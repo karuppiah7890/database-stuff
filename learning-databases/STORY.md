@@ -83,3 +83,28 @@ https://github.com/benstopford/awesome-db-benchmarks
 https://github.com/totogo/awesome-knowledge-graph
 
 These repos have so many links!! :O and references to so many DBs!! :O Wow. Of course there are lot of databases in the world. Hmm
+
+I actually can't write down all of them I guess. I mean, it would be there in some wikipedia article or another github repo like the above repos
+
+I have heard of so many of them actually. I have used some too
+
+Oracle is one. I have used very less of it though
+
+Many of the ones that I have heard of are -
+
+MS SQL Server
+
+[TigerGraph](https://www.tigergraph.com/tigergraph-db)
+
+[EnterpriseDB](https://www.enterprisedb.com)
+
+I also hear a lot about the managed database services
+
+AWS DynamoDB
+AWS RDS
+
+Google Spanner
+
+Azure Cosmos
+
+And there's more! Some hosted services are simply a wrapper around existing open source databases
