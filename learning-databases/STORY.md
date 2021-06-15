@@ -108,3 +108,5 @@ Google Spanner
 Azure Cosmos
 
 And there's more! Some hosted services are simply a wrapper around existing open source databases
+
+I guess I need to make a list of things that I want to learn. A list of questions I want to know answers to. And then take it from there :)
