@@ -10,6 +10,7 @@ Some of the databases / data stores I have used or tried basically are
 - [vault](https://www.vaultproject.io) kv store - it's secret management software in general though! :)
 - [dgraph](https://dgraph.io)
 - [gunDB](http://gun.js.org)
+- [sqlite](https://sqlite.org)
 
 Some of the ones I have heard of are
 
