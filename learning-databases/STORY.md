@@ -42,4 +42,44 @@ I have a list of databases that I can start off with. I also plan to build a dat
 
 I'm looking forward to learning in depth about all the interesting terms that I have heard a lot. Distributed systems, Network Partitioning, CAP theorem, Consensus, Eventual Consistency, Strong consistency among many others
 
+---
 
+I did a quick search to find an awesome list of databases
+
+https://github.com/search?utf8=%E2%9C%93&q=databases
+
+And I found what people are doing in their github repos regarding databases, maybe I could check them out too. For example
+
+https://github.com/rxin/db-readings
+
+https://github.com/sevenweeks/databases
+
+Interesting links I see!
+
+https://github.com/mindsdb/mindsdb
+
+For awesome stuff, I did this
+
+https://github.com/search?q=awesome+database&type=Repositories
+
+https://github.com/pingcap/awesome-database-learning
+
+https://github.com/dhamaniasad/awesome-postgres
+
+https://github.com/xephonhq/awesome-time-series-database
+
+Some more misc stuff
+
+https://github.com/mgramin/awesome-db-tools
+
+https://github.com/dzharii/awesome-elasticsearch
+
+https://github.com/jbmusso/awesome-graph
+
+https://github.com/numetriclabz/awesome-db
+
+https://github.com/benstopford/awesome-db-benchmarks
+
+https://github.com/totogo/awesome-knowledge-graph
+
+These repos have so many links!! :O and references to so many DBs!! :O Wow. Of course there are lot of databases in the world. Hmm
