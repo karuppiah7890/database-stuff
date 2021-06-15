@@ -22,6 +22,8 @@ Some of the ones I have heard of are
 - [CockroachDB](https://github.com/cockroachdb/cockroach)
 - [Neo4j](https://neo4j.com)
 - [MariaDB](https://mariadb.org)
+- [TiKV](https://tikv.org) - https://github.com/tikv/tikv
+- [TiDB](https://pingcap.com/products/tidb) - https://github.com/pingcap/tidb
 
 Some of the extensions or plugins I have heard of are
 
