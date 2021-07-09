@@ -331,7 +331,7 @@ Interesting! Lot of stuff in each one of them! I couldn't understand some gibber
 
 I can also see that some of the options I provided in the command line have been stored in files
 
-I also see there's an `OPTIONS-000003` file with lot of options I guess? or something like config? I couldn't understand all the options though, but I can see some familiar names like `WAL` for Write Ahead Logs, which is mentioned in `disable_wal`, `strict_wal_tail`, `wal_dir`, `wal_bytes_per_sync` config 
+I also see there's an `OPTIONS-000003` file with lot of options I guess? or something like config? I couldn't understand all the options though, but I can see some familiar names like `WAL` for Write Ahead Logs, which is mentioned in `disable_wal`, `strict_wal_tail`, `wal_dir`, `wal_bytes_per_sync` config
 
 I can also see something called `Level` which I don't get and there are 7 of them, from 0 to 6. I see it mentioning some stuff about `block`s like `block_size` and then something about compression `compression=Snappy` and then a filter policy `filter_policy=rocksdb.BuiltinBloomFilter`, which refers to Rocks DB `rocksdb` - https://rocksdb.org and something about filter type and more. I'll probably have to dig into Cockroach DB internals to understand better I guess. And who knows, they might be using RocksDB internally? and hence the reference? I don't know 🤷 Or maybe it's just to denote something similar to the RocksDB thingy, but internally the implementation is different to do the same thing? I don't know, gotta check
 
@@ -384,7 +384,7 @@ I was actually wondering how to look at the logs since the process is in the bac
 Before getting into the `cockroach.log`, I had already gotten into the `pebble` one assuming that's the main thing. Let's see
 
 ```bash
-$ cat logs/cockroach-pebble.log 
+$ cat logs/cockroach-pebble.log
 I210709 02:36:56.398843 29 util/log/file_sync_buffer.go:238 ⋮ [config]   file created at: 2021/07/09 02:36:56
 I210709 02:36:56.398872 29 util/log/file_sync_buffer.go:238 ⋮ [config]   running on machine: ‹karuppiahn-a01›
 I210709 02:36:56.398908 29 util/log/file_sync_buffer.go:238 ⋮ [config]   binary: CockroachDB CCL v21.1.5 (x86_64-apple-darwin19, built 2021/07/02 04:00:15, go1.15.11)
@@ -457,7 +457,7 @@ Not sure why it has the `\`. Oh. Maybe they were escaping the `[` to show that a
 
 `[counter]` field value = 6
 
-Seems like a counter or number. Looking at all the logs, looks like it's an increasing number, from 1. 
+Seems like a counter or number. Looking at all the logs, looks like it's an increasing number, from 1.
 
 `msg` field value = [JOB 2] all initial table stats loaded
 
@@ -466,7 +466,7 @@ Interesting that it looks like `[JOB 2]` is part of the `msg`, hmm and other par
 Next, looking at stderr logs, it looks similar to pebble logs
 
 ```bash
-$ cat cockroach-stderr.log 
+$ cat cockroach-stderr.log
 I210709 02:36:56.323015 1 util/log/file_sync_buffer.go:238 ⋮ [config]   file created at: 2021/07/09 02:36:56
 I210709 02:36:56.323033 1 util/log/file_sync_buffer.go:238 ⋮ [config]   running on machine: ‹karuppiahn-a01›
 I210709 02:36:56.323039 1 util/log/file_sync_buffer.go:238 ⋮ [config]   binary: CockroachDB CCL v21.1.5 (x86_64-apple-darwin19, built 2021/07/02 04:00:15, go1.15.11)
@@ -487,7 +487,7 @@ Next, I was just checking the `cockroach.log` log file and it had too much logs!
 It's just continuously logging and there thousands of errors - same errors. I tried to remove the duplicate lines
 
 ```bash
-$ cat cockroach.log 
+$ cat cockroach.log
 I210709 02:36:56.323807 1 util/log/file_sync_buffer.go:238 ⋮ [config]   file created at: 2021/07/09 02:36:56
 I210709 02:36:56.323816 1 util/log/file_sync_buffer.go:238 ⋮ [config]   running on machine: ‹karuppiahn-a01›
 I210709 02:36:56.323821 1 util/log/file_sync_buffer.go:238 ⋮ [config]   binary: CockroachDB CCL v21.1.5 (x86_64-apple-darwin19, built 2021/07/02 04:00:15, go1.15.11)
@@ -532,7 +532,7 @@ I210709 02:36:56.595766 29 1@server/server.go:913 ⋮ [n?] 14  monitoring forwar
 I210709 02:36:56.617898 29 1@cli/start.go:467 ⋮ [-] 15  initial startup completed.
 I210709 02:36:56.617898 29 1@cli/start.go:467 ⋮ [-] 15 +Node will now attempt to join a running cluster, or wait for `cockroach init`.
 I210709 02:36:56.617898 29 1@cli/start.go:467 ⋮ [-] 15 +Client connections will be accepted after this completes successfully.
-I210709 02:36:56.617898 29 1@cli/start.go:467 ⋮ [-] 15 +Check the log file(s) for progress. 
+I210709 02:36:56.617898 29 1@cli/start.go:467 ⋮ [-] 15 +Check the log file(s) for progress.
 I210709 02:36:56.672917 29 server/init.go:196 ⋮ [n?] 16  no stores initialized
 I210709 02:36:56.672964 29 server/init.go:197 ⋮ [n?] 17  awaiting `cockroach init` or join with an already initialized node
 W210709 02:36:56.673877 183 server/init.go:374 ⋮ [n?] 19  outgoing join rpc to ‹localhost:26258› unsuccessful: ‹rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial tcp [::1]:26258: connect: connection refused"›
@@ -624,7 +624,7 @@ I210709 02:36:56.595766 29 1@server/server.go:913 ⋮ [n?] 14  monitoring forwar
 I210709 02:36:56.617898 29 1@cli/start.go:467 ⋮ [-] 15  initial startup completed.
 I210709 02:36:56.617898 29 1@cli/start.go:467 ⋮ [-] 15 +Node will now attempt to join a running cluster, or wait for `cockroach init`.
 I210709 02:36:56.617898 29 1@cli/start.go:467 ⋮ [-] 15 +Client connections will be accepted after this completes successfully.
-I210709 02:36:56.617898 29 1@cli/start.go:467 ⋮ [-] 15 +Check the log file(s) for progress. 
+I210709 02:36:56.617898 29 1@cli/start.go:467 ⋮ [-] 15 +Check the log file(s) for progress.
 I210709 02:36:56.672917 29 server/init.go:196 ⋮ [n?] 16  no stores initialized
 I210709 02:36:56.672964 29 server/init.go:197 ⋮ [n?] 17  awaiting `cockroach init` or join with an already initialized node
 ```
@@ -643,7 +643,7 @@ awaiting `cockroach init` or join with an already initialized node
 
 So, until I do init, it will try to reach other nodes but it will fail? As init has not been run on the other nodes too? Hmm
 
-I'm planning to tail the node 1 logs and then see what happens when I do `init` 
+I'm planning to tail the node 1 logs and then see what happens when I do `init`
 
 I ran `init`
 
@@ -655,7 +655,7 @@ Cluster successfully initialized
 and I was tailing the logs of node 1 and I saw a hell a lot of logs once I did `init`
 
 ```bash
-$ tail -f cockroach.log 
+$ tail -f cockroach.log
 I210709 04:25:04.006157 183 server/init.go:418 ⋮ [n?] 5808  ‹localhost:26259› is itself waiting for init, will retry
 I210709 04:25:05.006149 183 server/init.go:418 ⋮ [n?] 5809  ‹localhost:26258› is itself waiting for init, will retry
 I210709 04:25:06.006252 183 server/init.go:418 ⋮ [n?] 5810  ‹localhost:26259› is itself waiting for init, will retry
@@ -862,7 +862,7 @@ I210709 04:25:29.311837 87124 kv/kvserver/store_snapshot.go:1160 ⋮ [n1,replica
 I210709 04:25:29.628741 87124 kv/kvserver/replica_command.go:2113 ⋮ [n1,replicate,s1,r26/1:‹/NamespaceTable/{30-Max}›] 5991  change replicas (add ‹[(n3,s3):2]› remove ‹[]›): existing descriptor r26:‹/NamespaceTable/{30-Max}› [(n1,s1):1, (n3,s3):2LEARNER, next=3, gen=1]
 I210709 04:25:29.741686 87124 kv/kvserver/replica_raft.go:277 ⋮ [n1,s1,r26/1:‹/NamespaceTable/{30-Max}›] 5992  proposing SIMPLE(v2) ‹[(n3,s3):2]›: after=‹[(n1,s1):1 (n3,s3):2]› next=3
 I210709 04:25:29.832235 87124 kv/kvserver/replica_command.go:2113 ⋮ [n1,replicate,s1,r26/1:‹/NamespaceTable/{30-Max}›] 5993  change replicas (add ‹[(n2,s2):3LEARNER]› remove ‹[]›): existing descriptor r26:‹/NamespaceTable/{30-Max}› [(n1,s1):1, (n3,s3):2, next=3, gen=2]
-I210709 04:25:29.853552 83727 kv/kvserver/store.go:2663 ⋮ [n1,s1] 5994  
+I210709 04:25:29.853552 83727 kv/kvserver/store.go:2663 ⋮ [n1,s1] 5994
 I210709 04:25:29.853552 83727 kv/kvserver/store.go:2663 ⋮ [n1,s1] 5994 +__level_____count____size___score______in__ingest(sz_cnt)____move(sz_cnt)___write(sz_cnt)____read___r-amp___w-amp
 I210709 04:25:29.853552 83727 kv/kvserver/store.go:2663 ⋮ [n1,s1] 5994 +    WAL         4   2.0 M       -   2.0 M       -       -       -       -   2.0 M       -       -       -     1.0
 I210709 04:25:29.853552 83727 kv/kvserver/store.go:2663 ⋮ [n1,s1] 5994 +      0         0     0 B    0.00     0 B     0 B       0     0 B       0     0 B       0     0 B       0     0.0
@@ -1025,7 +1025,7 @@ That's like around 400 lines of logs!! At some point I think it finally became a
 The next time I did after some time, it showed this
 
 ```bash
-$ tail -f cockroach.log 
+$ tail -f cockroach.log
 I210709 04:27:09.851713 83728 2@gossip/gossip.go:567 ⋮ [n1] 6337  gossip status (ok, 3 node‹s›)
 I210709 04:27:09.851713 83728 2@gossip/gossip.go:567 ⋮ [n1] 6337 +gossip client (1/3 cur/max conns)
 I210709 04:27:09.851713 83728 2@gossip/gossip.go:567 ⋮ [n1] 6337 +  3: ‹localhost:26259› (1m59s: infos 505/147 sent/received, bytes 187391B/49036B sent/received)
@@ -1095,7 +1095,7 @@ I think I can keep the node data locally though. Previously I was planning on ge
 I was looking at how to stop the nodes. I couldn't find any commands named "stop", hmm
 
 ```bash
-$ cockroach 
+$ cockroach
 CockroachDB command-line interface and server.
 
 Usage:
@@ -1127,14 +1127,14 @@ Available Commands:
 
 Flags:
   -h, --help                     help for cockroach
-      --log <string>             
+      --log <string>
                                   Logging configuration, expressed using YAML syntax. For example, you can
                                   change the default logging directory with: --log='file-defaults: {dir: ...}'.
                                   See the documentation for more options and details.  To preview how the log
                                   configuration is applied, or preview the default configuration, you can use
                                   the 'cockroach debug check-log-config' sub-command.
-                                 
-      --log-config-file <file>   
+
+      --log-config-file <file>
                                   File name to read the logging configuration from. This has the same effect as
                                   passing the content of the file via the --log flag.
                                   (default <unset>)
@@ -1162,14 +1162,14 @@ Flags:
   -h, --help   help for node
 
 Global Flags:
-      --log <string>             
+      --log <string>
                                   Logging configuration, expressed using YAML syntax. For example, you can
                                   change the default logging directory with: --log='file-defaults: {dir: ...}'.
                                   See the documentation for more options and details.  To preview how the log
                                   configuration is applied, or preview the default configuration, you can use
                                   the 'cockroach debug check-log-config' sub-command.
-                                 
-      --log-config-file <file>   
+
+      --log-config-file <file>
                                   File name to read the logging configuration from. This has the same effect as
                                   passing the content of the file via the --log flag.
                                   (default <unset>)
@@ -1198,7 +1198,7 @@ Usage:
   cockroach node decommission { --self | <node id 1> [<node id 2> ...] } [flags]
 
 Flags:
-      --cert-principal-map strings          
+      --cert-principal-map strings
                                              A comma separated list of <cert-principal>:<db-principal> mappings. This
                                              allows mapping the principal in a cert to a DB principal such as "node" or
                                              "root" or any SQL user. This is intended for use in situations where the
@@ -1210,39 +1210,39 @@ Flags:
                                              function. A cert is allowed to authenticate a DB principal if the DB principal
                                              name is contained in the mapped CommonName or DNS-type SubjectAlternateName
                                              fields.
-                                            
-      --certs-dir string                    
+
+      --certs-dir string
                                              Path to the directory containing SSL certificates and keys.
                                              Environment variable: COCKROACH_CERTS_DIR
                                              (default "${HOME}/.cockroach-certs")
-      --cluster-name <identifier>           
+      --cluster-name <identifier>
                                              Sets a name to verify the identity of a remote node or cluster. The value must
                                              match between this node and the remote node(s) specified via --join.
-                                            
+
                                              This can be used as an additional verification when either the node or
                                              cluster, or both, have not yet been initialized and do not yet know their
                                              cluster ID.
-                                            
+
                                              To introduce a cluster name into an already-initialized cluster, pair this
                                              flag with --disable-cluster-name-verification.
-                                            
-      --disable-cluster-name-verification   
+
+      --disable-cluster-name-verification
                                              Tell the server to ignore cluster name mismatches. This is meant for use when
                                              opting an existing cluster into starting to use cluster name verification, or
                                              when changing the cluster name.
-                                            
+
                                              The cluster should be restarted once with --cluster-name and
                                              --disable-cluster-name-verification combined, and once all nodes have been
                                              updated to know the new cluster name, the cluster can be restarted again with
                                              this flag removed.
-                                            
-      --format string                       
+
+      --format string
                                              Selects how to display table rows in results. Possible values: tsv, csv,
                                              table, records, sql, raw, html. If left unspecified, defaults to tsv for
                                              non-interactive sessions and table for interactive sessions.
                                              (default "table")
   -h, --help                                help for decommission
-      --host <addr/host>[:<port>]           
+      --host <addr/host>[:<port>]
                                              CockroachDB node to connect to. This can be specified either as an
                                              address/hostname, or together with a port number as in -s myhost:26257. If
                                              the port number is left unspecified, it defaults to 26257. An IPv6 address
@@ -1250,46 +1250,46 @@ Flags:
                                              [fe80::f6f2:::]:26257.
                                              Environment variable: COCKROACH_HOST
                                              (default :26257)
-      --insecure                            
+      --insecure
                                              Connect to a cluster without using TLS nor authentication. This makes the
                                              client-server connection vulnerable to MITM attacks. Use with care.
                                              Environment variable: COCKROACH_INSECURE
-                                            
-      --self                                
+
+      --self
                                              Use the node ID of the node connected to via --host as target of the
                                              decommissioning or recommissioning command.
-                                            
-      --url <postgres://...>                
+
+      --url <postgres://...>
                                              Connection URL, of the form:
                                                 postgresql://[user[:passwd]@]host[:port]/[db][?parameters...]
                                              For example, postgresql://myuser@localhost:26257/mydb.
-                                            
+
                                              If left empty, the discrete connection flags are used: host, port, user,
                                              database, insecure, certs-dir.
                                              Environment variable: COCKROACH_URL
-                                            
-      --wait string                         
+
+      --wait string
                                              Specifies when to return during the decommissioning process. Takes any of the
                                              following values:
-                                            
+
                                                - all   waits until all target nodes\' replica counts have dropped to zero and
                                                        marks the nodes as fully decommissioned. This is the default.
                                                - none  marks the targets as decommissioning, but does not wait for the
                                                        replica counts to drop to zero before returning. If the replica counts
                                                        are found to be zero, nodes are marked as fully decommissioned. Use
                                                        when polling manually from an external system.
-                                            
+
                                              (default "all")
 
 Global Flags:
-      --log <string>             
+      --log <string>
                                   Logging configuration, expressed using YAML syntax. For example, you can
                                   change the default logging directory with: --log='file-defaults: {dir: ...}'.
                                   See the documentation for more options and details.  To preview how the log
                                   configuration is applied, or preview the default configuration, you can use
                                   the 'cockroach debug check-log-config' sub-command.
-                                 
-      --log-config-file <file>   
+
+      --log-config-file <file>
                                   File name to read the logging configuration from. This has the same effect as
                                   passing the content of the file via the --log flag.
                                   (default <unset>)
@@ -1313,8 +1313,8 @@ Hmm, interesting
 
 ```bash
 $ cockroach quit
-Command "quit" is deprecated, see 'cockroach node drain' instead to drain a 
-server without terminating the server process (which can in turn be done using 
+Command "quit" is deprecated, see 'cockroach node drain' instead to drain a
+server without terminating the server process (which can in turn be done using
 an orchestration layer or a process manager, or by sending a termination signal
 directly).
 ERROR: cannot load certificates.
@@ -1332,8 +1332,8 @@ I'm just going to quit it I guess, let's see how it works
 
 ```bash
 $ cockroach quit -h
-Command "quit" is deprecated, see 'cockroach node drain' instead to drain a 
-server without terminating the server process (which can in turn be done using 
+Command "quit" is deprecated, see 'cockroach node drain' instead to drain a
+server without terminating the server process (which can in turn be done using
 an orchestration layer or a process manager, or by sending a termination signal
 directly).
 
@@ -1347,7 +1347,7 @@ Usage:
   cockroach quit [flags]
 
 Flags:
-      --cert-principal-map strings          
+      --cert-principal-map strings
                                              A comma separated list of <cert-principal>:<db-principal> mappings. This
                                              allows mapping the principal in a cert to a DB principal such as "node" or
                                              "root" or any SQL user. This is intended for use in situations where the
@@ -1359,40 +1359,40 @@ Flags:
                                              function. A cert is allowed to authenticate a DB principal if the DB principal
                                              name is contained in the mapped CommonName or DNS-type SubjectAlternateName
                                              fields.
-                                            
-      --certs-dir string                    
+
+      --certs-dir string
                                              Path to the directory containing SSL certificates and keys.
                                              Environment variable: COCKROACH_CERTS_DIR
                                              (default "${HOME}/.cockroach-certs")
-      --cluster-name <identifier>           
+      --cluster-name <identifier>
                                              Sets a name to verify the identity of a remote node or cluster. The value must
                                              match between this node and the remote node(s) specified via --join.
-                                            
+
                                              This can be used as an additional verification when either the node or
                                              cluster, or both, have not yet been initialized and do not yet know their
                                              cluster ID.
-                                            
+
                                              To introduce a cluster name into an already-initialized cluster, pair this
                                              flag with --disable-cluster-name-verification.
-                                            
-      --disable-cluster-name-verification   
+
+      --disable-cluster-name-verification
                                              Tell the server to ignore cluster name mismatches. This is meant for use when
                                              opting an existing cluster into starting to use cluster name verification, or
                                              when changing the cluster name.
-                                            
+
                                              The cluster should be restarted once with --cluster-name and
                                              --disable-cluster-name-verification combined, and once all nodes have been
                                              updated to know the new cluster name, the cluster can be restarted again with
                                              this flag removed.
-                                            
-      --drain-wait duration                 
+
+      --drain-wait duration
                                              When non-zero, wait for at most the specified amount of time for the node to
                                              drain all active client connections and migrate away range leases. If zero,
                                              the command waits until the last client has disconnected and all range leases
                                              have been migrated away.
                                              (default 10m0s)
   -h, --help                                help for quit
-      --host <addr/host>[:<port>]           
+      --host <addr/host>[:<port>]
                                              CockroachDB node to connect to. This can be specified either as an
                                              address/hostname, or together with a port number as in -s myhost:26257. If
                                              the port number is left unspecified, it defaults to 26257. An IPv6 address
@@ -1400,29 +1400,29 @@ Flags:
                                              [fe80::f6f2:::]:26257.
                                              Environment variable: COCKROACH_HOST
                                              (default :26257)
-      --insecure                            
+      --insecure
                                              Connect to a cluster without using TLS nor authentication. This makes the
                                              client-server connection vulnerable to MITM attacks. Use with care.
                                              Environment variable: COCKROACH_INSECURE
-                                            
-      --url <postgres://...>                
+
+      --url <postgres://...>
                                              Connection URL, of the form:
                                                 postgresql://[user[:passwd]@]host[:port]/[db][?parameters...]
                                              For example, postgresql://myuser@localhost:26257/mydb.
-                                            
+
                                              If left empty, the discrete connection flags are used: host, port, user,
                                              database, insecure, certs-dir.
                                              Environment variable: COCKROACH_URL
 
 Global Flags:
-      --log <string>             
+      --log <string>
                                   Logging configuration, expressed using YAML syntax. For example, you can
                                   change the default logging directory with: --log='file-defaults: {dir: ...}'.
                                   See the documentation for more options and details.  To preview how the log
                                   configuration is applied, or preview the default configuration, you can use
                                   the 'cockroach debug check-log-config' sub-command.
-                                 
-      --log-config-file <file>   
+
+      --log-config-file <file>
                                   File name to read the logging configuration from. This has the same effect as
                                   passing the content of the file via the --log flag.
                                   (default <unset>)
@@ -1440,15 +1440,15 @@ Looks like there's a note about the process of quitting
 ```
 Note:
 
-For the last 2 nodes, the shutdown process will take longer (about a minute each) and will eventually force the nodes to stop. This is because, with only 2 of 5 nodes left, a majority of replicas are not available, and so the cluster is no longer operational. 
+For the last 2 nodes, the shutdown process will take longer (about a minute each) and will eventually force the nodes to stop. This is because, with only 2 of 5 nodes left, a majority of replicas are not available, and so the cluster is no longer operational.
 ```
 
 I think there's a step to scale the nodes from 3 to 5 nodes. I still have only 3. But looks like when the majority goes down, the cluster is not operational, hmm, makes sense if it's quorum and stuff I guess? Not sure. In my case, out of 3, majority is (3/2) + 1 = 1 + 1 = 2. So, my third node is taking a lot of time to shutdown but apparently it will be shutdown just a bit later
 
 ```bash
 $ cockroach quit --insecure --host=localhost:26257
-Command "quit" is deprecated, see 'cockroach node drain' instead to drain a 
-server without terminating the server process (which can in turn be done using 
+Command "quit" is deprecated, see 'cockroach node drain' instead to drain a
+server without terminating the server process (which can in turn be done using
 an orchestration layer or a process manager, or by sending a termination signal
 directly).
 node is draining... remaining: 21
@@ -1456,8 +1456,8 @@ node is draining... remaining: 0 (complete)
 ok
 
 $ cockroach quit --insecure --host=localhost:26258
-Command "quit" is deprecated, see 'cockroach node drain' instead to drain a 
-server without terminating the server process (which can in turn be done using 
+Command "quit" is deprecated, see 'cockroach node drain' instead to drain a
+server without terminating the server process (which can in turn be done using
 an orchestration layer or a process manager, or by sending a termination signal
 directly).
 node is draining... remaining: 14
@@ -1465,11 +1465,11 @@ node is draining... remaining: 0 (complete)
 ok
 
 $ cockroach quit --insecure --host=localhost:26259
-Command "quit" is deprecated, see 'cockroach node drain' instead to drain a 
-server without terminating the server process (which can in turn be done using 
+Command "quit" is deprecated, see 'cockroach node drain' instead to drain a
+server without terminating the server process (which can in turn be done using
 an orchestration layer or a process manager, or by sending a termination signal
 directly).
-node is draining... 
+node is draining...
 ```
 
 Currently it's stuck trying to drain the last node
@@ -1485,3 +1485,37 @@ If you do not plan to restart the cluster, you may want to remove the nodes' dat
 ```
 
 So I just need to run `start` command. Makes sense! :)
+
+The node3 didn't shutdown at all actually. It was just stuck. I tried to use `kill`
+
+```bash
+$ ps aux | rg cockroach
+karuppiahn        7656   8.4  0.5  5538868 173436 s000  S     8:24AM   7:36.97 cockroach start --insecure --store=node3 --listen-addr=localhost:26259 --http-addr=localhost:8082 --join=localhost:26257,localhost:26258,localhost:26259
+karuppiahn       30433   0.0  0.0  4265112    300 s000  R+   11:35AM   0:00.00 rg cockroach
+$ kill 7656
+$ initiating graceful shutdown of server
+```
+
+Note how it says "initiating graceful shutdown of server"
+
+Even the guide mentioned that the server is not fully detached from the terminal / shell, so I guess the log makes sense
+
+But then the process still exits, even though the log contains the shutdown message and there are lots of messages after that too, haha
+
+```bash
+$ rg shutdown node3/logs/cockroach.log
+5209:I210709 04:47:41.690426 167982 1@server/drain.go:57 ⋮ [n3] 5034  drain request received with doDrain = true, shutdown = false
+7351:I210709 05:20:31.827262 187510 1@server/drain.go:57 ⋮ [n3] 5896  drain request received with doDrain = true, shutdown = false
+8113:I210709 06:05:10.230388 194232 1@server/drain.go:57 ⋮ [n3] 6247  drain request received with doDrain = true, shutdown = false
+8246:I210709 06:05:47.583957 1 1@cli/start.go:821 ⋮ [-] 6297  initiating graceful shutdown of server
+8458:I210709 06:06:44.436890 1 1@cli/start.go:859 ⋮ [-] 6399  received additional signal 'terminated'; continuing graceful shutdown
+8511:I210709 06:06:57.805543 1 1@cli/start.go:859 ⋮ [-] 6425  received additional signal 'terminated'; continuing graceful shutdown
+```
+
+I finally killed it with `SIGKILL` signal instead of the default `SIGTERM`
+
+```bash
+$ kill -9 7656
+$ ps aux | rg cockroach
+karuppiahn       32151   0.0  0.0  4265112    212 s000  R+   11:40AM   0:00.00 rg cockroach
+```

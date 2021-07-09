@@ -93,7 +93,7 @@ It says
 ```
 Warning:
 
-cockroach demo is designed for testing purposes only. It is not suitable for production deployments. To see a list of recommendations for production deployments, see the Production Checklist. 
+cockroach demo is designed for testing purposes only. It is not suitable for production deployments. To see a list of recommendations for production deployments, see the Production Checklist.
 ```
 
 production checklist - https://www.cockroachlabs.com/docs/v21.1/recommended-production-settings
@@ -126,7 +126,7 @@ karuppiahn-a01:database-stuff karuppiahn$ cockroach demo
 #     (webui)    http://127.0.0.1:8080/demologin?password=demo82954&username=demo
 #     (sql)      postgres://demo:demo82954@127.0.0.1:26257?sslmode=require
 #     (sql/unix) postgres://demo:demo82954@?host=%2Fvar%2Ffolders%2F4z%2F09jpfvfj6c19lxl7ch78pzvc0000gn%2FT%2Fdemo670084497&port=26257
-#   
+#
 #   - Username: "demo", password: "demo82954"
 #   - Directory with certificate files (for certain SQL drivers/tools): /var/folders/4z/09jpfvfj6c19lxl7ch78pzvc0000gn/T/demo670084497
 #
@@ -187,7 +187,7 @@ Commands specific to the demo shell (EXPERIMENTAL):
 More documentation about our SQL dialect and the CLI shell is available online:
 https://www.cockroachlabs.com/docs/v21.1/sql-statements.html
 https://www.cockroachlabs.com/docs/v21.1/use-the-built-in-sql-client.html
-demo@127.0.0.1:26257/movr> 
+demo@127.0.0.1:26257/movr>
 demo@127.0.0.1:26257/movr> \dt
   schema_name |         table_name         | type  | owner | estimated_row_count | locality
 --------------+----------------------------+-------+-------+---------------------+-----------
@@ -209,7 +209,7 @@ demo@127.0.0.1:26257/movr> SELECT ST_IsValid(ST_MakePoint(1,2));
 
 Time: 1ms total (execution 1ms / network 0ms)
 
-demo@127.0.0.1:26257/movr> 
+demo@127.0.0.1:26257/movr>
 ```
 
 That was interesting :D There was a temporary Enterprise license in the demo cluster! It works for an hour it
@@ -250,7 +250,7 @@ demo@127.0.0.1:26257/movr> \dt
 
 Time: 11ms total (execution 10ms / network 0ms)
 
-demo@127.0.0.1:26257/movr> 
+demo@127.0.0.1:26257/movr>
 demo@127.0.0.1:26257/movr> select count(*)
                         -> from promo_codes;
   count
@@ -300,7 +300,7 @@ demo@127.0.0.1:26257/movr> select count(*) from vehicles;
 
 Time: 1ms total (execution 1ms / network 0ms)
 
-demo@127.0.0.1:26257/movr> 
+demo@127.0.0.1:26257/movr>
 ```
 
 I'll probably try more SQL commands with more data later. I'm going to continue with the
