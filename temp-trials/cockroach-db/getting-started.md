@@ -302,3 +302,9 @@ Time: 1ms total (execution 1ms / network 0ms)
 
 demo@127.0.0.1:26257/movr> 
 ```
+
+I'll probably try more SQL commands with more data later. I'm going to continue with the
+
+https://www.cockroachlabs.com/docs/stable/install-cockroachdb-mac.html#whats-next
+
+And checkout running a [local cluster](./local-cluster.md) - https://www.cockroachlabs.com/docs/v21.1/start-a-local-cluster
