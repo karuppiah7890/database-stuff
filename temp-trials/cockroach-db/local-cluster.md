@@ -1087,3 +1087,401 @@ I210709 04:25:13.104992 85362 server/auto_upgrade.go:55 ⋮ [n1] 5882  no need t
 I think I'm going to try the built-in SQL client later
 
 https://www.cockroachlabs.com/docs/v21.1/start-a-local-cluster#step-2-use-the-built-in-sql-client
+
+I need to stop all the nodes though! I forgot about that! Haha
+
+I think I can keep the node data locally though. Previously I was planning on getting rid of everything. But then I'll start from scratch later - which is okay, as there's not much steps to follow. But still, it will be interesting to see the nodes stop and then start back again and how the logs look etc ;) Unlike a brand new set of nodes and a new cluster
+
+I was looking at how to stop the nodes. I couldn't find any commands named "stop", hmm
+
+```bash
+$ cockroach 
+CockroachDB command-line interface and server.
+
+Usage:
+  cockroach [command]
+
+Available Commands:
+  start             start a node in a multi-node cluster
+  start-single-node start a single-node cluster
+  connect           auto-build TLS certificates for use with the start command
+  init              initialize a cluster
+  cert              create ca, node, and client certs
+  sql               open a sql shell
+  statement-diag    commands for managing statement diagnostics bundles
+  auth-session      log in and out of HTTP sessions
+  node              list, inspect, drain or remove nodes
+
+  nodelocal         upload and delete nodelocal files
+  userfile          upload, list and delete user scoped files
+  import            import a db or table from a local PGDUMP or MYSQLDUMP file
+  demo              open a demo sql shell
+  gen               generate auxiliary files
+  version           output version information
+  debug             debugging commands
+  sqlfmt            format SQL statements
+  workload          generators for data and query loads
+  systembench       Run systembench
+  load              loading commands
+  help              Help about any command
+
+Flags:
+  -h, --help                     help for cockroach
+      --log <string>             
+                                  Logging configuration, expressed using YAML syntax. For example, you can
+                                  change the default logging directory with: --log='file-defaults: {dir: ...}'.
+                                  See the documentation for more options and details.  To preview how the log
+                                  configuration is applied, or preview the default configuration, you can use
+                                  the 'cockroach debug check-log-config' sub-command.
+                                 
+      --log-config-file <file>   
+                                  File name to read the logging configuration from. This has the same effect as
+                                  passing the content of the file via the --log flag.
+                                  (default <unset>)
+      --vmodule moduleSpec       comma-separated list of pattern=N settings for file-filtered logging (significantly hurts performance)
+
+Use "cockroach [command] --help" for more information about a command.
+```
+
+There was some `node` command, so I thought I could do some node stuff there
+
+```bash
+$ cockroach node
+Usage:
+  cockroach node [command] [flags]
+  cockroach node [command]
+
+Available Commands:
+  ls           lists the IDs of all nodes in the cluster
+  status       shows the status of a node or all nodes
+  decommission decommissions the node(s)
+  recommission recommissions the node(s)
+  drain        drain a node without shutting it down
+
+Flags:
+  -h, --help   help for node
+
+Global Flags:
+      --log <string>             
+                                  Logging configuration, expressed using YAML syntax. For example, you can
+                                  change the default logging directory with: --log='file-defaults: {dir: ...}'.
+                                  See the documentation for more options and details.  To preview how the log
+                                  configuration is applied, or preview the default configuration, you can use
+                                  the 'cockroach debug check-log-config' sub-command.
+                                 
+      --log-config-file <file>   
+                                  File name to read the logging configuration from. This has the same effect as
+                                  passing the content of the file via the --log flag.
+                                  (default <unset>)
+      --vmodule moduleSpec       comma-separated list of pattern=N settings for file-filtered logging (significantly hurts performance)
+
+Use "cockroach node [command] --help" for more information about a command.
+ERROR: unknown sub-command: ""
+Failed running "node"
+```
+
+I mean, I guess I could just go and kill the processes using `ps aux | grep cockroach` or something like that. I was wondering if it will be graceful etc. Also, sometimes I kill processes forcefully with `kill -9` if I can't kill them just with `kill` and it can get very messy apparently, since it's abrupt. So, just checking out what's the general way
+
+I noticed the `decommission` command under `node`. That looked nice, so I tried that out
+
+```bash
+$ cockroach node decommission
+ERROR: no node ID specified; use --self to target the node specified with --host
+Failed running "node decommission"
+
+$ cockroach node decommission -h
+
+Marks the nodes with the supplied IDs as decommissioning.
+This will cause leases and replicas to be removed from these nodes.
+
+Usage:
+  cockroach node decommission { --self | <node id 1> [<node id 2> ...] } [flags]
+
+Flags:
+      --cert-principal-map strings          
+                                             A comma separated list of <cert-principal>:<db-principal> mappings. This
+                                             allows mapping the principal in a cert to a DB principal such as "node" or
+                                             "root" or any SQL user. This is intended for use in situations where the
+                                             certificate management system places restrictions on the Subject.CommonName or
+                                             SubjectAlternateName fields in the certificate (e.g. disallowing a CommonName
+                                             such as "node" or "root"). If multiple mappings are provided for the same
+                                             <cert-principal>, the last one specified in the list takes precedence. A
+                                             principal not specified in the map is passed through as-is via the identity
+                                             function. A cert is allowed to authenticate a DB principal if the DB principal
+                                             name is contained in the mapped CommonName or DNS-type SubjectAlternateName
+                                             fields.
+                                            
+      --certs-dir string                    
+                                             Path to the directory containing SSL certificates and keys.
+                                             Environment variable: COCKROACH_CERTS_DIR
+                                             (default "${HOME}/.cockroach-certs")
+      --cluster-name <identifier>           
+                                             Sets a name to verify the identity of a remote node or cluster. The value must
+                                             match between this node and the remote node(s) specified via --join.
+                                            
+                                             This can be used as an additional verification when either the node or
+                                             cluster, or both, have not yet been initialized and do not yet know their
+                                             cluster ID.
+                                            
+                                             To introduce a cluster name into an already-initialized cluster, pair this
+                                             flag with --disable-cluster-name-verification.
+                                            
+      --disable-cluster-name-verification   
+                                             Tell the server to ignore cluster name mismatches. This is meant for use when
+                                             opting an existing cluster into starting to use cluster name verification, or
+                                             when changing the cluster name.
+                                            
+                                             The cluster should be restarted once with --cluster-name and
+                                             --disable-cluster-name-verification combined, and once all nodes have been
+                                             updated to know the new cluster name, the cluster can be restarted again with
+                                             this flag removed.
+                                            
+      --format string                       
+                                             Selects how to display table rows in results. Possible values: tsv, csv,
+                                             table, records, sql, raw, html. If left unspecified, defaults to tsv for
+                                             non-interactive sessions and table for interactive sessions.
+                                             (default "table")
+  -h, --help                                help for decommission
+      --host <addr/host>[:<port>]           
+                                             CockroachDB node to connect to. This can be specified either as an
+                                             address/hostname, or together with a port number as in -s myhost:26257. If
+                                             the port number is left unspecified, it defaults to 26257. An IPv6 address
+                                             can also be specified with the notation [...], for example [::1]:26257 or
+                                             [fe80::f6f2:::]:26257.
+                                             Environment variable: COCKROACH_HOST
+                                             (default :26257)
+      --insecure                            
+                                             Connect to a cluster without using TLS nor authentication. This makes the
+                                             client-server connection vulnerable to MITM attacks. Use with care.
+                                             Environment variable: COCKROACH_INSECURE
+                                            
+      --self                                
+                                             Use the node ID of the node connected to via --host as target of the
+                                             decommissioning or recommissioning command.
+                                            
+      --url <postgres://...>                
+                                             Connection URL, of the form:
+                                                postgresql://[user[:passwd]@]host[:port]/[db][?parameters...]
+                                             For example, postgresql://myuser@localhost:26257/mydb.
+                                            
+                                             If left empty, the discrete connection flags are used: host, port, user,
+                                             database, insecure, certs-dir.
+                                             Environment variable: COCKROACH_URL
+                                            
+      --wait string                         
+                                             Specifies when to return during the decommissioning process. Takes any of the
+                                             following values:
+                                            
+                                               - all   waits until all target nodes\' replica counts have dropped to zero and
+                                                       marks the nodes as fully decommissioned. This is the default.
+                                               - none  marks the targets as decommissioning, but does not wait for the
+                                                       replica counts to drop to zero before returning. If the replica counts
+                                                       are found to be zero, nodes are marked as fully decommissioned. Use
+                                                       when polling manually from an external system.
+                                            
+                                             (default "all")
+
+Global Flags:
+      --log <string>             
+                                  Logging configuration, expressed using YAML syntax. For example, you can
+                                  change the default logging directory with: --log='file-defaults: {dir: ...}'.
+                                  See the documentation for more options and details.  To preview how the log
+                                  configuration is applied, or preview the default configuration, you can use
+                                  the 'cockroach debug check-log-config' sub-command.
+                                 
+      --log-config-file <file>   
+                                  File name to read the logging configuration from. This has the same effect as
+                                  passing the content of the file via the --log flag.
+                                  (default <unset>)
+      --vmodule moduleSpec       comma-separated list of pattern=N settings for file-filtered logging (significantly hurts performance)
+```
+
+Damn, I just found out from the guide on how to stop the cluster
+
+https://www.cockroachlabs.com/docs/v21.1/start-a-local-cluster#step-7-stop-the-cluster
+
+I was looking for `stop` or something but I guess I could have read all the sub commands, lol. Impatiently
+searching for `stop` didn't help :P
+
+Wierdly, `quit` doesn't show up in the `cockroach` help
+
+```bash
+$ cockroach | rg quit
+```
+
+Hmm, interesting
+
+```bash
+$ cockroach quit
+Command "quit" is deprecated, see 'cockroach node drain' instead to drain a 
+server without terminating the server process (which can in turn be done using 
+an orchestration layer or a process manager, or by sending a termination signal
+directly).
+ERROR: cannot load certificates.
+Check your certificate settings, set --certs-dir, or use --insecure for insecure clusters.
+
+failed to connect to the node: problem using security settings: no certificates found; does certs dir exist?
+Failed running "quit"
+```
+
+Ah, it's deprecated, okay
+
+So, they ask us to drain the server. Hmm. Drain still sounds like - drain out the data to other servers / move out the data to other servers, so that this server can be killed, or upgraded or do some similar maintenance stuff. Hmm
+
+I'm just going to quit it I guess, let's see how it works
+
+```bash
+$ cockroach quit -h
+Command "quit" is deprecated, see 'cockroach node drain' instead to drain a 
+server without terminating the server process (which can in turn be done using 
+an orchestration layer or a process manager, or by sending a termination signal
+directly).
+
+Shut down the server. The first stage is drain, where the server stops accepting
+client connections, then stops extant connections, and finally pushes range
+leases onto other nodes, subject to various timeout parameters configurable via
+cluster settings. After the first stage completes, the server process is shut
+down.
+
+Usage:
+  cockroach quit [flags]
+
+Flags:
+      --cert-principal-map strings          
+                                             A comma separated list of <cert-principal>:<db-principal> mappings. This
+                                             allows mapping the principal in a cert to a DB principal such as "node" or
+                                             "root" or any SQL user. This is intended for use in situations where the
+                                             certificate management system places restrictions on the Subject.CommonName or
+                                             SubjectAlternateName fields in the certificate (e.g. disallowing a CommonName
+                                             such as "node" or "root"). If multiple mappings are provided for the same
+                                             <cert-principal>, the last one specified in the list takes precedence. A
+                                             principal not specified in the map is passed through as-is via the identity
+                                             function. A cert is allowed to authenticate a DB principal if the DB principal
+                                             name is contained in the mapped CommonName or DNS-type SubjectAlternateName
+                                             fields.
+                                            
+      --certs-dir string                    
+                                             Path to the directory containing SSL certificates and keys.
+                                             Environment variable: COCKROACH_CERTS_DIR
+                                             (default "${HOME}/.cockroach-certs")
+      --cluster-name <identifier>           
+                                             Sets a name to verify the identity of a remote node or cluster. The value must
+                                             match between this node and the remote node(s) specified via --join.
+                                            
+                                             This can be used as an additional verification when either the node or
+                                             cluster, or both, have not yet been initialized and do not yet know their
+                                             cluster ID.
+                                            
+                                             To introduce a cluster name into an already-initialized cluster, pair this
+                                             flag with --disable-cluster-name-verification.
+                                            
+      --disable-cluster-name-verification   
+                                             Tell the server to ignore cluster name mismatches. This is meant for use when
+                                             opting an existing cluster into starting to use cluster name verification, or
+                                             when changing the cluster name.
+                                            
+                                             The cluster should be restarted once with --cluster-name and
+                                             --disable-cluster-name-verification combined, and once all nodes have been
+                                             updated to know the new cluster name, the cluster can be restarted again with
+                                             this flag removed.
+                                            
+      --drain-wait duration                 
+                                             When non-zero, wait for at most the specified amount of time for the node to
+                                             drain all active client connections and migrate away range leases. If zero,
+                                             the command waits until the last client has disconnected and all range leases
+                                             have been migrated away.
+                                             (default 10m0s)
+  -h, --help                                help for quit
+      --host <addr/host>[:<port>]           
+                                             CockroachDB node to connect to. This can be specified either as an
+                                             address/hostname, or together with a port number as in -s myhost:26257. If
+                                             the port number is left unspecified, it defaults to 26257. An IPv6 address
+                                             can also be specified with the notation [...], for example [::1]:26257 or
+                                             [fe80::f6f2:::]:26257.
+                                             Environment variable: COCKROACH_HOST
+                                             (default :26257)
+      --insecure                            
+                                             Connect to a cluster without using TLS nor authentication. This makes the
+                                             client-server connection vulnerable to MITM attacks. Use with care.
+                                             Environment variable: COCKROACH_INSECURE
+                                            
+      --url <postgres://...>                
+                                             Connection URL, of the form:
+                                                postgresql://[user[:passwd]@]host[:port]/[db][?parameters...]
+                                             For example, postgresql://myuser@localhost:26257/mydb.
+                                            
+                                             If left empty, the discrete connection flags are used: host, port, user,
+                                             database, insecure, certs-dir.
+                                             Environment variable: COCKROACH_URL
+
+Global Flags:
+      --log <string>             
+                                  Logging configuration, expressed using YAML syntax. For example, you can
+                                  change the default logging directory with: --log='file-defaults: {dir: ...}'.
+                                  See the documentation for more options and details.  To preview how the log
+                                  configuration is applied, or preview the default configuration, you can use
+                                  the 'cockroach debug check-log-config' sub-command.
+                                 
+      --log-config-file <file>   
+                                  File name to read the logging configuration from. This has the same effect as
+                                  passing the content of the file via the --log flag.
+                                  (default <unset>)
+      --vmodule moduleSpec       comma-separated list of pattern=N settings for file-filtered logging (significantly hurts performance)
+```
+
+The guide says I can gracefully shut down the node with `quit`
+
+```
+When you're done with your test cluster, use the cockroach quit command to gracefully shut down each node.
+```
+
+Looks like there's a note about the process of quitting
+
+```
+Note:
+
+For the last 2 nodes, the shutdown process will take longer (about a minute each) and will eventually force the nodes to stop. This is because, with only 2 of 5 nodes left, a majority of replicas are not available, and so the cluster is no longer operational. 
+```
+
+I think there's a step to scale the nodes from 3 to 5 nodes. I still have only 3. But looks like when the majority goes down, the cluster is not operational, hmm, makes sense if it's quorum and stuff I guess? Not sure. In my case, out of 3, majority is (3/2) + 1 = 1 + 1 = 2. So, my third node is taking a lot of time to shutdown but apparently it will be shutdown just a bit later
+
+```bash
+$ cockroach quit --insecure --host=localhost:26257
+Command "quit" is deprecated, see 'cockroach node drain' instead to drain a 
+server without terminating the server process (which can in turn be done using 
+an orchestration layer or a process manager, or by sending a termination signal
+directly).
+node is draining... remaining: 21
+node is draining... remaining: 0 (complete)
+ok
+
+$ cockroach quit --insecure --host=localhost:26258
+Command "quit" is deprecated, see 'cockroach node drain' instead to drain a 
+server without terminating the server process (which can in turn be done using 
+an orchestration layer or a process manager, or by sending a termination signal
+directly).
+node is draining... remaining: 14
+node is draining... remaining: 0 (complete)
+ok
+
+$ cockroach quit --insecure --host=localhost:26259
+Command "quit" is deprecated, see 'cockroach node drain' instead to drain a 
+server without terminating the server process (which can in turn be done using 
+an orchestration layer or a process manager, or by sending a termination signal
+directly).
+node is draining... 
+```
+
+Currently it's stuck trying to drain the last node
+
+Let's see if it stops at all, hmm
+
+Also, I can start the nodes later it seems. The guide says
+
+```
+To restart the cluster at a later time, run the same cockroach start commands as earlier from the directory containing the nodes' data stores.
+
+If you do not plan to restart the cluster, you may want to remove the nodes' data stores
+```
+
+So I just need to run `start` command. Makes sense! :)
