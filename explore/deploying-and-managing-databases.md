@@ -103,3 +103,26 @@ Automating operations - using automatic operators, for example Kubernetes operat
 
 We used alertmanager for alerts on slack and pagerduty
 
+---
+
+Understanding what the database is being used for is key like I had already mentioned. For example, when we were maintaing a Redis for our clients, the Redis was actually used as a cache for the API results from Google Maps API. Why? Google Maps API is a paid product and costs a lot and the cost is based on API call count, and so, if there's response that's cached and valid, then it can be reused instead of hitting the API again which will cost the client more. So for this reason, Redis was being used. Now, usually cache is considered to be something as - "it's okay if we lose it, we can build the cache again", at least that's what I thought. But hey, guess what, in this case, and in many cases, losing a cache can be pretty costly and catostropic, how? Well, in the case of caching Google Maps API response, if the cache is lost due to some reason, say the Redis goes down and it was all in-memory and it had no persistence, and all cache is lost, it has to be built up again, and all that cached response is gone, so more API calls will be made now, which could have otherwise been reduced if the Redis cache didn't go down, and more API calls means more money. So it costs a lot of money in this case, to lose the cache. Also, another obvious thing that will happen is the operation will slow down a bit, because usually a cache helps to speed things up compared to the normal operation, in case the result is cached. But when the cache is gone, operations are expected to be a bit slower. So, losing a cache can be costly regardless, it can slow down the system, for example response times can go up if cache is lost. Slow response means the system is slow, which can have bad effects on the business in general, for various technical and non-technical reasons. One technical reason is - strict timeouts, this can chuck the slow responses. So, some teams can't really afford to slower their API's response time, the 99th percentile especially
+
+So, what do we do? We need to ensure the Redis is HA in such a case or maybe use Redis Cluster which has both sharding and HA features. Also, if possible, persistence can be enabled in Redis given it doesn't affect the speed of the Redis to act as a cache, as caches are supposed to be fast. Or atleast try taking backups if persistence is not enabled, in order to restore data from backup in case of disasters, so that cache ain't gone. But yeah, these are just ideas based on what I thought, I'm not sure what people generally follow based on the context. I'll be reading more caches soon, along with cache invalidation etc, so yeah, not sure if backup of cache is cool or not, but surely losing cache may not be a very cool or nice thing and can cause craziness and chaos in the system at times
+
+---
+
+Status pages and dashboards for customers / public
+
+For example
+
+https://status.aws.amazon.com/
+
+https://carl.gg/status
+
+https://www.githubstatus.com/
+
+If it's for the public, then one has to use Social Media accounts too for sharing status updates, this is popular trend and customers might expect this from other services too
+
+Example - https://twitter.com/githubstatus
+
+Also, notifying about status can also help. GitHub Status page has feature to subscribe to GitHub Status updates - through email, phone text (SMS), Webhook (!!!), Atom / RSS Feed, and also Social Media - by following their twitter profile or simply checking it out like I mentioned
