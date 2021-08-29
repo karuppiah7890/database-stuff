@@ -8,4 +8,6 @@ And then found this https://github.com/pingcap/talent-plan , looks like a gem!!
 
 I have been also seeing if I can contribute to some database code to learn in the process !
 
+https://engineering.purdue.edu/online/courses/distributed-database-systems
 
+https://www.binwang.me/2019-11-04-Great-Resources-for-Learning-Database-and-Distributed-System.html
