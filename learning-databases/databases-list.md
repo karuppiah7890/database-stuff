@@ -24,3 +24,8 @@ This is just me listing out databases I come across or tried out or hear about. 
 - [TiDB](https://pingcap.com/products/tidb) - https://github.com/pingcap/tidb
 - RocksDB - https://github.com/facebook/rocksdb/ , https://rocksdb.org/
 - Badger - https://github.com/dgraph-io/badger
+- LevelDB
+- Greenplum
+- Apache Geode
+- Memcached - not sure if it classifies as a database. It's a cache I think, given the name :P
+- 
