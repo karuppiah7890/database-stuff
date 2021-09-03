@@ -28,4 +28,5 @@ This is just me listing out databases I come across or tried out or hear about. 
 - Greenplum
 - Apache Geode
 - Memcached - not sure if it classifies as a database. It's a cache I think, given the name :P
-- 
+- FoundationDB - https://github.com/apple/foundationdb
+- RefineDB - https://github.com/losfair/RefineDB
