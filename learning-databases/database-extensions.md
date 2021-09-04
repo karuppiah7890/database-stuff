@@ -1,0 +1,3 @@
+
+This is an interesting thing that I notice in databases. For example, Redis has Redis Modules. Postgres has Postgres
+Extensions. One interesting thing I have noticed in the DBaaS in the cloud is - sometimes Postgres DBaaS will not allow using Postgres Extensions. Atleast that's what I noticed in some. Maybe I need to research more in more DBaaS services. But it's an interesting thing which makes me wonder why that would be the case if that's true
