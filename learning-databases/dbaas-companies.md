@@ -63,3 +63,47 @@ https://www.heroku.com/postgres
 https://www.heroku.com/redis
 
 https://www.heroku.com/kafka - yeah, not a database, but still, cool :P
+
+# Aiven
+
+https://aiven.io/
+
+https://aiven.io/kafka
+
+https://aiven.io/kafka-connect
+
+https://aiven.io/mirrormaker
+
+https://aiven.io/m3
+
+https://aiven.io/m3-aggregator
+
+https://aiven.io/cassandra
+
+https://aiven.io/elasticsearch
+
+https://aiven.io/postgresql
+
+https://aiven.io/mysql
+
+https://aiven.io/redis
+
+https://aiven.io/influxdb
+
+https://aiven.io/grafana
+
+# Hosted Metrics
+
+https://hostedmetrics.com/ . Time series database
+
+https://hostedmetrics.com/use-with/airflow/
+
+https://hostedmetrics.com/use-with/kong/
+
+https://hostedmetrics.com/use-with/uwsgi/
+
+# Supabase
+
+Kind of like a DBaaS but not exactly. It's a firebase alternative. Most people consider firebase as like an abstracted database with an API, especially mobile and web app developers
+
+https://supabase.io/
