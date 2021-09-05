@@ -12,6 +12,10 @@ Under NoSQL, there are many kinds
 - Document Store
 - Wide Column - I need to research on this one a bit
 
-There's also another kind, I think that's also NoSQL
+There's also another kind and few more, I think that's also NoSQL
 - Time Series DB
+- Databases that can help with Search Engine like features. For example ElasticSearch
 
+There's also this thing called Multi Model that I hear a lot. One example I hear is FaunaDB, there's also ArangoDB
+
+A small video on these - https://fireship.io/lessons/top-seven-database-paradigms/
