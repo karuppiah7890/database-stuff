@@ -29,3 +29,11 @@ Things I'll learn from this
 - How to store data in the disk
 - How to use indexes to search the disk fast
 - I can try to do benchmark testing to see how the database performs in terms of data insertion, deletion and data search when there's a LOT of data
+
+---
+
+# Simple B Tree implementation
+
+---
+
+# Simple B+ Tree implementation
