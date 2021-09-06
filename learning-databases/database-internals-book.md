@@ -63,6 +63,8 @@ Mention of lot of concepts
 - In-memory database
 - Memory management
 - Mapping program memory to the disk storage
-
+- Pages
+- Indexes / Indices
+- Primary Key
 
 
