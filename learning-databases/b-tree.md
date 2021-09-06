@@ -172,4 +172,26 @@ I'll come back and check more on my question I think!
 
 `Is disk block based on the disk? or the system? Like, operating system / kernel. Or is it based on the file system?` [Question]
 
+---
 
+I was checking how to find the block size when running code, let's say in Golang
+
+https://duckduckgo.com/?t=ffab&q=find+block+size+in+golang&ia=web&iax=qa
+
+Found this small thing https://stackoverflow.com/questions/46558824/how-do-i-get-a-block-devices-size-correctly-in-go#46559181
+
+I was thinking there might be some standard library, like file system, with which I can get the block size in all platforms, with programming language capabilities. But yeah, I don't know what block size all of these are, that I'm seeing
+
+golang standard library - https://duckduckgo.com/?q=golang+file+system+standard+library&t=ffab&ia=web
+
+https://pkg.go.dev/std
+
+https://pkg.go.dev/io/fs@go1.17
+
+https://pkg.go.dev/io/ioutil@go1.17
+
+https://pkg.go.dev/internal/poll@go1.17
+
+https://pkg.go.dev/testing/fstest@go1.17
+
+Hmm, I couldn't find anything when searching for `block`, hmm
