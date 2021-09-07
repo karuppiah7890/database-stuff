@@ -15,6 +15,7 @@ Under NoSQL, there are many kinds
 There's also another kind and few more, I think that's also NoSQL
 - Time Series DB
 - Databases that can help with Search Engine like features. For example ElasticSearch
+- Data Analytics, Business Intelligence. Examples - Metabase
 
 There's also this thing called Multi Model that I hear a lot. One example I hear is FaunaDB, there's also ArangoDB
 

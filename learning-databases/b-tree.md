@@ -205,3 +205,13 @@ What's the hardware disk block size of disks in the cloud? [Question]
 Will golang syscall to find block size work in all platforms? Or just Linux? And what block size is it? File system block size? [Question]
 
 What do the different block sizes mean? In disk at hardware level, in file system and in kernel, for example in Linux [Question]
+
+---
+
+https://www.youtube.com/results?search_query=b+tree
+
+https://www.youtube.com/watch?v=UzHl2VzyZS4
+
+https://www.youtube.com/watch?v=UzHl2VzyZS4&list=RDCMUC_ML5xP23TOWKUcc-oAE_Eg&start_radio=1
+
+
