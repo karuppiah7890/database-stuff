@@ -30,3 +30,13 @@ This is just me listing out databases I come across or tried out or hear about. 
 - Memcached - not sure if it classifies as a database. It's a cache I think, given the name :P
 - FoundationDB - https://github.com/apple/foundationdb
 - RefineDB - https://github.com/losfair/RefineDB
+- Sonic - https://github.com/valeriansaliou/sonic - is an alternative to ElasticSearch
+- [ArangoDB](https://www.arangodb.com/) - https://github.com/arangodb/arangodb/
+- FaunaDB - https://fauna.com/
+- Typesense - https://typesense.org/ , https://cloud.typesense.org , https://github.com/typesense/typesense . An open source alternative to Algolia and Elastic Search
+
+---
+
+More can be found here :D
+
+https://dbdb.io/browse

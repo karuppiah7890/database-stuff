@@ -89,3 +89,7 @@ I know databases using HTTP APIs, custom protocols on top of TCP
 Given that new protocols are coming up everyday, this is something to check out too and see if there's a venue to optimize the performance here too. For example, there's QUIC protocol which I'm yet to checkout, but it's a new venue. The only tricky thing is - both database client and server have to support it. Unlike HTTP APIs with HTTP clients and client libraries, it's harder to implement something that's less well known across many languages for developers to be able to use it. HTTP and TCP are popular, mature and ubiquitous. If someone uses something else, like QUIC, they have to also ensure that they can write clients (GUI, CLI) and client libraries in different languages. Something to be aware of is that there are already some implementations of QUIC available for example, but maybe not in all languages. Also, since QUIC is new, community and support around it might be less!!
 
 Maybe supporting multiple protocols might be a good idea - HTTP, QUIC and even TCP and anything else that seems like a good option. For example, if QUIC is a viable option, maybe one can say that QUIC is for squeezing out the performance at the network layer at protocol level ;) If that's possible and implemented that is and someone asks "Why use QUIC?"
+
+---
+
+Are there any advantages to using ARM and other CPU architectures? For example Graviton seems to be popular, and fast. How? Why not AMD64? [Question]

@@ -18,7 +18,7 @@ Things I can learn by practicing
 
 ---
 
-# Simple database
+# Simple relational database
 
 With following features
 - Ability to store a table with only one primary key column and a few other columns like name, interests. Column types can be integer and string. No defined constraints on the size as of now, whatever works and is easy
@@ -37,3 +37,22 @@ Things I'll learn from this
 ---
 
 # Simple B+ Tree implementation
+
+---
+
+# Simple in-memory key value store
+
+- With keys and values as strings
+
+---
+
+# Simple key value store
+
+- With keys and values as strings
+- In-memory store or persisted on disk - user can choose
+
+---
+
+# Implement WiscKey
+
+WiscKey is a research paper - https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf

@@ -195,3 +195,13 @@ https://pkg.go.dev/internal/poll@go1.17
 https://pkg.go.dev/testing/fstest@go1.17
 
 Hmm, I couldn't find anything when searching for `block`, hmm
+
+---
+
+Some questions I had in mind
+
+What's the hardware disk block size of disks in the cloud? [Question]
+
+Will golang syscall to find block size work in all platforms? Or just Linux? And what block size is it? File system block size? [Question]
+
+What do the different block sizes mean? In disk at hardware level, in file system and in kernel, for example in Linux [Question]
