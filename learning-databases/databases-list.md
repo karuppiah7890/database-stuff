@@ -41,6 +41,9 @@ This is just me listing out databases I come across or tried out or hear about. 
 - [Timescale](https://www.timescale.com/) - https://github.com/timescale/timescaledb
 - [Promscale](https://www.timescale.com/promscale) - https://github.com/timescale/promscale
 - [Apache Druid](https://druid.apache.org/) - https://github.com/apache/druid
+- [JanusGraph](https://janusgraph.org/) - https://github.com/JanusGraph/janusgraph
+- [Milvus](https://milvus.io/) - https://github.com/milvus-io , https://github.com/milvus-io/milvus
+- [WatermelonDB](https://nozbe.github.io/WatermelonDB/) - https://github.com/Nozbe/WatermelonDB
 
 ---
 
