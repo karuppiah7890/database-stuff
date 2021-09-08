@@ -44,6 +44,7 @@ This is just me listing out databases I come across or tried out or hear about. 
 - [JanusGraph](https://janusgraph.org/) - https://github.com/JanusGraph/janusgraph
 - [Milvus](https://milvus.io/) - https://github.com/milvus-io , https://github.com/milvus-io/milvus
 - [WatermelonDB](https://nozbe.github.io/WatermelonDB/) - https://github.com/Nozbe/WatermelonDB
+- [ScyllaDB](https://www.scylladb.com/) - https://github.com/scylladb/scylla
 
 ---
 
