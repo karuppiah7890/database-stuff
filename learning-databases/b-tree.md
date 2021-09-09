@@ -1,3 +1,5 @@
+#b-tree #btree #b+tree #trees #tree #indexing #index #indexes #indices #multilevel-indexing
+
 B Tree
 
 https://en.m.wikipedia.org/wiki/B-tree
@@ -303,5 +305,13 @@ Postgres B Tree and B+ Tree - https://en.wikipedia.org/wiki/Talk%3AB%2B_tree , [
 I was also wondering about what pages are since that was mentioned a lot in a lot of places including the https://www.youtube.com/watch?v=UzHl2VzyZS4 video
 
 I also saw a small video - short ones - https://www.youtube.com/watch?v=cll-lsNK_N4 
+
+---
+
+I saw another interesting video today
+
+https://www.youtube.com/watch?v=xprkGzP36TI " Could Conventional B-Trees harm Solid State Drives? " related to B trees and SSDs
+
+It also spoke about Log Structured Merge Tree mainly
 
 

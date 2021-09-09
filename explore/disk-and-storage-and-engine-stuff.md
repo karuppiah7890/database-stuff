@@ -1,4 +1,7 @@
-
+# storage
+# disk
+# storage engine
+# database engine
 
 Solid State Drive - SSD - https://en.wikipedia.org/wiki/Solid-state_drive
 
