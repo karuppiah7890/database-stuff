@@ -395,8 +395,8 @@ Operations for B-Tree are Insert, Delete, Search. It could also have Update, to 
 
 To check if the operation was performed right, I was wondering if I could render the tree in some way and then check if it's all good
 
-One render mechanism is - render it in a line. But then, the output is always a single line, a sorted one, I cannot say for sure if the final data structure is a tree or not, and if it's balanced or not and if it obeys all the restrictions / conditions or not. It's a whole big thing
+One render mechanism is - render it in a line in a sorted manner. But then, the output is always a single line, a sorted one, I cannot say for sure if the final data structure is a tree or not, and if it's balanced or not and if it obeys all the restrictions / conditions or not. It's a whole big thing
 
-I could print the tree as a YAML or JSON! ;) And then traverse it / process it to test if the positioning of all the keys, values and child pointers and the whole structure is good and is a balanced tree and no violation of any conditions
+I could print the tree as a YAML or JSON! ;) With root node as the top level key and then it's children in the nested value, and then it's children nodes in the nested value and so on and so forth. And then traverse it / process it to test if the positioning of all the keys, values and child pointers and the whole structure is good and is a balanced tree and no violation of any conditions
 
-
+For JSON, I can customize like this - https://pkg.go.dev/encoding/json#example-package-CustomMarshalJSON I guess
