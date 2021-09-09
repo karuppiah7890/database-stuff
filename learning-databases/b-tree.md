@@ -314,4 +314,89 @@ https://www.youtube.com/watch?v=xprkGzP36TI " Could Conventional B-Trees harm So
 
 It also spoke about Log Structured Merge Tree mainly
 
+---
+
+About B tree implementation, I was thinking about how exactly I'm going to implement if I don't know the low level details
+
+I was wondering about insertion, deletion and even search which is part of insertion and deletion too
+
+I was thinking about space constraints - as I wanted to have the same constraints a modern database would have and I wanted to solve and implement a B tree keeping that in mind. For example - I was thinking the following things
+
+- How will each node look like? Use an array of keys as one field? Array of child pointers as another field? But then while searching, I'll have to lookup the child pointer array to get the child pointer. But, if it's an array, I just the correct index, which is mostly related to the array index of the keys array that I'm traversing to find which key's children (left children, right children) I should be looking at, so it might look something like this when it comes to index of the arrays -
+
+keys array index - 0 1 2
+child pointers array index - 0 1 2 3
+
+CPs - Child pointers array
+Keys - Keys array
+
+CPs[0] and CPs[1] are left and right children of Keys[0]
+CPs[1] and CPs[2] are left and right children of Keys[1]
+CPs[2] and CPs[3] are left and right children of Keys[2]
+
+So I guess that's pretty straight forward. Or otherwise, I was thinking of putting keys and child pointers all together in some way. Not easy though!
+
+- Why use arrays for storing keys and child pointers? Why not lists? like linked lists?
+- Also, if it's array, should it be like a array of values or array of pointers to values? If it's pointers to values, it's very easy to copy and move around the pointer, during insertions, deletions, which will be pretty small in size. If we copy and move around values, it will take up more space in memory - and this will happen during insertion and deletions when split or merge operations. During insertion with split, we move values up the tree. During deletion, we do merge and there's one more way too. Gotta check on that!
+- For getting hold of the nodes, we can use pointers. Especially for root node also - we can use pointer, instead of concrete value variable. As child pointers are also pointers and point to internal and leaf nodes. Having root node also being pointed to using a pointer is easier. Especially when we want to do moving around during insertion, deletion. Also, it takes up less space when doing copy and moving around etc, also, while traversing, the logic is pretty straight forward - every node is pointed by a pointer, and we keep traversing
+- For getting hold of a parent node to be able to push keys to the parent node during insertion, as part of the split process, one thing that can be done is - while traversing, we can have two pointers, one pointer pointing to the current node we are traversing / processing, for example, checking the keys in it, another pointer will point to the parent of the current node we are processing. When current node is root node, the parent of the root node would be null, or `nil` in golang :P But at one point I was wondering if it even helps to have the pointer to the parent node. Only while implementing or thinking about it I'll know
+- Use linked list instead of arrays for storing keys, child pointers. Put it all in one linked list. How will the structure of linked list look like? Each element in the linked list would have a key and a pointer to the right child. This way, for K keys, we would have K children pointers for all the right children of each key. This way, we store exactly one pointer to a child node, even though in some cases it's both - the left child of one key and also the right child of another key. But if there are K keys, there would be K + 1 children. Right! Since the pointers in linked list have pointer to the right child always, the left children of all keys but one key is taken care of too. For the left most key, the left child node pointer is not store anywhere. This can be store in a separate field. What's the benefit? We store each value / pointer exactly once! So no space is wasted! :D This way, given a fixed memory - we can fit more keys and pointers in each node and even values in each node in the case of B trees. Another alternative that I thought was less efficient - each linked list would contain one key and two pointers - one for the left child and one for the right child. But then, this would store duplicate pointers, a element with a key would be storing the right child in it's right child pointer field and the same child would be stored as left child pointer in the next element. It's almost like we are using up twice the space to store the pointers. Which seems completely unnecessary. I also want to avoid null values in my fields. I think the field does take up some memory even if the value is empty, even if the field is a pointer field. I'm just trying to decrease and remove anything that's possible to keep it small and simple! Not to mention, I have to think about traversal when using a single linked list to store keys and child pointers. I mean, if I'm looking for key 5 and I'm currently at key 4, I can't simply jump into the right child of key 4, I first need to check the next element in the linked list to see if it's 5, if it is 5 then I can stop in case of B tree as I can find the value along with the key, if it's not 5, then I can go back to element with key 4 having right child pointer and traverse from that child. For this reason, I'll need to have a pointer to the current and previous element when traversing the linked list. But it's just two pointers, so, meh
+
+All in all, I need to think more about the exact details of the implementation
+
+I guess I really need to learn more about how efficient systems are made. How programs are written efficiently where performance is squeezed, because databases need to be performant! I need to look at space complexity, time complexity and more things! Space complexity - I didn't check this before much, but now, given that memory is limited and a very very important resource, I need to use it very carefully and get rid of any unnecessary objects whenever possible
+
+Reminds me of this tweet - https://twitter.com/manishrjain/status/1435483231286038534
+
+" Releasing objects when you're done is still the best way to build high performance systems. GCs are great for non-critical path. "
+
+The picture in it has a old lady walking with a stick saying " I used to retain and release my objects " and a helper says " Sure Grandma, let's get you to bed "
+
+More like, retaining objects when not necessary and then releasing the objects later (using GC automatic help I guess? or without it) is just not great and can make things less performant - less memory available, operations could do away with more memory instead, but with less memory operations might be slow
+
+But I'm not sure. Maybe I gotta clarify! But the tweet text clearly says - GC - Garbage Collectors are great for non-critical path - so, you can let GC do the automatic releasing of memory in case of non-critical stuff, but for critical stuff, you gotta own the retaining and releasing of objects I guess
+
+Some interesting comments on this one https://twitter.com/palmin/status/1434941842286686212/
+
+Anyways, I was wondering if I could write the B tree in Golang and write it in an efficient manner and also test it's efficiency using some benchmarking by using lots of data and also checking the memory usage etc. Like, less nodes in the B tree, memory usage should be less, etc, kind of an obvious thing, but if I'm keeping things in memory unnecessarily, then it's not so obvious. For example, if I let GC take care of things but don't know how GC does it or assume it will take care of things but it doesn't for some valid reason, then it's gonna be using a lot of memory even when the tree is too small or say just has one key, though it could have previously had 100 keys or something. Or more ;) Like, millions ;)
+
+Some TODOs that I'm thinking of adding to my list
+- Learn how to write efficient programs to implement algorithms - efficient in terms of memory usage (space complexity), time (time complexity) / compute. Programming languages - Golang, Rust!
+- Read books and see videos on data structures and algorithms. And also on design and analysis of algorithms!
+
+---
+
+I have started to write some code already! :D
+
+```bash
+database-stuff $ code code/b-tree/
+database-stuff $ cd code/b-tree/
+b-tree $ ls
+b_tree.go	b_tree_test.go
+b-tree $ go test -v
+go: cannot find main module, but found .git/config in /Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff
+	to create a module there, run:
+	cd ../.. && go mod init
+b-tree $ go test -v ./...
+go: cannot find main module, but found .git/config in /Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff
+	to create a module there, run:
+	cd ../.. && go mod init
+b-tree $ go mod init github.com/karuppiah7890/database-stuff/code/b-tree
+go: creating new go.mod: module github.com/karuppiah7890/database-stuff/code/b-tree
+go: to add module requirements and sums:
+	go mod tidy
+b-tree $ go mod tidy
+b-tree $ 
+```
+
+I'm planning to write tests while I implement B trees. To write the test, I need to do operations and be able to check if it was performed right, to verify / test the functionality by checking the output for example
+
+Operations for B-Tree are Insert, Delete, Search. It could also have Update, to Update the value corresponding to a key ;). The Search is only for searching one key, and to return it's value I guess. All operations are on the Tree, with input as key usually
+
+To check if the operation was performed right, I was wondering if I could render the tree in some way and then check if it's all good
+
+One render mechanism is - render it in a line. But then, the output is always a single line, a sorted one, I cannot say for sure if the final data structure is a tree or not, and if it's balanced or not and if it obeys all the restrictions / conditions or not. It's a whole big thing
+
+I could print the tree as a YAML or JSON! ;) And then traverse it / process it to test if the positioning of all the keys, values and child pointers and the whole structure is good and is a balanced tree and no violation of any conditions
+
 
