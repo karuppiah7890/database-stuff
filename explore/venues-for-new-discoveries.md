@@ -8,3 +8,7 @@ https://github.com/topics/database - Database specific - but has all kinds of pr
 https://lfaidata.foundation , https://lfaidata.foundation/projects/ - AI and Data projects. Database projects will come under Data!
 
 https://dbdb.io/ - Database of databases
+
+https://db.cs.cmu.edu/ , https://db.cs.cmu.edu/projects/ , https://db.cs.cmu.edu/news/ , https://db.cs.cmu.edu/events/ , https://db.cs.cmu.edu/publications/ - Everything databases ! DB projects and what not !
+
+https://github.com/cmu-db

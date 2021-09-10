@@ -219,3 +219,7 @@ https://github.com/apple/foundationdb
 ---
 
 More can be found here - https://dbdb.io/browse :D
+
+---
+
+https://github.com/rqlite/rqlite , https://www.philipotoole.com/tag/rqlite/ or http://www.rqlite.io/
