@@ -741,3 +741,7 @@ b-tree $
 ```
 
 Finally it works! :D :D
+
+I'm afraid that if I'm testing the B tree with this JSON printing, the printing will take up more memory! LOL. Hmm
+
+Especially for benchmark tests! If I want to ensure that speed and correctness is maintained, it's going to be a bit hard, hmm
