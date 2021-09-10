@@ -745,3 +745,17 @@ Finally it works! :D :D
 I'm afraid that if I'm testing the B tree with this JSON printing, the printing will take up more memory! LOL. Hmm
 
 Especially for benchmark tests! If I want to ensure that speed and correctness is maintained, it's going to be a bit hard, hmm
+
+I think I can finally start writing test and code for Insert, Search and Delete! :D
+
+Also, I realized that there are currently no checks to tell if the B Tree is obeying all the conditions and is balanced. Once I write Insert, or Delete, I need to start doing that! Also, maybe I could start with Search ;)
+
+As part of testing, I want to do the following
+- Test how fast the operations are when I use lots and lots of data - benchmark test
+- Test that the B Tree structure is correct for a given data set and the order in which it was inserted. Maybe I could use some online service or some script to get the correct data. But if I write the script, I can't tell if it's correct in case I write the wrong script. Maybe I could use some online service, assuming it works and gives the correct information, and store that in the repo and use it!
+- Test that the B Tree structure obeys all the rules - ideally, the second point should take care of this. But I still need this for cases where I...okay, maybe I don't I guess, assuming the full tree data is properly structured in second point for the assertion. Or else, or as an extra thing, we could use an extra checker which checks if the tree obeys all the conditions of a B Tree! :D
+- Check the memory usage of the B tree when I use lots and lots of data
+
+Some things to beware of -
+- Don't convert to JSON while checking memory usage. JSON conversion is only for checking the final output and that can take a lot of memory. Capture memory usage data only when doing operations - before and after. Ensure no checking of tree structure, or JSON printing and other side work is going on while checking memory usage, or else it's a problem!
+- For every insert I do - assuming I can't do batch inserts, or maybe I could, let's see, for every insert, I need to know that the tree is balanced and is obeying the B tree conditions / properties. The full data set of final tree will help only in checking at the end, not in between, or I'll need more data! It's gonna be tricky to check if tree is balanced and also check memory usage. I mean, to check if tree is balanced - a lot of memory will be used I think. Or, I could just check more on how to capture memory and do something like - check memory usage before start of operation and then after end of operation and take the difference, every time, but I don'know if it's thing that will give proper results with proper data
