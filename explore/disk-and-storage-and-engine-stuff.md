@@ -22,3 +22,16 @@ What is disk IOPS? IO per second? Input Output per second? Input Output operatio
 ---
 
 https://www.youtube.com/watch?v=mddzlSw8mLg
+
+---
+
+I need to learn some OS stuff and more
+- I/O in general
+- File system
+- Disk IO
+- "Blocks", "Block size"
+- inode? Linux stuff
+
+---
+
+I need to understand SSDs and other kinds of disks. How the disks work and what are their advantages and disadvantages and what they have been built for and what they have NOT been built for and accordingly how they should be used and how they should NOT be used

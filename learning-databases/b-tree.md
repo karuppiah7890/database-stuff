@@ -23,6 +23,7 @@ It was good!
 This is another nice video - https://youtu.be/aZjYr87r1b8 !
 
 Some questions on the top of my mind
+
 - How are disk blocks and files related? Since everything on systems are stored in the form of files on the disk [Question]
 - What is the size of the disk block on a system? How do I find it? For example on Linux, or MacOS, or Windows. [Question]
 - Do Databases find the system's disk block size? and then accordingly store the data on the disk? Using files that is [Question]
@@ -46,12 +47,12 @@ https://apple.stackexchange.com/questions/78802/what-are-the-sector-sizes-on-mac
 ```bash
 database-stuff $ docker run -it ubuntu bash
 root@485e801c573f:/# bl
-blkdiscard  blkid       blkzone     blockdev    
+blkdiscard  blkid       blkzone     blockdev
 root@485e801c573f:/# bl
-blkdiscard  blkid       blkzone     blockdev    
+blkdiscard  blkid       blkzone     blockdev
 root@485e801c573f:/# blockdev --getsize64 /dev/
-console  fd/      mqueue/  ptmx     random   stderr   stdout   urandom  
-core     full     null     pts/     shm/     stdin    tty      zero     
+console  fd/      mqueue/  ptmx     random   stderr   stdout   urandom
+core     full     null     pts/     shm/     stdin    tty      zero
 root@485e801c573f:/# blockdev --getsize64 /dev/^C
 root@485e801c573f:/# df -H
 Filesystem      Size  Used Avail Use% Mounted on
@@ -66,7 +67,7 @@ root@485e801c573f:/# blockdev --getsize64 /dev/
 blockdev: ioctl error on BLKGETSIZE64: Inappropriate ioctl for device
 root@485e801c573f:/# blockdev --getsize64 /dev/vda1
 blockdev: cannot open /dev/vda1: No such file or directory
-root@485e801c573f:/# blockdev --getsize64 /        
+root@485e801c573f:/# blockdev --getsize64 /
 blockdev: ioctl error on BLKGETSIZE64: Inappropriate ioctl for device
 root@485e801c573f:/# blockdev --getsize64 /sys/firmware/
 blockdev: ioctl error on BLKGETSIZE64: Inappropriate ioctl for device
@@ -76,7 +77,7 @@ root@485e801c573f:/# exit
 database-stuff $ diskutil info / | grep "Block Size"
    Device Block Size:         4096 Bytes
    Allocation Block Size:     4096 Bytes
-database-stuff $ 
+database-stuff $
 ```
 
 I couldn't find the block size on Linux because of some issues
@@ -91,18 +92,18 @@ https://alvinalexander.com/misc/how-determine-macos-linux-filesystem-block-size/
 database-stuff $ docker run --rm -it ubuntu bash
 root@308461b97da6:/# echo foo > food
 root@308461b97da6:/# du -sh .
-root@308461b97da6:/# du -sh food 
+root@308461b97da6:/# du -sh food
 4.0K	food
-root@308461b97da6:/# 
+root@308461b97da6:/#
 ```
 
 ```bash
 database-stuff $ echo a > dummy
-database-stuff $ du -sh dummy 
+database-stuff $ du -sh dummy
 4.0K	dummy
-database-stuff $ cat dummy 
+database-stuff $ cat dummy
 a
-database-stuff $ 
+database-stuff $
 ```
 
 ```bash
@@ -161,7 +162,7 @@ database-stuff $ diskutil info /
    Sealed:                    Broken
    Locked:                    No
 
-database-stuff $ 
+database-stuff $
 ```
 
 This shows some hardware level data and shows block size. Also, https://www.youtube.com/watch?v=aZjYr87r1b8 mentioned that the block size is dependent on the manufacturer - assuming it's the hardware manufacturer, then it must be the disk block size. So, disk's property? 🤔
@@ -304,7 +305,7 @@ Postgres B Tree and B+ Tree - https://en.wikipedia.org/wiki/Talk%3AB%2B_tree , [
 
 I was also wondering about what pages are since that was mentioned a lot in a lot of places including the https://www.youtube.com/watch?v=UzHl2VzyZS4 video
 
-I also saw a small video - short ones - https://www.youtube.com/watch?v=cll-lsNK_N4 
+I also saw a small video - short ones - https://www.youtube.com/watch?v=cll-lsNK_N4
 
 ---
 
@@ -361,6 +362,7 @@ Some interesting comments on this one https://twitter.com/palmin/status/14349418
 Anyways, I was wondering if I could write the B tree in Golang and write it in an efficient manner and also test it's efficiency using some benchmarking by using lots of data and also checking the memory usage etc. Like, less nodes in the B tree, memory usage should be less, etc, kind of an obvious thing, but if I'm keeping things in memory unnecessarily, then it's not so obvious. For example, if I let GC take care of things but don't know how GC does it or assume it will take care of things but it doesn't for some valid reason, then it's gonna be using a lot of memory even when the tree is too small or say just has one key, though it could have previously had 100 keys or something. Or more ;) Like, millions ;)
 
 Some TODOs that I'm thinking of adding to my list
+
 - Learn how to write efficient programs to implement algorithms - efficient in terms of memory usage (space complexity), time (time complexity) / compute. Programming languages - Golang, Rust!
 - Read books and see videos on data structures and algorithms. And also on design and analysis of algorithms!
 
@@ -386,7 +388,7 @@ go: creating new go.mod: module github.com/karuppiah7890/database-stuff/code/b-t
 go: to add module requirements and sums:
 	go mod tidy
 b-tree $ go mod tidy
-b-tree $ 
+b-tree $
 ```
 
 I'm planning to write tests while I implement B trees. To write the test, I need to do operations and be able to check if it was performed right, to verify / test the functionality by checking the output for example
@@ -400,3 +402,342 @@ One render mechanism is - render it in a line in a sorted manner. But then, the 
 I could print the tree as a YAML or JSON! ;) With root node as the top level key and then it's children in the nested value, and then it's children nodes in the nested value and so on and so forth. And then traverse it / process it to test if the positioning of all the keys, values and child pointers and the whole structure is good and is a balanced tree and no violation of any conditions
 
 For JSON, I can customize like this - https://pkg.go.dev/encoding/json#example-package-CustomMarshalJSON I guess
+
+---
+
+I was thinking about the implementation and some of the thoughts I had -
+
+If I use array for storing keys, then I could do random access and do binary search, as keys would be sorted. But, insertion and deletion would be slow, as I'll have to move elements around
+
+If I use linked list, insertion and deletion will be fast, but search will be slow and sequential, as we can't do random access
+
+So, if the tree is write heavy, linked list. If it's read heavy...arrays? Or maybe still linked list?
+
+Also, for making linked list search better, I was thinking about adding a pointer to point to the middle element, and then to some more elements like between first and middle element, and between middle and last element and other middle elements like that. I quickly realized I can't add a pointer to all the elements, that's useless and also too much space (memory) used up. Also, if I add such pointers, it's kind of like indexing the keys inside the root node and if I do this for all nodes, which I was thinking about only later, that would be indexing a lot of nodes, the keys in those nodes. So, it's kind of like adding another level of index or b Tree node but just for the keys in a node, like as if the keys are all separated or something. And this all uses up more space. So I figured linear and sequential search in linked list is fine and that worst case scenario, we will search and reach the right most element if traversing from left to right. Anyways, it's cool to think about all this and try to implement it! I'm also planning to see how others implement b Tree when I have some decent version of a b Tree. Maybe check YouTube video or GitHub repo. I noticed one YouTube video title saying B Tree implemented in C++, I was like "nice!"
+
+---
+
+I was thinking about using Linked List for now and then optimizing more later. But yeah, I could also check other ways to store a list or line of elements
+
+One thing to note is - I was wondering about how the structure would like in the code. When I started writing the code, I named the golang struct as BTree, and I quickly realized it would contain only a node of the tree and then pointers to the children. But I guess it won't make sense to call it just a node as it also has pointers to the children. I think I'm just going to call it BTree only for now
+
+About the Linked List, I was wondering how I would traverse it and how I would insert the keys in the tree. Like, I was thinking how would I know if I need to insert the key in the same node or in the child node. Then I realized that - first, I need to check if there are child pointers. For example, if I have just one node, the root node, with max keys for the node as 4, and if the keys are 6 and 8 and I want to insert 7, I could just traverse and find that 7 is between 6 and 8 and since there are no child pointers as there's only the root node, also the leaf node, I just insert 7 between 6 and 8. Now I check if the conditions of the B Tree are not violated by this node. In this case, it's not. If it is, I'll have to do a split operation. But if there are child pointers let's say, then I would have to traverse to the child pointers and find a position in a node where there are no child pointers and I can insert the key in that node, and then split it in case it violates the B Tree conditions
+
+Come to think of it, inserting and then splitting the node sounds complicated. What if I don't insert and directly insert? That would work if the key I'm going to add is going to be put in the middle of the list of keys. But yeah, if that's note the case, the insertion and then split might be required, as insertion would be at one position in the list, but split would be another position!
+
+Also, for splitting, we need to first know when to split, for which we check the B Tree conditions. The simplest being - check the node in which the key was inserted and see if the node respects the B Tree conditions, for example, check if more than the max number of keys is present in the node, for this we need to find the number of keys - that is the length of the list. If we use arrays to implement the list of keys, it's too easy to find the length. But if we use linked list, we will have to traverse the whole list to find the length. Or, we can store the length separately in a field I guess!
+
+I was also checking out different list implementations, starting with Redis but then didn't dig too much into it
+
+https://matt.sh/redis-quicklist
+
+I guess I'll implement something basic and simple first, and make it work and then try out more by optmizing
+
+Also, I was thinking about - in golang how do I free up pointer memory etc. I was checking this out a bit and noticed some folks mentioning how it's costly to do deferencing of pointers and more. I guess taking care of memory allocation and using pointers is not straight forward and probably comes with a cost depending on the language I use, something to learn more about [TODO]
+
+---
+
+Now to do the implementation, I'm still not sure how to do the testing. Also, funny thing is, for testing other operations, I need to first implement the printing the tree in a JSON format with proper nesting and I need to first test the JSON printing first :P Lol. So, let's do that first maybe ;)
+
+To test the printing, I need to put some data in the Tree, or initialize the tree with some existing data in some way. Both test and code are in the same package, so I can change any field in the tree structure. I was also planning to put all the fields as private / non-exposed fields in the structure, that way, only tests written within the package can access the non-exposed fields in the structure. I could also write the b-tree code in such a way that it can be consumed as a library, but, this is just an experiment. Maybe I could write two test files - one within the package, to test printing, another outside, to test specificall other operations! That makes sense I guess!
+
+I can see a JSON like this here https://ysangkok.github.io/js-clrs-btree/btree.html
+
+```json
+{
+  "keys": [10, 20, 30],
+  "children": [
+    { "keys": [1, 2] },
+    { "keys": [11, 12] },
+    { "keys": [21, 22] },
+    { "keys": [31, 32] }
+  ]
+}
+```
+
+I was thinking of having a different JSON. Also, in the above, the traversal of the JSON is more breadth first. I was thinking depth first kind of JSON
+
+```json
+{
+  "node": {
+    "leftMostKeyLeftSubTree": null,
+    "keys": [
+      {
+        "key": 1,
+        "rightSubTree": null
+      },
+      {
+        "key": 2,
+        "rightSubTree": null
+      }
+    ]
+  }
+}
+```
+
+a more complex one -
+
+```json
+{
+  "node": {
+    "leftMostKeyLeftSubTree": {
+      "leftMostKeyLeftSubTree": null,
+      "keys": [
+        {
+          "key": 1,
+          "rightSubTree": null
+        }
+      ]
+    },
+    "keys": [
+      {
+        "key": 2,
+        "rightSubTree": {
+          "leftMostKeyLeftSubTree": null,
+          "keys": [
+            {
+              "key": 3,
+              "rightSubTree": null
+            }
+          ]
+        }
+      },
+      {
+        "key": 4,
+        "rightSubTree": {
+          "leftMostKeyLeftSubTree": null,
+          "keys": [
+            {
+              "key": 5,
+              "rightSubTree": null
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+```
+
+Woah. I guess that's pretty complex and takes up too much space, hmm. I think printing breadth first is easier!
+
+I just tried out a complex B tree JSON printing in https://ysangkok.github.io/js-clrs-btree/btree.html and saw this
+
+```json
+{
+  "keys": [32],
+  "children": [
+    {
+      "keys": [20],
+      "children": [
+        {
+          "keys": [10],
+          "children": [{ "keys": [1, 2] }, { "keys": [11, 12] }]
+        },
+        { "keys": [30], "children": [{ "keys": [21, 22] }, { "keys": [31] }] }
+      ]
+    },
+    {
+      "keys": [36],
+      "children": [
+        { "keys": [34], "children": [{ "keys": [33] }, { "keys": [35] }] },
+        {
+          "keys": [38, 40],
+          "children": [{ "keys": [37] }, { "keys": [39] }, { "keys": [41, 42] }]
+        }
+      ]
+    }
+  ]
+}
+```
+
+Actually, it's not entirely breadth first, more like a mix. But surely compact than what I had in mind. I guess I need to think on how I use the word breadth first and depth first and also how I see the nodes in B Trees. I keep seeing list of keys in a node and keep trying to print them separately. Maybe I should try to just put the whole node - the keys together, and print child nodes separately, like the above
+
+I was just thinking how to print the JSON with the current structure I have. I was also thinking how the JSON printing mechanism is probably going to be very very inefficient, lol. Hmm. Damn, testing is not so easy if not done well I guess. Gotta think if there's a better way to test if operations are done right on the tree and if no conditions are violated. Hmm. Printing seems to be an easy and straight forward way to ensure the tree looks the way it's supposed to look like, hmm
+
+Wow, with my structure, it's also too much work to initialize a tree!
+
+I think it would be nice to take the JSON and initialize the tree 🙈 LOL. I really need to learn some data structures and algorithms again and understand how to implement efficiently and also test this stuff! :D And also learn the traversal and also printing so that it's all easy!
+
+I was also thinking about how to make it easy to give tree data as input, compare trees etc. If I use JSON as tree data, then I have to write code to parse it and convert it to tree structure in code, lol
+
+I was also thinking about simple one line representations without JSON, using `(`, `)` or `[`, `]` to denote tree nodes, keys, maybe represent them differently or same way, etc. But that is hard too, I mean, I could print using `()` and `[]`, but I can't parse all that and spend time to create a tree with that I think. I mean, it will be pretty complex and unncessary at this point. Hmm
+
+```json
+{
+  "keys": [10, 20, 30],
+  "children": [
+    { "keys": [1, 2] },
+    { "keys": [11, 12] },
+    { "keys": [21, 22] },
+    { "keys": [31, 32] }
+  ]
+}
+```
+
+```json
+{
+  "keys": [20],
+  "children": [
+    { "keys": [10], "children": [{ "keys": [1, 2] }, { "keys": [11, 12] }] },
+    {
+      "keys": [30],
+      "children": [{ "keys": [21, 22] }, { "keys": [31, 32, 33] }]
+    }
+  ]
+}
+```
+
+```json
+{
+  "keys": [20],
+  "children": [
+    { "keys": [10], "children": [{ "keys": [1, 2] }, { "keys": [11, 12] }] },
+    {
+      "keys": [30, 32],
+      "children": [{ "keys": [21, 22] }, { "keys": [31] }, { "keys": [33, 34] }]
+    }
+  ]
+}
+```
+
+Some things I need to take care of while printing - no nil pointer exception. For the current test, there is no nil pointer exception though!
+
+[TODO] Check for nil pointers and only work on non-nil pointers! Maybe write tests for that?!
+
+Okay, I didn't have to write separate test for nil pointer. The single test took care of it! :D
+
+There were multiple hiccups and I had to debug the test to find out the issues and it was all because I didn't handle nil pointers
+
+```bash
+b-tree $ go test -v ./...
+=== RUN   TestInsert
+    b_tree_test.go:11:
+--- SKIP: TestInsert (0.00s)
+=== RUN   TestMarshalJson
+--- FAIL: TestMarshalJson (0.00s)
+panic: runtime error: invalid memory address or nil pointer dereference [recovered]
+	panic: runtime error: invalid memory address or nil pointer dereference
+[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x117c25f]
+
+goroutine 22 [running]:
+testing.tRunner.func1.2({0x119b100, 0x132d190})
+	/usr/local/Cellar/go/1.17/libexec/src/testing/testing.go:1209 +0x24e
+testing.tRunner.func1()
+	/usr/local/Cellar/go/1.17/libexec/src/testing/testing.go:1212 +0x218
+panic({0x119b100, 0x132d190})
+	/usr/local/Cellar/go/1.17/libexec/src/runtime/panic.go:1038 +0x215
+github.com/karuppiah7890/database-stuff/code/b-tree.BTreeToBTreeJson(0x0)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree.go:40 +0x7f
+github.com/karuppiah7890/database-stuff/code/b-tree.BTreeToBTreeJson(0xc000062f50)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree.go:51 +0x206
+github.com/karuppiah7890/database-stuff/code/b-tree.(*BTree).MarshalJSON(0x1067cc2)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree.go:58 +0x19
+github.com/karuppiah7890/database-stuff/code/b-tree.TestMarshalJson(0x0)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree_test.go:73 +0x3e8
+testing.tRunner(0xc000122340, 0x11d9b90)
+	/usr/local/Cellar/go/1.17/libexec/src/testing/testing.go:1259 +0x102
+created by testing.(*T).Run
+	/usr/local/Cellar/go/1.17/libexec/src/testing/testing.go:1306 +0x35a
+FAIL	github.com/karuppiah7890/database-stuff/code/b-tree	0.473s
+FAIL
+b-tree $ go test -v ./...
+=== RUN   TestInsert
+    b_tree_test.go:11:
+--- SKIP: TestInsert (0.00s)
+=== RUN   TestMarshalJson
+--- FAIL: TestMarshalJson (0.00s)
+panic: runtime error: invalid memory address or nil pointer dereference [recovered]
+	panic: runtime error: invalid memory address or nil pointer dereference
+[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x117c25f]
+
+goroutine 22 [running]:
+testing.tRunner.func1.2({0x119b120, 0x132d190})
+	/usr/local/Cellar/go/1.17/libexec/src/testing/testing.go:1209 +0x24e
+testing.tRunner.func1()
+	/usr/local/Cellar/go/1.17/libexec/src/testing/testing.go:1212 +0x218
+panic({0x119b120, 0x132d190})
+	/usr/local/Cellar/go/1.17/libexec/src/runtime/panic.go:1038 +0x215
+github.com/karuppiah7890/database-stuff/code/b-tree.BTreeToBTreeJson(0x0)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree.go:40 +0x7f
+github.com/karuppiah7890/database-stuff/code/b-tree.BTreeToBTreeJson(0xc000062f50)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree.go:53 +0x21a
+github.com/karuppiah7890/database-stuff/code/b-tree.(*BTree).MarshalJSON(0x1067cc2)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree.go:60 +0x19
+github.com/karuppiah7890/database-stuff/code/b-tree.TestMarshalJson(0x0)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree_test.go:73 +0x3e8
+testing.tRunner(0xc00011e680, 0x11d9bb0)
+	/usr/local/Cellar/go/1.17/libexec/src/testing/testing.go:1259 +0x102
+created by testing.(*T).Run
+	/usr/local/Cellar/go/1.17/libexec/src/testing/testing.go:1306 +0x35a
+FAIL	github.com/karuppiah7890/database-stuff/code/b-tree	0.450s
+FAIL
+b-tree $ go test -v ./...
+=== RUN   TestInsert
+    b_tree_test.go:11:
+--- SKIP: TestInsert (0.00s)
+=== RUN   TestMarshalJson
+--- FAIL: TestMarshalJson (0.00s)
+panic: runtime error: invalid memory address or nil pointer dereference [recovered]
+	panic: runtime error: invalid memory address or nil pointer dereference
+[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x117c256]
+
+goroutine 36 [running]:
+testing.tRunner.func1.2({0x119b100, 0x132d190})
+	/usr/local/Cellar/go/1.17/libexec/src/testing/testing.go:1209 +0x24e
+testing.tRunner.func1()
+	/usr/local/Cellar/go/1.17/libexec/src/testing/testing.go:1212 +0x218
+panic({0x119b100, 0x132d190})
+	/usr/local/Cellar/go/1.17/libexec/src/runtime/panic.go:1038 +0x215
+github.com/karuppiah7890/database-stuff/code/b-tree.BTreeToBTreeJson(0x0)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree.go:40 +0x76
+github.com/karuppiah7890/database-stuff/code/b-tree.BTreeToBTreeJson(0xc000111030)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree.go:53 +0x205
+github.com/karuppiah7890/database-stuff/code/b-tree.BTreeToBTreeJson(0xc000111020)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree.go:53 +0x205
+github.com/karuppiah7890/database-stuff/code/b-tree.BTreeToBTreeJson(0xc000062f50)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree.go:53 +0x205
+github.com/karuppiah7890/database-stuff/code/b-tree.(*BTree).MarshalJSON(0x1067cc2)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree.go:60 +0x19
+github.com/karuppiah7890/database-stuff/code/b-tree.TestMarshalJson(0x0)
+	/Users/karuppiahn/projects/github.com/karuppiah7890/database-stuff/code/b-tree/b_tree_test.go:73 +0x3e8
+testing.tRunner(0xc000105ba0, 0x11d9b90)
+	/usr/local/Cellar/go/1.17/libexec/src/testing/testing.go:1259 +0x102
+created by testing.(*T).Run
+	/usr/local/Cellar/go/1.17/libexec/src/testing/testing.go:1306 +0x35a
+FAIL	github.com/karuppiah7890/database-stuff/code/b-tree	0.381s
+FAIL
+b-tree $ go test -v ./...
+=== RUN   TestInsert
+    b_tree_test.go:11:
+--- SKIP: TestInsert (0.00s)
+=== RUN   TestMarshalJson
+    b_tree_test.go:75:
+        	Error Trace:	b_tree_test.go:75
+        	Error:      	Not equal:
+        	            	expected: "{\"keys\":[20],\"children\":[{\"keys\":[10],\"children\":[{\"keys\":[1,2]},{\"keys\":[11,12]}]},{\"keys\":[30,32],\"children\":[{\"keys\":[21,22]},{\"keys\":[31]},{\"keys\":[33,34]}]}]}"
+        	            	actual  : "{\"keys\":[20],\"children\":[{\"keys\":[10],\"children\":[{\"keys\":[1,2],\"children\":null},{\"keys\":[11,12],\"children\":null}]},{\"keys\":[30,32],\"children\":[{\"keys\":[21,22],\"children\":null},{\"keys\":[31],\"children\":null},{\"keys\":[33,34],\"children\":null}]}]}"
+
+        	            	Diff:
+        	            	--- Expected
+        	            	+++ Actual
+        	            	@@ -1 +1 @@
+        	            	-{"keys":[20],"children":[{"keys":[10],"children":[{"keys":[1,2]},{"keys":[11,12]}]},{"keys":[30,32],"children":[{"keys":[21,22]},{"keys":[31]},{"keys":[33,34]}]}]}
+        	            	+{"keys":[20],"children":[{"keys":[10],"children":[{"keys":[1,2],"children":null},{"keys":[11,12],"children":null}]},{"keys":[30,32],"children":[{"keys":[21,22],"children":null},{"keys":[31],"children":null},{"keys":[33,34],"children":null}]}]}
+        	Test:       	TestMarshalJson
+--- FAIL: TestMarshalJson (0.00s)
+FAIL
+FAIL	github.com/karuppiah7890/database-stuff/code/b-tree	0.524s
+FAIL
+b-tree $ go test -v ./...
+=== RUN   TestInsert
+    b_tree_test.go:11:
+--- SKIP: TestInsert (0.00s)
+=== RUN   TestMarshalJson
+--- PASS: TestMarshalJson (0.00s)
+PASS
+ok  	github.com/karuppiah7890/database-stuff/code/b-tree	0.422s
+b-tree $
+```
+
+Finally it works! :D :D

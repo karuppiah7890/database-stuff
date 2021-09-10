@@ -34,9 +34,15 @@ Things I'll learn from this
 
 # Simple B Tree implementation
 
+Extension
+- Store the tree on disk. User configurable option
+
 ---
 
 # Simple B+ Tree implementation
+
+Extension
+- Store the tree on disk. User configurable option.
 
 ---
 
@@ -56,3 +62,45 @@ Things I'll learn from this
 # Implement WiscKey
 
 WiscKey is a research paper - https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf
+
+---
+
+# Host and run a database meetup
+
+- To learn database concepts in a deep dive, with hands on practical stuff and workshops too
+- Pros and Cons kind of talks
+- Discussing research papers and blog posts by companies
+- Discussing and implementing a database from scratch over a few weeks!
+
+Why? To learn databases for free and for fun
+
+What platform to host it on? meetup.com ? Twitter? No need for registrations etc though, because in online there's usually not much operations to take care of, except in workshops maybe in case we need more folks to help people during the workshop or hands on sessions, then number of helpers would depend on the size of the audience
+
+A simple google calendar? But we need a forum for questions etc. Discord? Discourse? Slack? Hmm. Also, Instagram? Facebook? TikTok? :P We will see, in case I host it! Not to mention, YouTube, Twitch, Zoom? Microsoft Teams, Google Meet etc? To help with the virtual sessions. I can't think of any physical sessions for now. Also, virtual means, we can go global easily, but yeah, timezones are still a problem
+
+---
+
+# Implement a LSM Tree
+
+Log Structured Merge Tree
+
+---
+
+# Implement a QUIC client and server
+
+Use existing QUIC libraries for creating the client and server 
+
+---
+
+# Implement a gRPC client and server with HTTP v3
+
+HTTP v3 or HTTP/3 uses QUIC protocol
+
+---
+
+# Visualizations for different concepts and algorithms
+
+- B Trees
+- B+ Trees
+- QUIC
+- LSM Trees
