@@ -790,3 +790,12 @@ Checking balance of the tree and ensuring it's balanced. isTreeBalanced test uti
 
 Checking tree property that for a given key, all elements to it's left in left sub tree are lesser than the key and all elements to it's right in the right sub tree are greater than it. For this, I could print the whole tree in order and check if it's sorted or fail and say it's not a proper b tree or that it's not a b tree as it doesn't obey b tree properties. Or I could simply traverse the tree and if I find a key in left sub tree greater than its parent node key from where the left sub tree emerges from, then I can fail. Same for finding a key in right sub tree which is smaller than it's parent node key from where the right sub tree emerges from
 
+---
+
+After seeing https://www.youtube.com/watch?v=wxcCHvQeZ-U , I have come to realize that - by using linked lists to store the keys in the node, I made a big mistake. I tried to optimize the writes - insertion, deletion of keys in the node, but I slowed down the reads - I have to do sequential search for keys in the node. The talk https://www.youtube.com/watch?v=wxcCHvQeZ-U clearly talks about how B Trees are meant to be made for reads - to improve reads and be used for read heavy operations and how it's slow for writes - because there's some cost to balancing the tree when doing insertions and deletions
+
+I'm still trying to get my head around the whole thing. I'm wondering if I should change my implementation of list of keys and child pointers in my code, like use arrays. Or I could do that in a separate version too. Hmm. I'll also go check what others are doing to implement B trees! ;) :D But oh boy will writes be very slow by using arrays. The talk https://www.youtube.com/watch?v=wxcCHvQeZ-U also spoke about how B trees use extra space for updations, I didn't get that part entirely - maybe I guess what it meant was - extra space allocated to move things around to expand or contract the node during insertions and deletions - like, maybe have max key size node space as node size can't go above that! And the program won't have to give away memory and allocate it back again and again during insertions and deletions
+
+---
+
+I saw another video on LSM trees - https://www.youtube.com/watch?v=_5vrfuwhvlQ . Just to get an idea of what's out there

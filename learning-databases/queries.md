@@ -1,0 +1,2 @@
+
+I usually hear two types of queries - range queries / range scans and then point queries. Meaning, range query - when the user wants to query and get a range of things - list of houses priced between 500K and 750K etc. Point query - when the user wants exactly one record. But I guess a lot of times it's just range queries - list the books I have in my reading list etc, than a point query. Anyways, both are very possible. The thing here is - if a developer wants to support the two queries, the database has to support it too!
