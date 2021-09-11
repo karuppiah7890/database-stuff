@@ -35,3 +35,9 @@ I need to learn some OS stuff and more
 ---
 
 I need to understand SSDs and other kinds of disks. How the disks work and what are their advantages and disadvantages and what they have been built for and what they have NOT been built for and accordingly how they should be used and how they should NOT be used
+
+---
+
+https://github.com/wiredtiger
+
+https://github.com/wiredtiger/wiredtiger

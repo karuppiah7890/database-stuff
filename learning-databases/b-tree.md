@@ -759,3 +759,34 @@ As part of testing, I want to do the following
 Some things to beware of -
 - Don't convert to JSON while checking memory usage. JSON conversion is only for checking the final output and that can take a lot of memory. Capture memory usage data only when doing operations - before and after. Ensure no checking of tree structure, or JSON printing and other side work is going on while checking memory usage, or else it's a problem!
 - For every insert I do - assuming I can't do batch inserts, or maybe I could, let's see, for every insert, I need to know that the tree is balanced and is obeying the B tree conditions / properties. The full data set of final tree will help only in checking at the end, not in between, or I'll need more data! It's gonna be tricky to check if tree is balanced and also check memory usage. I mean, to check if tree is balanced - a lot of memory will be used I think. Or, I could just check more on how to capture memory and do something like - check memory usage before start of operation and then after end of operation and take the difference, every time, but I don'know if it's thing that will give proper results with proper data
+
+---
+
+" Modern B-tree techniques " https://ieeexplore.ieee.org/document/5767956
+
+---
+
+B Tree vs LSM Tree
+
+https://github.com/wiredtiger/wiredtiger/wiki/Btree-vs-LSM
+
+---
+
+I was seeing this interesting video - https://www.youtube.com/watch?v=wxcCHvQeZ-U
+
+---
+
+I had written down some thoughts around B Trees
+
+My b tree will not allow duplicate keys. And what happens when someone tries to add a duplicate key? Either silently ignore it and leave it as though nothing happened. OR throw an error saying duplicate key was being inserted by the user.  All this can be interesting config, the erroring out or silent response. This is all assuming users are simply storing keys without values. If values are stored and user is trying to insert the same key, it could be thought of as updating existing key with a value which can be a new one or same as one that's already there.
+
+For searching, assuming it's all unique values I don't have to worry about duplicates and if duplicates go on the left sub tree or right subtree. Anyways, no duplicates. I can safely go left of a key if the value I'm searching for is strictly less than the key and right sub tree of the value I'm searching for is strictly greater than the key. Assuming it's all non duplicate keys. Actually, I can't go to the left or right sub trees without looking at the keys in the current node. So, if I have keys 2,3,4,5 in a node, and I'm looking for 3, when I go to 2, I should just know that 3 could be either in the right sub tree of 2 which is the same as left sub tree of the next key(3), basically, the sub tree between keys 2 and next key (3) or it could be the next key too, or it could come in later keys or sub trees too. As the check I'll do is only greater check or less than check, not a check if the values are subsequent. If it's greater, I move forward to next key on the right. If it's lesser, then I need to use the left sub tree of the key, which is stored in the code as right sub tree of previous key. And if the value is equal, well, I found my key! :D I don't have any values for now. Maybe I could use an integer value or some string value, hmm
+
+---
+
+Some more thoughts -
+
+Checking balance of the tree and ensuring it's balanced. isTreeBalanced test utility - it will traverse the tree and find the height of all leaf nodes, during the traversal, if it finds a leaf node at a different height compared to the previous leaf nodes, then it immediately stops and returns that tree is not balanced as all leaf nodes should be at the same height for tree to be balanced. I gotta think if I need to check anything else, like internal nodes, to check balance. I think checking all leaf nodes is enough. How do I know I'm at a leaf node? If the left sub tree or right sub tree is nil, then I'm at leaf, ideally, all sub tree pointers of a leaf node should be nil, but that's for the test utility to check and take care of, if there are some more sub trees below for some key's right or left sub tree but not the others, it's gonna be caught!
+
+Checking tree property that for a given key, all elements to it's left in left sub tree are lesser than the key and all elements to it's right in the right sub tree are greater than it. For this, I could print the whole tree in order and check if it's sorted or fail and say it's not a proper b tree or that it's not a b tree as it doesn't obey b tree properties. Or I could simply traverse the tree and if I find a key in left sub tree greater than its parent node key from where the left sub tree emerges from, then I can fail. Same for finding a key in right sub tree which is smaller than it's parent node key from where the right sub tree emerges from
+

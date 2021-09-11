@@ -16,3 +16,7 @@ https://www.youtube.com/playlist?list=PLSE8ODhjZXjbohkNBWQs_otTrBTrjyohi by Andy
 Some more courses from CMU - https://db.cs.cmu.edu/courses/ , but not sure if all of them are available online
 
 https://db.cs.cmu.edu/ 
+
+---
+
+https://online-learning.harvard.edu/catalog

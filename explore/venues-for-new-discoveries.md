@@ -1,3 +1,4 @@
+Also checkout people who one can follow to discover cool new stuff at [people](../learning-databases/people.md)
 
 https://github.com - see right hand side projects after logging in. Generic and Database specific.
 
@@ -12,3 +13,9 @@ https://dbdb.io/ - Database of databases
 https://db.cs.cmu.edu/ , https://db.cs.cmu.edu/projects/ , https://db.cs.cmu.edu/news/ , https://db.cs.cmu.edu/events/ , https://db.cs.cmu.edu/publications/ - Everything databases ! DB projects and what not !
 
 https://github.com/cmu-db
+
+http://daslab.seas.harvard.edu/
+
+https://stratos.seas.harvard.edu/
+
+https://twitter.com/harvarddaslab
