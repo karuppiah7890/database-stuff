@@ -41,3 +41,9 @@ I need to understand SSDs and other kinds of disks. How the disks work and what 
 https://github.com/wiredtiger
 
 https://github.com/wiredtiger/wiredtiger
+
+---
+
+Following https://github.com/tidb-incubator/tinykv/blob/course/doc/reading_list.md
+
+Flavors of IO - https://medium.com/databasss/on-disk-io-part-1-flavours-of-io-8e1ace1de017

@@ -20,3 +20,15 @@ https://db.cs.cmu.edu/
 ---
 
 https://online-learning.harvard.edu/catalog
+
+---
+
+https://github.com/tidb-incubator/tinykv
+
+There's a reading list - https://github.com/tidb-incubator/tinykv/blob/course/doc/reading_list.md and more
+
+---
+
+https://github.com/tidb-incubator/tinysql
+
+Material List - https://github.com/tidb-incubator/tinysql/blob/course/courses/material.md
