@@ -112,3 +112,23 @@ Gotta checkout about storage though. Elastic block storage Open EBS, Ceph, Rook 
 For the management platform, for authentication and authorisation, let's not build from scratch. Let's use ORY, or similar services, like Keycloak, Auth0 (paid), Firebase (paid), Gluu etc
 
 Try reusing tools and services as much as possible, unless you wanna build and learn or surpass existing tools and services, or if existing ones are paid and you wanna try open source and there's none and you wanna build it. Don't do yak shaving though, remember that
+
+----
+
+Features required for DBaaS? Thinking about User workflows, I was checking out existing DBaaS
+
+Some basic things users would want to see are
+- Monitoring and Alerts - of course. Some dashboards and data. Some place to query data like "what are the slowest running commands / queries in my database?"
+- Import data into the database
+- Manage access
+    - Provide access to other users, say developers
+    - Access control, like Role based access control
+    - Access can be two kinds - one is the access to the management platform / management layer. The other is access to the database. The management platform has features like creating a database (or database cluster), deleting a database etc. Database access is access features provided by the database software itself and will have it's own access management - who can do CRUD operations on data, settings / configuration etc
+    - We need to define how both levels of access are managed and also understand how they are connected if they are connected at all / should be connected at all. For now I'm just gonna think of them with some basic connection - like, only someone with access to management platform can access the database and add users to the database's access management component, or could add users directly from the management platform UI / CLI / API
+- Use the management platform API with an API key
+- Good security - ability to provide long passwords - like 64 characters long etc, ability to have Multi Factor Authentication, ability to get emails when some big actions take place - for example database or any other resource is deleted
+- Billing alerts - if bill goes above a particular price
+- Backup - backups to S3 etc? I gotta check more on this
+- Deploy the database to a particular region due to legal reasons - we need to help customers obey data laws like GDPR etc
+
+Billing and other stuff - this is going to be needed only when DBaaS is going to be hosted, with all the payment and billing related features. For now I plan to build just a standalone platform that anyone can host and use!
