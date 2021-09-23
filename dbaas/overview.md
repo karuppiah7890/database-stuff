@@ -132,3 +132,22 @@ Some basic things users would want to see are
 - Deploy the database to a particular region due to legal reasons - we need to help customers obey data laws like GDPR etc
 
 Billing and other stuff - this is going to be needed only when DBaaS is going to be hosted, with all the payment and billing related features. For now I plan to build just a standalone platform that anyone can host and use!
+
+---
+
+Proving that the DBaaS software is good and can be trusted!
+- Make everything open and transparent including code - open source code
+- Test the software publicly and show pipeline statuses
+    - Unit tests
+    - Integration tests
+    - Code quality
+    - Security vulnerability checking
+    - Performance tests / Benchmark tests
+- 
+
+---
+
+Plan
+- create a backlog for user features for API, CLI, Web UI
+- start thinking about implementing each of the features in short stints / iterations
+
