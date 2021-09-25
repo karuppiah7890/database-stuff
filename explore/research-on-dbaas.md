@@ -37,4 +37,12 @@ https://www.xenonstack.com/insights/what-is-database-as-a-service
 
 https://www.bmc.com/blogs/dbaas-database-as-a-service/
 
+---
 
+https://duckduckgo.com/?t=ffab&q=open+source+database+as+a+service+&ia=web
+
+https://www.dbta.com/Editorial/News-Flashes/Percona-Showcases-Open-Source-Database-as-a-Service-146983.aspx
+
+https://www.percona.com/software/percona-kubernetes-operators
+
+https://github.com/percona

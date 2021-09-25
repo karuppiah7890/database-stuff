@@ -107,3 +107,25 @@ https://hostedmetrics.com/use-with/uwsgi/
 Kind of like a DBaaS but not exactly. It's a firebase alternative. Most people consider firebase as like an abstracted database with an API, especially mobile and web app developers
 
 https://supabase.io/
+
+# Percona
+
+https://www.percona.com/
+
+https://www.percona.com/software
+
+https://www.percona.com/services/managed-services
+
+https://www.percona.com/services/consulting
+
+https://www.percona.com/software/database-tools/percona-monitoring-and-management - Open Source DB monitoring and management solution. https://pmmdemo.percona.com/ . https://github.com/percona/pmm . https://percona.community/projects/pmm/
+
+https://www.percona.com/software/mysql-database
+
+https://www.percona.com/software/mysql-database/percona-server
+
+https://www.percona.com/software/mysql-database/percona-xtradb-cluster
+
+https://www.percona.com/software/mysql-database/percona-xtrabackup
+
+
