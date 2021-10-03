@@ -45,6 +45,7 @@ This is just me listing out databases I come across or tried out or hear about. 
 - [Milvus](https://milvus.io/) - https://github.com/milvus-io , https://github.com/milvus-io/milvus
 - [WatermelonDB](https://nozbe.github.io/WatermelonDB/) - https://github.com/Nozbe/WatermelonDB
 - [ScyllaDB](https://www.scylladb.com/) - https://github.com/scylladb/scylla
+- SpiceDB - https://github.com/authzed/spicedb , https://github.com/authzed , https://authzed.com/
 
 ---
 

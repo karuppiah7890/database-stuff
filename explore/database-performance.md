@@ -93,3 +93,17 @@ Maybe supporting multiple protocols might be a good idea - HTTP, QUIC and even T
 ---
 
 Are there any advantages to using ARM and other CPU architectures? For example Graviton seems to be popular, and fast. How? Why not AMD64? [Question]
+
+---
+
+Tooling for benchmarking Messaging Systems -
+
+http://openmessaging.cloud/docs/benchmarks/
+
+https://github.com/openmessaging/openmessaging-benchmark
+
+Example for Redis - https://github.com/openmessaging/openmessaging-benchmark/pull/196
+
+---
+
+Redis performance guide - https://redis.io/topics/performance-on-cpu
