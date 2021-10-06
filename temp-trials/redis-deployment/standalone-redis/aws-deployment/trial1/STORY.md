@@ -293,7 +293,7 @@ Terraform will perform the following actions:
 
   # aws_vpc.redis_vpc will be destroyed
   - resource "aws_vpc" "redis_vpc" {
-      - arn                              = "arn:aws:ec2:us-east-1:469318448823:vpc/vpc-09998eb8f41666b86" -> null
+      - arn                              = "arn:aws:ec2:us-east-1:1112222333444:vpc/vpc-09998eb8f41666b86" -> null
       - assign_generated_ipv6_cidr_block = false -> null
       - cidr_block                       = "10.0.0.0/24" -> null
       - default_network_acl_id           = "acl-0a04df490d034ecc4" -> null
@@ -307,7 +307,7 @@ Terraform will perform the following actions:
       - id                               = "vpc-09998eb8f41666b86" -> null
       - instance_tenancy                 = "default" -> null
       - main_route_table_id              = "rtb-09682102da3eee3d0" -> null
-      - owner_id                         = "469318448823" -> null
+      - owner_id                         = "1112222333444" -> null
       - tags                             = {
           - "Name" = "redis-vpc"
         } -> null
@@ -524,7 +524,7 @@ Terraform will perform the following actions:
 
   # aws_key_pair.redis_ssh_key will be destroyed
   - resource "aws_key_pair" "redis_ssh_key" {
-      - arn             = "arn:aws:ec2:us-east-1:469318448823:key-pair/redis-ssh-key20210925144806031400000001" -> null
+      - arn             = "arn:aws:ec2:us-east-1:1112222333444:key-pair/redis-ssh-key20210925144806031400000001" -> null
       - fingerprint     = "e0Q0MJQbEgD3Omap1nZ/OXZTs8HhcvanjW1+AvkGabw=" -> null
       - id              = "redis-ssh-key20210925144806031400000001" -> null
       - key_name        = "redis-ssh-key20210925144806031400000001" -> null
@@ -537,7 +537,7 @@ Terraform will perform the following actions:
 
   # aws_vpc.redis_vpc will be destroyed
   - resource "aws_vpc" "redis_vpc" {
-      - arn                              = "arn:aws:ec2:us-east-1:469318448823:vpc/vpc-08ae3fdf9ceb2e57c" -> null
+      - arn                              = "arn:aws:ec2:us-east-1:1112222333444:vpc/vpc-08ae3fdf9ceb2e57c" -> null
       - assign_generated_ipv6_cidr_block = false -> null
       - cidr_block                       = "10.0.0.0/24" -> null
       - default_network_acl_id           = "acl-0cc01558f2cdd320f" -> null
@@ -551,7 +551,7 @@ Terraform will perform the following actions:
       - id                               = "vpc-08ae3fdf9ceb2e57c" -> null
       - instance_tenancy                 = "default" -> null
       - main_route_table_id              = "rtb-0a8284bd8e2daf2dc" -> null
-      - owner_id                         = "469318448823" -> null
+      - owner_id                         = "1112222333444" -> null
       - tags                             = {
           - "Name" = "redis-vpc"
         } -> null
@@ -695,7 +695,7 @@ Terraform will perform the following actions:
 
   # aws_key_pair.redis_ssh_key will be destroyed
   - resource "aws_key_pair" "redis_ssh_key" {
-      - arn             = "arn:aws:ec2:us-east-1:469318448823:key-pair/redis-ssh-key20210925145653893800000001" -> null
+      - arn             = "arn:aws:ec2:us-east-1:1112222333444:key-pair/redis-ssh-key20210925145653893800000001" -> null
       - fingerprint     = "e0Q0MJQbEgD3Omap1nZ/OXZTs8HhcvanjW1+AvkGabw=" -> null
       - id              = "redis-ssh-key20210925145653893800000001" -> null
       - key_name        = "redis-ssh-key20210925145653893800000001" -> null
@@ -708,7 +708,7 @@ Terraform will perform the following actions:
 
   # aws_subnet.redis_subnet will be destroyed
   - resource "aws_subnet" "redis_subnet" {
-      - arn                             = "arn:aws:ec2:us-east-1:469318448823:subnet/subnet-0e86df5f7278f53a3" -> null
+      - arn                             = "arn:aws:ec2:us-east-1:1112222333444:subnet/subnet-0e86df5f7278f53a3" -> null
       - assign_ipv6_address_on_creation = false -> null
       - availability_zone               = "us-east-1c" -> null
       - availability_zone_id            = "use1-az6" -> null
@@ -716,7 +716,7 @@ Terraform will perform the following actions:
       - id                              = "subnet-0e86df5f7278f53a3" -> null
       - map_customer_owned_ip_on_launch = false -> null
       - map_public_ip_on_launch         = false -> null
-      - owner_id                        = "469318448823" -> null
+      - owner_id                        = "1112222333444" -> null
       - tags                            = {
           - "Name" = "redis-subnet"
         } -> null
@@ -728,7 +728,7 @@ Terraform will perform the following actions:
 
   # aws_vpc.redis_vpc will be destroyed
   - resource "aws_vpc" "redis_vpc" {
-      - arn                              = "arn:aws:ec2:us-east-1:469318448823:vpc/vpc-04e12ac450c884deb" -> null
+      - arn                              = "arn:aws:ec2:us-east-1:1112222333444:vpc/vpc-04e12ac450c884deb" -> null
       - assign_generated_ipv6_cidr_block = false -> null
       - cidr_block                       = "10.0.0.0/16" -> null
       - default_network_acl_id           = "acl-0f79dcaeef41d11fa" -> null
@@ -742,7 +742,7 @@ Terraform will perform the following actions:
       - id                               = "vpc-04e12ac450c884deb" -> null
       - instance_tenancy                 = "default" -> null
       - main_route_table_id              = "rtb-0edde735296f94dc0" -> null
-      - owner_id                         = "469318448823" -> null
+      - owner_id                         = "1112222333444" -> null
       - tags                             = {
           - "Name" = "redis-vpc"
         } -> null
@@ -1415,9 +1415,9 @@ Terraform will perform the following actions:
 
   # aws_internet_gateway.redis_internet_gateway will be destroyed
   - resource "aws_internet_gateway" "redis_internet_gateway" {
-      - arn      = "arn:aws:ec2:us-east-1:469318448823:internet-gateway/igw-059a46a1baab6bd01" -> null
+      - arn      = "arn:aws:ec2:us-east-1:1112222333444:internet-gateway/igw-059a46a1baab6bd01" -> null
       - id       = "igw-059a46a1baab6bd01" -> null
-      - owner_id = "469318448823" -> null
+      - owner_id = "1112222333444" -> null
       - tags     = {
           - "Name" = "redis-internet-gateway"
         } -> null
@@ -1429,7 +1429,7 @@ Terraform will perform the following actions:
 
   # aws_key_pair.redis_ssh_key will be destroyed
   - resource "aws_key_pair" "redis_ssh_key" {
-      - arn             = "arn:aws:ec2:us-east-1:469318448823:key-pair/redis-ssh-key20210925154911290700000001" -> null
+      - arn             = "arn:aws:ec2:us-east-1:1112222333444:key-pair/redis-ssh-key20210925154911290700000001" -> null
       - fingerprint     = "e0Q0MJQbEgD3Omap1nZ/OXZTs8HhcvanjW1+AvkGabw=" -> null
       - id              = "redis-ssh-key20210925154911290700000001" -> null
       - key_name        = "redis-ssh-key20210925154911290700000001" -> null
@@ -1467,9 +1467,9 @@ Terraform will perform the following actions:
 
   # aws_route_table.redis_route_table will be destroyed
   - resource "aws_route_table" "redis_route_table" {
-      - arn              = "arn:aws:ec2:us-east-1:469318448823:route-table/rtb-0c7905f6350207b2b" -> null
+      - arn              = "arn:aws:ec2:us-east-1:1112222333444:route-table/rtb-0c7905f6350207b2b" -> null
       - id               = "rtb-0c7905f6350207b2b" -> null
-      - owner_id         = "469318448823" -> null
+      - owner_id         = "1112222333444" -> null
       - propagating_vgws = [] -> null
       - route            = [] -> null
       - tags             = {
@@ -1483,7 +1483,7 @@ Terraform will perform the following actions:
 
   # aws_security_group.redis_security_group will be destroyed
   - resource "aws_security_group" "redis_security_group" {
-      - arn                    = "arn:aws:ec2:us-east-1:469318448823:security-group/sg-0080f02036d1153f2" -> null
+      - arn                    = "arn:aws:ec2:us-east-1:1112222333444:security-group/sg-0080f02036d1153f2" -> null
       - description            = "Allow Redis traffic" -> null
       - egress                 = [
           - {
@@ -1521,7 +1521,7 @@ Terraform will perform the following actions:
             },
         ] -> null
       - name                   = "allow_redis_traffic" -> null
-      - owner_id               = "469318448823" -> null
+      - owner_id               = "1112222333444" -> null
       - revoke_rules_on_delete = false -> null
       - tags                   = {
           - "Name" = "allow-redis-traffic"
@@ -1571,7 +1571,7 @@ Terraform will perform the following actions:
 
   # aws_subnet.redis_subnet will be destroyed
   - resource "aws_subnet" "redis_subnet" {
-      - arn                             = "arn:aws:ec2:us-east-1:469318448823:subnet/subnet-0fbcdc630c7caba7a" -> null
+      - arn                             = "arn:aws:ec2:us-east-1:1112222333444:subnet/subnet-0fbcdc630c7caba7a" -> null
       - assign_ipv6_address_on_creation = false -> null
       - availability_zone               = "us-east-1c" -> null
       - availability_zone_id            = "use1-az6" -> null
@@ -1579,7 +1579,7 @@ Terraform will perform the following actions:
       - id                              = "subnet-0fbcdc630c7caba7a" -> null
       - map_customer_owned_ip_on_launch = false -> null
       - map_public_ip_on_launch         = false -> null
-      - owner_id                        = "469318448823" -> null
+      - owner_id                        = "1112222333444" -> null
       - tags                            = {
           - "Name" = "redis-subnet"
         } -> null
@@ -1591,7 +1591,7 @@ Terraform will perform the following actions:
 
   # aws_vpc.redis_vpc will be destroyed
   - resource "aws_vpc" "redis_vpc" {
-      - arn                              = "arn:aws:ec2:us-east-1:469318448823:vpc/vpc-00228dd0c114f8550" -> null
+      - arn                              = "arn:aws:ec2:us-east-1:1112222333444:vpc/vpc-00228dd0c114f8550" -> null
       - assign_generated_ipv6_cidr_block = false -> null
       - cidr_block                       = "10.0.0.0/16" -> null
       - default_network_acl_id           = "acl-0ead402f8c5296f2d" -> null
@@ -1605,7 +1605,7 @@ Terraform will perform the following actions:
       - id                               = "vpc-00228dd0c114f8550" -> null
       - instance_tenancy                 = "default" -> null
       - main_route_table_id              = "rtb-06ea3177ae189274a" -> null
-      - owner_id                         = "469318448823" -> null
+      - owner_id                         = "1112222333444" -> null
       - tags                             = {
           - "Name" = "redis-vpc"
         } -> null
@@ -2450,9 +2450,9 @@ Terraform will perform the following actions:
 
   # aws_internet_gateway.redis_internet_gateway will be destroyed
   - resource "aws_internet_gateway" "redis_internet_gateway" {
-      - arn      = "arn:aws:ec2:us-east-1:469318448823:internet-gateway/igw-06ad7c09faee95735" -> null
+      - arn      = "arn:aws:ec2:us-east-1:1112222333444:internet-gateway/igw-06ad7c09faee95735" -> null
       - id       = "igw-06ad7c09faee95735" -> null
-      - owner_id = "469318448823" -> null
+      - owner_id = "1112222333444" -> null
       - tags     = {
           - "Name" = "redis-internet-gateway"
         } -> null
@@ -2464,7 +2464,7 @@ Terraform will perform the following actions:
 
   # aws_key_pair.redis_ssh_key will be destroyed
   - resource "aws_key_pair" "redis_ssh_key" {
-      - arn             = "arn:aws:ec2:us-east-1:469318448823:key-pair/redis-ssh-key20210925161011968600000001" -> null
+      - arn             = "arn:aws:ec2:us-east-1:1112222333444:key-pair/redis-ssh-key20210925161011968600000001" -> null
       - fingerprint     = "e0Q0MJQbEgD3Omap1nZ/OXZTs8HhcvanjW1+AvkGabw=" -> null
       - id              = "redis-ssh-key20210925161011968600000001" -> null
       - key_name        = "redis-ssh-key20210925161011968600000001" -> null
@@ -2502,9 +2502,9 @@ Terraform will perform the following actions:
 
   # aws_route_table.redis_route_table will be destroyed
   - resource "aws_route_table" "redis_route_table" {
-      - arn              = "arn:aws:ec2:us-east-1:469318448823:route-table/rtb-040ff4d3f4319adbb" -> null
+      - arn              = "arn:aws:ec2:us-east-1:1112222333444:route-table/rtb-040ff4d3f4319adbb" -> null
       - id               = "rtb-040ff4d3f4319adbb" -> null
-      - owner_id         = "469318448823" -> null
+      - owner_id         = "1112222333444" -> null
       - propagating_vgws = [] -> null
       - route            = [] -> null
       - tags             = {
@@ -2518,7 +2518,7 @@ Terraform will perform the following actions:
 
   # aws_security_group.redis_security_group will be destroyed
   - resource "aws_security_group" "redis_security_group" {
-      - arn                    = "arn:aws:ec2:us-east-1:469318448823:security-group/sg-0df6e9f40a710e2a8" -> null
+      - arn                    = "arn:aws:ec2:us-east-1:1112222333444:security-group/sg-0df6e9f40a710e2a8" -> null
       - description            = "Allow Redis traffic" -> null
       - egress                 = [
           - {
@@ -2556,7 +2556,7 @@ Terraform will perform the following actions:
             },
         ] -> null
       - name                   = "allow_redis_traffic" -> null
-      - owner_id               = "469318448823" -> null
+      - owner_id               = "1112222333444" -> null
       - revoke_rules_on_delete = false -> null
       - tags                   = {
           - "Name" = "allow-redis-traffic"
@@ -2606,7 +2606,7 @@ Terraform will perform the following actions:
 
   # aws_subnet.redis_subnet will be destroyed
   - resource "aws_subnet" "redis_subnet" {
-      - arn                             = "arn:aws:ec2:us-east-1:469318448823:subnet/subnet-0b8e4bfdf1a200d78" -> null
+      - arn                             = "arn:aws:ec2:us-east-1:1112222333444:subnet/subnet-0b8e4bfdf1a200d78" -> null
       - assign_ipv6_address_on_creation = false -> null
       - availability_zone               = "us-east-1b" -> null
       - availability_zone_id            = "use1-az4" -> null
@@ -2614,7 +2614,7 @@ Terraform will perform the following actions:
       - id                              = "subnet-0b8e4bfdf1a200d78" -> null
       - map_customer_owned_ip_on_launch = false -> null
       - map_public_ip_on_launch         = false -> null
-      - owner_id                        = "469318448823" -> null
+      - owner_id                        = "1112222333444" -> null
       - tags                            = {
           - "Name" = "redis-subnet"
         } -> null
@@ -2626,7 +2626,7 @@ Terraform will perform the following actions:
 
   # aws_vpc.redis_vpc will be destroyed
   - resource "aws_vpc" "redis_vpc" {
-      - arn                              = "arn:aws:ec2:us-east-1:469318448823:vpc/vpc-0d321af6048b821e5" -> null
+      - arn                              = "arn:aws:ec2:us-east-1:1112222333444:vpc/vpc-0d321af6048b821e5" -> null
       - assign_generated_ipv6_cidr_block = false -> null
       - cidr_block                       = "10.0.0.0/16" -> null
       - default_network_acl_id           = "acl-01da8c3d6f7771536" -> null
@@ -2640,7 +2640,7 @@ Terraform will perform the following actions:
       - id                               = "vpc-0d321af6048b821e5" -> null
       - instance_tenancy                 = "default" -> null
       - main_route_table_id              = "rtb-0dafc7041e78277df" -> null
-      - owner_id                         = "469318448823" -> null
+      - owner_id                         = "1112222333444" -> null
       - tags                             = {
           - "Name" = "redis-vpc"
         } -> null
@@ -3312,7 +3312,7 @@ Terraform will perform the following actions:
   # aws_instance.redis_server will be destroyed
   - resource "aws_instance" "redis_server" {
       - ami                                  = "ami-029c64b3c205e6cce" -> null
-      - arn                                  = "arn:aws:ec2:us-east-1:469318448823:instance/i-06804bc5c48d40b7e" -> null
+      - arn                                  = "arn:aws:ec2:us-east-1:1112222333444:instance/i-06804bc5c48d40b7e" -> null
       - associate_public_ip_address          = true -> null
       - availability_zone                    = "us-east-1f" -> null
       - cpu_core_count                       = 2 -> null
@@ -3377,9 +3377,9 @@ Terraform will perform the following actions:
 
   # aws_internet_gateway.redis_internet_gateway will be destroyed
   - resource "aws_internet_gateway" "redis_internet_gateway" {
-      - arn      = "arn:aws:ec2:us-east-1:469318448823:internet-gateway/igw-08b9b28b4806e8aad" -> null
+      - arn      = "arn:aws:ec2:us-east-1:1112222333444:internet-gateway/igw-08b9b28b4806e8aad" -> null
       - id       = "igw-08b9b28b4806e8aad" -> null
-      - owner_id = "469318448823" -> null
+      - owner_id = "1112222333444" -> null
       - tags     = {
           - "Name" = "redis-internet-gateway"
         } -> null
@@ -3391,7 +3391,7 @@ Terraform will perform the following actions:
 
   # aws_key_pair.redis_ssh_key will be destroyed
   - resource "aws_key_pair" "redis_ssh_key" {
-      - arn             = "arn:aws:ec2:us-east-1:469318448823:key-pair/redis-ssh-key20210925173804304400000001" -> null
+      - arn             = "arn:aws:ec2:us-east-1:1112222333444:key-pair/redis-ssh-key20210925173804304400000001" -> null
       - fingerprint     = "e0Q0MJQbEgD3Omap1nZ/OXZTs8HhcvanjW1+AvkGabw=" -> null
       - id              = "redis-ssh-key20210925173804304400000001" -> null
       - key_name        = "redis-ssh-key20210925173804304400000001" -> null
@@ -3424,9 +3424,9 @@ Terraform will perform the following actions:
 
   # aws_route_table.redis_route_table will be destroyed
   - resource "aws_route_table" "redis_route_table" {
-      - arn              = "arn:aws:ec2:us-east-1:469318448823:route-table/rtb-0b7924b8e6f57cfb0" -> null
+      - arn              = "arn:aws:ec2:us-east-1:1112222333444:route-table/rtb-0b7924b8e6f57cfb0" -> null
       - id               = "rtb-0b7924b8e6f57cfb0" -> null
-      - owner_id         = "469318448823" -> null
+      - owner_id         = "1112222333444" -> null
       - propagating_vgws = [] -> null
       - route            = [
           - {
@@ -3478,7 +3478,7 @@ Terraform will perform the following actions:
 
   # aws_security_group.redis_security_group will be destroyed
   - resource "aws_security_group" "redis_security_group" {
-      - arn                    = "arn:aws:ec2:us-east-1:469318448823:security-group/sg-0396f39a81eb9f1c2" -> null
+      - arn                    = "arn:aws:ec2:us-east-1:1112222333444:security-group/sg-0396f39a81eb9f1c2" -> null
       - description            = "Allow Redis traffic" -> null
       - egress                 = [
           - {
@@ -3516,7 +3516,7 @@ Terraform will perform the following actions:
             },
         ] -> null
       - name                   = "allow_redis_traffic" -> null
-      - owner_id               = "469318448823" -> null
+      - owner_id               = "1112222333444" -> null
       - revoke_rules_on_delete = false -> null
       - tags                   = {
           - "Name" = "allow-redis-traffic"
@@ -3566,7 +3566,7 @@ Terraform will perform the following actions:
 
   # aws_subnet.redis_subnet will be destroyed
   - resource "aws_subnet" "redis_subnet" {
-      - arn                             = "arn:aws:ec2:us-east-1:469318448823:subnet/subnet-05db60892d72c5558" -> null
+      - arn                             = "arn:aws:ec2:us-east-1:1112222333444:subnet/subnet-05db60892d72c5558" -> null
       - assign_ipv6_address_on_creation = false -> null
       - availability_zone               = "us-east-1f" -> null
       - availability_zone_id            = "use1-az5" -> null
@@ -3574,7 +3574,7 @@ Terraform will perform the following actions:
       - id                              = "subnet-05db60892d72c5558" -> null
       - map_customer_owned_ip_on_launch = false -> null
       - map_public_ip_on_launch         = false -> null
-      - owner_id                        = "469318448823" -> null
+      - owner_id                        = "1112222333444" -> null
       - tags                            = {
           - "Name" = "redis-subnet"
         } -> null
@@ -3586,7 +3586,7 @@ Terraform will perform the following actions:
 
   # aws_vpc.redis_vpc will be destroyed
   - resource "aws_vpc" "redis_vpc" {
-      - arn                              = "arn:aws:ec2:us-east-1:469318448823:vpc/vpc-0b45c36773ac7882c" -> null
+      - arn                              = "arn:aws:ec2:us-east-1:1112222333444:vpc/vpc-0b45c36773ac7882c" -> null
       - assign_generated_ipv6_cidr_block = false -> null
       - cidr_block                       = "10.0.0.0/16" -> null
       - default_network_acl_id           = "acl-0a1b0106caba9828f" -> null
@@ -3600,7 +3600,7 @@ Terraform will perform the following actions:
       - id                               = "vpc-0b45c36773ac7882c" -> null
       - instance_tenancy                 = "default" -> null
       - main_route_table_id              = "rtb-0da7568e9bea8d94a" -> null
-      - owner_id                         = "469318448823" -> null
+      - owner_id                         = "1112222333444" -> null
       - tags                             = {
           - "Name" = "redis-vpc"
         } -> null
@@ -4206,7 +4206,7 @@ Terraform will perform the following actions:
   # aws_instance.redis_server will be destroyed
   - resource "aws_instance" "redis_server" {
       - ami                                  = "ami-029c64b3c205e6cce" -> null
-      - arn                                  = "arn:aws:ec2:us-east-1:469318448823:instance/i-0162661ba412ca2d4" -> null
+      - arn                                  = "arn:aws:ec2:us-east-1:1112222333444:instance/i-0162661ba412ca2d4" -> null
       - associate_public_ip_address          = true -> null
       - availability_zone                    = "us-east-1a" -> null
       - cpu_core_count                       = 2 -> null
@@ -4271,9 +4271,9 @@ Terraform will perform the following actions:
 
   # aws_internet_gateway.redis_internet_gateway will be destroyed
   - resource "aws_internet_gateway" "redis_internet_gateway" {
-      - arn      = "arn:aws:ec2:us-east-1:469318448823:internet-gateway/igw-0f99d81bcb0643aa7" -> null
+      - arn      = "arn:aws:ec2:us-east-1:1112222333444:internet-gateway/igw-0f99d81bcb0643aa7" -> null
       - id       = "igw-0f99d81bcb0643aa7" -> null
-      - owner_id = "469318448823" -> null
+      - owner_id = "1112222333444" -> null
       - tags     = {
           - "Name" = "redis-internet-gateway"
         } -> null
@@ -4285,7 +4285,7 @@ Terraform will perform the following actions:
 
   # aws_key_pair.redis_ssh_key will be destroyed
   - resource "aws_key_pair" "redis_ssh_key" {
-      - arn             = "arn:aws:ec2:us-east-1:469318448823:key-pair/redis-ssh-key20210925174953991200000001" -> null
+      - arn             = "arn:aws:ec2:us-east-1:1112222333444:key-pair/redis-ssh-key20210925174953991200000001" -> null
       - fingerprint     = "e0Q0MJQbEgD3Omap1nZ/OXZTs8HhcvanjW1+AvkGabw=" -> null
       - id              = "redis-ssh-key20210925174953991200000001" -> null
       - key_name        = "redis-ssh-key20210925174953991200000001" -> null
@@ -4318,9 +4318,9 @@ Terraform will perform the following actions:
 
   # aws_route_table.redis_route_table will be destroyed
   - resource "aws_route_table" "redis_route_table" {
-      - arn              = "arn:aws:ec2:us-east-1:469318448823:route-table/rtb-0f1908557cca58987" -> null
+      - arn              = "arn:aws:ec2:us-east-1:1112222333444:route-table/rtb-0f1908557cca58987" -> null
       - id               = "rtb-0f1908557cca58987" -> null
-      - owner_id         = "469318448823" -> null
+      - owner_id         = "1112222333444" -> null
       - propagating_vgws = [] -> null
       - route            = [
           - {
@@ -4372,7 +4372,7 @@ Terraform will perform the following actions:
 
   # aws_security_group.redis_security_group will be destroyed
   - resource "aws_security_group" "redis_security_group" {
-      - arn                    = "arn:aws:ec2:us-east-1:469318448823:security-group/sg-0fd0bf4fde6011b74" -> null
+      - arn                    = "arn:aws:ec2:us-east-1:1112222333444:security-group/sg-0fd0bf4fde6011b74" -> null
       - description            = "Allow Redis traffic" -> null
       - egress                 = [
           - {
@@ -4410,7 +4410,7 @@ Terraform will perform the following actions:
             },
         ] -> null
       - name                   = "allow_redis_traffic" -> null
-      - owner_id               = "469318448823" -> null
+      - owner_id               = "1112222333444" -> null
       - revoke_rules_on_delete = false -> null
       - tags                   = {
           - "Name" = "allow-redis-traffic"
@@ -4460,7 +4460,7 @@ Terraform will perform the following actions:
 
   # aws_subnet.redis_subnet will be destroyed
   - resource "aws_subnet" "redis_subnet" {
-      - arn                             = "arn:aws:ec2:us-east-1:469318448823:subnet/subnet-0e332317735330792" -> null
+      - arn                             = "arn:aws:ec2:us-east-1:1112222333444:subnet/subnet-0e332317735330792" -> null
       - assign_ipv6_address_on_creation = false -> null
       - availability_zone               = "us-east-1a" -> null
       - availability_zone_id            = "use1-az2" -> null
@@ -4468,7 +4468,7 @@ Terraform will perform the following actions:
       - id                              = "subnet-0e332317735330792" -> null
       - map_customer_owned_ip_on_launch = false -> null
       - map_public_ip_on_launch         = false -> null
-      - owner_id                        = "469318448823" -> null
+      - owner_id                        = "1112222333444" -> null
       - tags                            = {
           - "Name" = "redis-subnet"
         } -> null
@@ -4480,7 +4480,7 @@ Terraform will perform the following actions:
 
   # aws_vpc.redis_vpc will be destroyed
   - resource "aws_vpc" "redis_vpc" {
-      - arn                              = "arn:aws:ec2:us-east-1:469318448823:vpc/vpc-03d7951ba6c86ba72" -> null
+      - arn                              = "arn:aws:ec2:us-east-1:1112222333444:vpc/vpc-03d7951ba6c86ba72" -> null
       - assign_generated_ipv6_cidr_block = false -> null
       - cidr_block                       = "10.0.0.0/16" -> null
       - default_network_acl_id           = "acl-0266f4d9c2721ca21" -> null
@@ -4494,7 +4494,7 @@ Terraform will perform the following actions:
       - id                               = "vpc-03d7951ba6c86ba72" -> null
       - instance_tenancy                 = "default" -> null
       - main_route_table_id              = "rtb-0b675f95f8f6a5e81" -> null
-      - owner_id                         = "469318448823" -> null
+      - owner_id                         = "1112222333444" -> null
       - tags                             = {
           - "Name" = "redis-vpc"
         } -> null
@@ -4647,7 +4647,7 @@ repl_backlog_histlen:0
 ```bash
 trial1 $ packer validate .
 trial1 $ source .env
-trial1 $ packer build redis-server.pkr.hcl 
+trial1 $ packer build redis-server.pkr.hcl
 redis.amazon-ebs.redis: output will be in this color.
 
 ==> redis.amazon-ebs.redis: Prevalidating any provided VPC information
@@ -4782,13 +4782,13 @@ Build 'redis.amazon-ebs.redis' errored after 2 minutes 213 milliseconds: Script 
 --> redis.amazon-ebs.redis: Script exited with non-zero exit status: 1.Allowed exit codes are: [0]
 
 ==> Builds finished but no artifacts were created.
-trial1 $ 
+trial1 $
 ```
 
 ---
 
 ```bash
-trial1 $ packer build redis-server.pkr.hcl 
+trial1 $ packer build redis-server.pkr.hcl
 redis.amazon-ebs.redis: output will be in this color.
 
 ==> redis.amazon-ebs.redis: Prevalidating any provided VPC information
@@ -5359,13 +5359,13 @@ WAFv2RuleGroup
 WAFv2WebACL
 WorkLinkFleet
 WorkSpacesWorkspace
-trial1 $ 
+trial1 $
 ```
 
 ---
 
 ```bash
-trial1 $ terraform plan -out tfplan 
+trial1 $ terraform plan -out tfplan
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with
 the following symbols:
@@ -5666,13 +5666,13 @@ To perform exactly these actions, run the following command to apply:
 trial1 $ terraform apply tfplan -auto-approve
 ╷
 │ Error: Too many command line arguments
-│ 
+│
 │ Expected at most one positional argument.
 ╵
 
 For more help on using this command, run:
   terraform apply -help
-trial1 $ terraform apply tfplan 
+trial1 $ terraform apply tfplan
 aws_key_pair.redis_ssh_key: Creating...
 aws_vpc.redis_vpc: Creating...
 aws_key_pair.redis_ssh_key: Creation complete after 3s [id=redis-ssh-key20211006041811593600000001]
@@ -5708,10 +5708,57 @@ Outputs:
 ip = "54.85.164.255"
 trial1 $ redis-cli -h 54.85.164.255 -p 50379
 Could not connect to Redis at 54.85.164.255:50379: Connection refused
-not connected> 
-trial1 $ 
+not connected>
+trial1 $
 ```
 
 [TODO]
+
 - Find out what's causing the error in connectivity - I think it might the firewall inside the VM at OS level. Gotta check this out! Something like `ufw` etc
 
+---
+
+```bash
+envsubst < aws-nuke-config-template.yaml > aws-nuke-config.yaml
+
+aws-nuke -c aws-nuke-config.yaml --access-key-id "$AWS_ACCESS_KEY_ID" --secret-access-key "$AWS_SECRET_ACCESS_KEY" --force --no-dry-run
+```
+
+```bash
+trial1 $ aws-nuke -c aws-nuke-config.yaml --access-key-id "$AWS_ACCESS_KEY_ID" --secret-access-key "$AWS_SECRET_ACCESS_KEY" --force --no-dry-run
+aws-nuke version v2.15.0 - Thu Apr 15 10:00:09 UTC 2021 - b5ccc0056f070379678264ccae7c88ddf8b5dfa5
+
+Do you really want to nuke the account with the ID 1112222333444 and the alias 'karuppiahn'?
+Waiting 15s before continuing.
+us-east-1 - EC2Snapshot - snap-0a47f59a14dda167f - [] - would remove
+us-east-1 - EC2Image - ami-06d002a0dcaaa385f - [] - would remove
+us-east-1 - EC2Instance - i-07489073f732a444d - [tag:Name: "redis-server"] - already terminated
+us-east-1 - EC2Instance - i-0c02ebdb98e689ba2 - [tag:Name: "Packer Builder"] - already terminated
+us-east-1 - EC2Instance - i-0ff9f8be241a41fb2 - [tag:Name: "Packer Builder"] - already terminated
+us-east-1 - EC2Instance - i-0d6c56672ae961c26 - [tag:Name: "redis-server"] - already terminated
+us-east-1 - EC2Instance - i-0c5a12c1b4bc5254d - [tag:Name: "Packer Builder"] - already terminated
+us-east-1 - EC2Instance - i-022a8006da87b7360 - [tag:Name: "Packer Builder"] - already terminated
+us-east-1 - EC2Instance - i-0a42c48ba25679bae - [tag:Name: "redis-server"] - already terminated
+us-east-1 - EC2Instance - i-0d279d8515171acea - [tag:Name: "redis-server"] - already terminated
+Scan complete: 10 total, 2 nukeable, 8 filtered.
+
+Do you really want to nuke these resources on the account with the ID 1112222333444 and the alias 'karuppiahn'?
+Waiting 15s before continuing.
+us-east-1 - EC2Snapshot - snap-0a47f59a14dda167f - [] - failed
+us-east-1 - EC2Image - ami-06d002a0dcaaa385f - [] - triggered remove
+
+Removal requested: 1 waiting, 1 failed, 8 skipped, 0 finished
+
+us-east-1 - EC2Snapshot - snap-0a47f59a14dda167f - [] - removed
+us-east-1 - EC2Image - ami-06d002a0dcaaa385f - [] - waiting
+
+Removal requested: 1 waiting, 0 failed, 8 skipped, 1 finished
+
+us-east-1 - EC2Image - ami-06d002a0dcaaa385f - [] - removed
+
+Removal requested: 0 waiting, 0 failed, 8 skipped, 2 finished
+
+Nuke complete: 0 failed, 8 skipped, 2 finished.
+
+trial1 $
+```

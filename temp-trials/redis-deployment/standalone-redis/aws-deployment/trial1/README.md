@@ -3,9 +3,12 @@
 Put AWS keys in `.env` file in the below format
 
 ```
+export AWS_ACCOUNT_ID="aws-account-id"
 export AWS_ACCESS_KEY_ID="aws-access-key"
 export AWS_SECRET_ACCESS_KEY="secret-access-key"
 ```
+
+
 
 ```bash
 $ source .env
@@ -14,8 +17,16 @@ $ terraform plan -out tfplan
 $ terraform apply tfplan
 ```
 
-The above should finish successfully and give out a public IP to connect to
+The above should finish successfully and give out a public IP to connect to. If SSH feature is enabled then you can use the SSH
 
 ```bash
 $ ssh -i dummy-key ec2-user@${IP}
+```
+
+For cleaning up images
+
+```bash
+$ envsubst < aws-nuke-config-template.yaml > aws-nuke-config.yaml
+
+$ aws-nuke -c aws-nuke-config.yaml --access-key-id "$AWS_ACCESS_KEY_ID" --secret-access-key "$AWS_SECRET_ACCESS_KEY" --force --no-dry-run
 ```

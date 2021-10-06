@@ -1,6 +1,9 @@
 regions:
   - us-east-1
 
+account-blocklist:
+  - "999999999999"
+
 resource-types:
   targets:
     - EC2Image
@@ -8,4 +11,4 @@ resource-types:
     - EC2Snapshot
 
 accounts:
-  ${AWS_ACCOUNT_ID}: {} # aws-nuke-example
+  ${AWS_ACCOUNT_ID}: {}
