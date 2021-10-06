@@ -6,7 +6,7 @@ terraform {
     }
   }
 
-  required_version = "1.0.7"
+  required_version = "1.0.8"
 }
 
 provider "aws" {
@@ -58,6 +58,18 @@ resource "aws_security_group_rule" "redis_security_group_ingress" {
   security_group_id = aws_security_group.redis_security_group.id
 }
 
+// This enables SSH feature
+// resource "aws_security_group_rule" "redis_security_group_ingress_ssh" {
+//   type              = "ingress"
+//   description       = "Redis Traffic from the Internet"
+//   from_port         = 22
+//   to_port           = 22
+//   protocol          = "tcp"
+//   cidr_blocks       = ["0.0.0.0/0"]
+//   ipv6_cidr_blocks  = ["::/0"]
+//   security_group_id = aws_security_group.redis_security_group.id
+// }
+
 resource "aws_security_group_rule" "redis_security_group_egress" {
   type              = "egress"
   from_port         = 0
@@ -101,7 +113,7 @@ resource "aws_route_table_association" "redis_route_table_with_subnet" {
 }
 
 resource "aws_instance" "redis_server" {
-  ami                         = "ami-06d002a0dcaaa385f"
+  ami                         = "ami-036b8becf28ac0ad9"
   instance_type               = "t4g.micro"
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.redis_security_group.id]

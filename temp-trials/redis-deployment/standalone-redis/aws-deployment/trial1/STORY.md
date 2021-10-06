@@ -5762,3 +5762,1593 @@ Nuke complete: 0 failed, 8 skipped, 2 finished.
 
 trial1 $
 ```
+
+---
+
+```bash
+trial1 $ packer build redis-server.pkr.hcl 
+redis.amazon-ebs.redis: output will be in this color.
+
+Build 'redis.amazon-ebs.redis' errored after 5 seconds 345 milliseconds: no valid credential sources for  found.
+
+Please see 
+for more information about providing credentials.
+
+Error: NoCredentialProviders: no valid providers in chain. Deprecated.
+	For verbose messaging see aws.Config.CredentialsChainVerboseErrors
+
+
+==> Wait completed after 5 seconds 345 milliseconds
+
+==> Some builds didn't complete successfully and had errors:
+--> redis.amazon-ebs.redis: no valid credential sources for  found.
+
+Please see 
+for more information about providing credentials.
+
+Error: NoCredentialProviders: no valid providers in chain. Deprecated.
+	For verbose messaging see aws.Config.CredentialsChainVerboseErrors
+
+
+==> Builds finished but no artifacts were created.
+trial1 $ 
+```
+
+---
+
+[TODO]
+- Check if AMIs can exported to my computer and imported later 🤔 They exist on S3 buckets apparently. Can I get hold of them and download them and upload them back later to S3 / AWS console and use it as a VM image is the question 🤔
+
+---
+
+https://duckduckgo.com/?t=ffab&q=amazon+ec2+linux+firewall&ia=web
+
+https://www.cyberciti.biz/faq/set-up-a-basic-iptables-firewall-on-amazon-linux-ami/
+
+https://cloudacademy.com/blog/server-security-firewalld/
+
+---
+
+Some redis config file stuff -
+
+```
+################################## NETWORK #####################################
+
+# By default, if no "bind" configuration directive is specified, Redis listens
+# for connections from all available network interfaces on the host machine.
+# It is possible to listen to just one or multiple selected interfaces using
+# the "bind" configuration directive, followed by one or more IP addresses.
+# Each address can be prefixed by "-", which means that redis will not fail to
+# start if the address is not available. Being not available only refers to
+# addresses that does not correspond to any network interfece. Addresses that
+# are already in use will always fail, and unsupported protocols will always BE
+# silently skipped.
+#
+# Examples:
+#
+# bind 192.168.1.100 10.0.0.1     # listens on two specific IPv4 addresses
+# bind 127.0.0.1 ::1              # listens on loopback IPv4 and IPv6
+# bind * -::*                     # like the default, all available interfaces
+#
+# ~~~ WARNING ~~~ If the computer running Redis is directly exposed to the
+# internet, binding to all the interfaces is dangerous and will expose the
+# instance to everybody on the internet. So by default we uncomment the
+# following bind directive, that will force Redis to listen only on the
+# IPv4 and IPv6 (if available) loopback interface addresses (this means Redis
+# will only be able to accept client connections from the same host that it is
+# running on).
+#
+# IF YOU ARE SURE YOU WANT YOUR INSTANCE TO LISTEN TO ALL THE INTERFACES
+# JUST COMMENT OUT THE FOLLOWING LINE.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+bind 127.0.0.1 -::1
+```
+
+```
+# Protected mode is a layer of security protection, in order to avoid that
+# Redis instances left open on the internet are accessed and exploited.
+#
+# When protected mode is on and if:
+#
+# 1) The server is not binding explicitly to a set of addresses using the
+#    "bind" directive.
+# 2) No password is configured.
+#
+# The server only accepts connections from clients connecting from the
+# IPv4 and IPv6 loopback addresses 127.0.0.1 and ::1, and from Unix domain
+# sockets.
+#
+# By default protected mode is enabled. You should disable it only if
+# you are sure you want clients from other hosts to connect to Redis
+# even if no authentication is configured, nor a specific set of interfaces
+# are explicitly listed using the "bind" directive.
+protected-mode yes
+```
+
+---
+
+```bash
+trial1 $ packer build redis-server.pkr.hcl 
+trial1 $ packer init .
+trial1 $ packer fmt .
+trial1 $ packer build redis-server.pkr.hcl
+redis.amazon-ebs.redis: output will be in this color.
+
+==> redis.amazon-ebs.redis: Prevalidating any provided VPC information
+==> redis.amazon-ebs.redis: Prevalidating AMI Name: redis-server
+    redis.amazon-ebs.redis: Found Image ID: ami-029c64b3c205e6cce
+==> redis.amazon-ebs.redis: Creating temporary keypair: packer_615de088-cf90-43c5-2a08-70307142ae25
+==> redis.amazon-ebs.redis: Creating temporary security group for this instance: packer_615de08f-ab5e-bcb3-10a3-86a906c4396a
+==> redis.amazon-ebs.redis: Authorizing access to port 22 from [0.0.0.0/0] in the temporary security groups...
+==> redis.amazon-ebs.redis: Launching a source AWS instance...
+==> redis.amazon-ebs.redis: Adding tags to source instance
+    redis.amazon-ebs.redis: Adding tag: "Name": "Packer Builder"
+    redis.amazon-ebs.redis: Instance ID: i-03081a2d8b58c2c09
+==> redis.amazon-ebs.redis: Waiting for instance (i-03081a2d8b58c2c09) to become ready...
+==> redis.amazon-ebs.redis: Using SSH communicator to connect: 107.22.86.14
+==> redis.amazon-ebs.redis: Waiting for SSH to become available...
+==> redis.amazon-ebs.redis: Connected to SSH!
+==> redis.amazon-ebs.redis: Provisioning with shell script: ./install-redis.sh
+==> redis.amazon-ebs.redis: ++ sudo amazon-linux-extras enable redis6
+    redis.amazon-ebs.redis:   0  ansible2                 available    [ =2.4.6  =2.8  =stable ]
+    redis.amazon-ebs.redis:   1  httpd_modules            available    [ =1.0  =stable ]
+    redis.amazon-ebs.redis:   2  memcached1.5             available    \
+    redis.amazon-ebs.redis:         [ =1.5.1  =1.5.16  =1.5.17 ]
+    redis.amazon-ebs.redis:   4  postgresql9.6            available    [ =9.6.8  =stable ]
+    redis.amazon-ebs.redis:   5  postgresql10             available    [ =10  =stable ]
+    redis.amazon-ebs.redis:   7  R3.4                     available    [ =3.4.3  =stable ]
+    redis.amazon-ebs.redis:   8  rust1                    available    [ =stable ]
+    redis.amazon-ebs.redis:  11  php7.2                   available    \
+    redis.amazon-ebs.redis:         [ =7.2.13  =7.2.14  =7.2.16  =7.2.17  =7.2.19  =7.2.21
+    redis.amazon-ebs.redis:           =7.2.22  =7.2.23  =7.2.24  =7.2.26  =stable ]
+    redis.amazon-ebs.redis:  13  lamp-mariadb10.2-php7.2  available    \
+    redis.amazon-ebs.redis:         [ =10.2.10_7.2.11  =10.2.10_7.2.14  =10.2.10_7.2.16
+    redis.amazon-ebs.redis:           =10.2.10_7.2.17  =10.2.10_7.2.19  =10.2.10_7.2.22
+    redis.amazon-ebs.redis:           =10.2.10_7.2.23  =10.2.10_7.2.24  =stable ]
+    redis.amazon-ebs.redis:  14  libreoffice              available    [ =5.3.6.1  =stable ]
+    redis.amazon-ebs.redis:  16  docker=latest            enabled      \
+    redis.amazon-ebs.redis:         [ =18.06.1  =18.09.9  =stable ]
+    redis.amazon-ebs.redis:  17  mate-desktop1.x          available    [ =stable ]
+    redis.amazon-ebs.redis:  18  GraphicsMagick1.3        available    \
+    redis.amazon-ebs.redis:         [ =1.3.29  =1.3.32  =1.3.34  =stable ]
+    redis.amazon-ebs.redis:  19  tomcat8.5                available    \
+==> redis.amazon-ebs.redis: ++ yum clean metadata
+    redis.amazon-ebs.redis:         [ =8.5.32  =8.5.38  =8.5.40  =8.5.42  =8.5.50  =stable ]
+    redis.amazon-ebs.redis:  20  epel                     available    [ =7.11  =stable ]
+    redis.amazon-ebs.redis:  21  testing                  available    [ =1.0  =stable ]
+    redis.amazon-ebs.redis:  22  ecs                      available    [ =stable ]
+    redis.amazon-ebs.redis:  23  corretto8                available    \
+    redis.amazon-ebs.redis:         [ =1.8.0_202  =1.8.0_212  =1.8.0_222  =1.8.0_232  =1.8.0_242
+    redis.amazon-ebs.redis:           =stable ]
+    redis.amazon-ebs.redis:  24  golang1.11               available    \
+    redis.amazon-ebs.redis:         [ =1.11.3  =1.11.11  =1.11.13  =stable ]
+    redis.amazon-ebs.redis:  25  squid4                   available    [ =4  =stable ]
+    redis.amazon-ebs.redis:  26  php7.3                   available    \
+    redis.amazon-ebs.redis:         [ =7.3.2  =7.3.3  =7.3.4  =7.3.6  =7.3.8  =7.3.9  =7.3.10
+    redis.amazon-ebs.redis:           =7.3.11  =7.3.13  =stable ]
+    redis.amazon-ebs.redis:  27  java-openjdk11           available    [ =11  =stable ]
+    redis.amazon-ebs.redis:  28  lynis                    available    [ =stable ]
+    redis.amazon-ebs.redis:  29  kernel-ng                available    [ =stable ]
+    redis.amazon-ebs.redis:  30  BCC                      available    [ =0.x  =stable ]
+    redis.amazon-ebs.redis:  31  nginx1                   available    [ =stable ]
+    redis.amazon-ebs.redis:  32  ruby2.6                  available    [ =2.6  =stable ]
+    redis.amazon-ebs.redis:  33  mock                     available    [ =stable ]
+    redis.amazon-ebs.redis:  34  postgresql11             available    [ =11  =stable ]
+    redis.amazon-ebs.redis:  35  php7.4                   available    [ =stable ]
+    redis.amazon-ebs.redis:  36  python3.8                available    [ =stable ]
+    redis.amazon-ebs.redis:  37  lustre2.10               available    [ =stable ]
+    redis.amazon-ebs.redis:  38  haproxy2                 available    [ =stable ]
+    redis.amazon-ebs.redis:  39  collectd                 available    [ =stable ]
+    redis.amazon-ebs.redis:  40  R4                       available    [ =stable ]
+    redis.amazon-ebs.redis:  41  kernel-5.4               available    [ =stable ]
+    redis.amazon-ebs.redis:  42  selinux-ng               available    [ =stable ]
+    redis.amazon-ebs.redis:  43  php8.0                   available    [ =stable ]
+    redis.amazon-ebs.redis:  44  tomcat9                  available    [ =stable ]
+    redis.amazon-ebs.redis:  45  unbound1.13              available    [ =stable ]
+    redis.amazon-ebs.redis:  46  mariadb10.5              available    [ =stable ]
+    redis.amazon-ebs.redis:  47  kernel-5.10              available    [ =stable ]
+    redis.amazon-ebs.redis:  48  redis6=latest            enabled      [ =stable ]
+    redis.amazon-ebs.redis:  49  ruby3.0                  available    [ =stable ]
+    redis.amazon-ebs.redis:  50  postgresql12             available    [ =stable ]
+    redis.amazon-ebs.redis:  51  postgresql13             available    [ =stable ]
+    redis.amazon-ebs.redis:  52  mock2                    available    [ =stable ]
+    redis.amazon-ebs.redis:  53  dnsmasq2.85              available    [ =stable ]
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Now you can install:
+    redis.amazon-ebs.redis:  # yum clean metadata
+    redis.amazon-ebs.redis:  # yum install redis
+==> redis.amazon-ebs.redis: ++ sudo yum install redis -y
+    redis.amazon-ebs.redis: Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+    redis.amazon-ebs.redis: Cleaning repos: amzn2-core amzn2extra-docker amzn2extra-redis6
+    redis.amazon-ebs.redis: 9 metadata files removed
+    redis.amazon-ebs.redis: 0 sqlite files removed
+    redis.amazon-ebs.redis: 0 metadata files removed
+==> redis.amazon-ebs.redis: Existing lock /var/run/yum.pid: another copy is running as pid 1269.
+==> redis.amazon-ebs.redis: Another app is currently holding the yum lock; waiting for it to exit...
+    redis.amazon-ebs.redis: Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+==> redis.amazon-ebs.redis:   The other application is: yum
+==> redis.amazon-ebs.redis:     Memory : 114 M RSS (209 MB VSZ)
+==> redis.amazon-ebs.redis:     Started: Wed Oct  6 17:45:26 2021 - 00:02 ago
+==> redis.amazon-ebs.redis:     State  : Running, pid: 1269
+    redis.amazon-ebs.redis: Resolving Dependencies
+    redis.amazon-ebs.redis: --> Running transaction check
+    redis.amazon-ebs.redis: ---> Package redis.aarch64 0:6.2.5-1.amzn2.0.1 will be installed
+    redis.amazon-ebs.redis: --> Finished Dependency Resolution
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Dependencies Resolved
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: ================================================================================
+    redis.amazon-ebs.redis:  Package    Arch         Version                   Repository              Size
+    redis.amazon-ebs.redis: ================================================================================
+    redis.amazon-ebs.redis: Installing:
+    redis.amazon-ebs.redis:  redis      aarch64      6.2.5-1.amzn2.0.1         amzn2extra-redis6      1.1 M
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Transaction Summary
+    redis.amazon-ebs.redis: ================================================================================
+    redis.amazon-ebs.redis: Install  1 Package
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Total download size: 1.1 M
+    redis.amazon-ebs.redis: Installed size: 3.7 M
+    redis.amazon-ebs.redis: Downloading packages:
+    redis.amazon-ebs.redis: Running transaction check
+    redis.amazon-ebs.redis: Running transaction test
+    redis.amazon-ebs.redis: Transaction test succeeded
+    redis.amazon-ebs.redis: Running transaction
+    redis.amazon-ebs.redis:   Installing : redis-6.2.5-1.amzn2.0.1.aarch64                              1/1
+    redis.amazon-ebs.redis:   Verifying  : redis-6.2.5-1.amzn2.0.1.aarch64                              1/1
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Installed:
+    redis.amazon-ebs.redis:   redis.aarch64 0:6.2.5-1.amzn2.0.1
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Complete!
+==> redis.amazon-ebs.redis: ++ export PORT=50379
+==> redis.amazon-ebs.redis: ++ PORT=50379
+==> redis.amazon-ebs.redis: ++ sudo tee /etc/systemd/system/redis.service
+==> redis.amazon-ebs.redis: ++ echo '[Unit]
+==> redis.amazon-ebs.redis: Description=Redis
+==> redis.amazon-ebs.redis: After=syslog.target
+==> redis.amazon-ebs.redis:
+==> redis.amazon-ebs.redis: [Service]
+==> redis.amazon-ebs.redis: ExecStart=/bin/redis-server /etc/redis/redis.conf --port 50379
+==> redis.amazon-ebs.redis: RestartSec=5s
+==> redis.amazon-ebs.redis: Restart=on-success
+==> redis.amazon-ebs.redis:
+==> redis.amazon-ebs.redis: [Install]
+==> redis.amazon-ebs.redis: WantedBy=multi-user.target
+==> redis.amazon-ebs.redis: '
+    redis.amazon-ebs.redis: [Unit]
+    redis.amazon-ebs.redis: Description=Redis
+==> redis.amazon-ebs.redis: ++ cat /etc/systemd/system/redis.service
+    redis.amazon-ebs.redis: After=syslog.target
+    redis.amazon-ebs.redis:
+==> redis.amazon-ebs.redis: ++ sudo systemctl daemon-reload
+    redis.amazon-ebs.redis: [Service]
+    redis.amazon-ebs.redis: ExecStart=/bin/redis-server /etc/redis/redis.conf --port 50379
+    redis.amazon-ebs.redis: RestartSec=5s
+    redis.amazon-ebs.redis: Restart=on-success
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: [Install]
+    redis.amazon-ebs.redis: WantedBy=multi-user.target
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: [Unit]
+    redis.amazon-ebs.redis: Description=Redis
+    redis.amazon-ebs.redis: After=syslog.target
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: [Service]
+    redis.amazon-ebs.redis: ExecStart=/bin/redis-server /etc/redis/redis.conf --port 50379
+    redis.amazon-ebs.redis: RestartSec=5s
+    redis.amazon-ebs.redis: Restart=on-success
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: [Install]
+    redis.amazon-ebs.redis: WantedBy=multi-user.target
+    redis.amazon-ebs.redis:
+==> redis.amazon-ebs.redis: ++ sudo systemctl status redis
+    redis.amazon-ebs.redis: ● redis.service - Redis
+    redis.amazon-ebs.redis:    Loaded: loaded (/etc/systemd/system/redis.service; disabled; vendor preset: disabled)
+    redis.amazon-ebs.redis:   Drop-In: /etc/systemd/system/redis.service.d
+==> redis.amazon-ebs.redis: ++ true
+    redis.amazon-ebs.redis:            └─limit.conf
+    redis.amazon-ebs.redis:    Active: inactive (dead)
+==> redis.amazon-ebs.redis: ++ sudo systemctl start redis
+==> redis.amazon-ebs.redis: ++ sudo systemctl status redis
+    redis.amazon-ebs.redis: ● redis.service - Redis
+    redis.amazon-ebs.redis:    Loaded: loaded (/etc/systemd/system/redis.service; disabled; vendor preset: disabled)
+    redis.amazon-ebs.redis:   Drop-In: /etc/systemd/system/redis.service.d
+==> redis.amazon-ebs.redis: ++ redis-cli -p 50379 PING
+    redis.amazon-ebs.redis:            └─limit.conf
+    redis.amazon-ebs.redis:    Active: active (running) since Wed 2021-10-06 17:45:31 UTC; 30ms ago
+    redis.amazon-ebs.redis:  Main PID: 1413 (redis-server)
+    redis.amazon-ebs.redis:    CGroup: /system.slice/redis.service
+    redis.amazon-ebs.redis:            └─1413 /bin/redis-server 127.0.0.1:50379
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Oct 06 17:45:31 ip-172-31-49-134.ec2.internal systemd[1]: Started Redis.
+    redis.amazon-ebs.redis: PONG
+==> redis.amazon-ebs.redis: Stopping the source instance...
+    redis.amazon-ebs.redis: Stopping instance
+==> redis.amazon-ebs.redis: Waiting for the instance to stop...
+==> redis.amazon-ebs.redis: Creating AMI redis-server from instance i-03081a2d8b58c2c09
+    redis.amazon-ebs.redis: AMI: ami-036b8becf28ac0ad9
+==> redis.amazon-ebs.redis: Waiting for AMI to become ready...
+==> redis.amazon-ebs.redis: Skipping Enable AMI deprecation...
+==> redis.amazon-ebs.redis: Terminating the source AWS instance...
+==> redis.amazon-ebs.redis: Cleaning up any extra volumes...
+==> redis.amazon-ebs.redis: No volumes to clean up, skipping
+==> redis.amazon-ebs.redis: Deleting temporary security group...
+==> redis.amazon-ebs.redis: Deleting temporary keypair...
+Build 'redis.amazon-ebs.redis' finished after 3 minutes 51 seconds.
+
+==> Wait completed after 3 minutes 51 seconds
+
+==> Builds finished. The artifacts of successful builds are:
+--> redis.amazon-ebs.redis: AMIs were created:
+us-east-1: ami-036b8becf28ac0ad9
+
+trial1 $ 
+trial1 $ 
+trial1 $ 
+trial1 $ terraform init .
+Too many command line arguments. Did you mean to use -chdir?
+trial1 $ source .env
+trial1 $ terraform init
+╷
+│ Error: Unsupported Terraform Core version
+│ 
+│   on main.tf line 9, in terraform:
+│    9:   required_version = "1.0.7"
+│ 
+│ This configuration does not support Terraform version 1.0.8. To proceed, either choose another supported Terraform
+│ version or update this version constraint. Version constraints are normally set for good reason, so updating the
+│ constraint may lead to other errors or unexpected behavior.
+╵
+
+trial1 $ terraform version
+Terraform v1.0.8
+on darwin_amd64
++ provider registry.terraform.io/hashicorp/aws v3.60.0
+trial1 $ terraform init
+
+Initializing the backend...
+
+Initializing provider plugins...
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Using previously-installed hashicorp/aws v3.60.0
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+trial1 $ terraform fmt
+trial1 $ terraform fmt -h
+Usage: terraform [global options] fmt [options] [DIR]
+
+	Rewrites all Terraform configuration files to a canonical format. Both
+	configuration files (.tf) and variables files (.tfvars) are updated.
+	JSON files (.tf.json or .tfvars.json) are not modified.
+
+	If DIR is not specified then the current working directory will be used.
+	If DIR is "-" then content will be read from STDIN. The given content must
+	be in the Terraform language native syntax; JSON is not supported.
+
+Options:
+
+  -list=false    Don't list files whose formatting differs
+                 (always disabled if using STDIN)
+
+  -write=false   Don't write to source files
+                 (always disabled if using STDIN or -check)
+
+  -diff          Display diffs of formatting changes
+
+  -check         Check if the input is formatted. Exit status will be 0 if all
+                 input is properly formatted and non-zero otherwise.
+
+  -no-color      If specified, output won't contain any color.
+
+  -recursive     Also process files in subdirectories. By default, only the
+                 given directory (or current directory) is processed.
+trial1 $ terraform fmt .
+trial1 $ terraform plan -out tfplan
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with
+the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_instance.redis_server will be created
+  + resource "aws_instance" "redis_server" {
+      + ami                                  = "ami-036b8becf28ac0ad9"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = true
+      + availability_zone                    = (known after apply)
+      + cpu_core_count                       = (known after apply)
+      + cpu_threads_per_core                 = (known after apply)
+      + disable_api_termination              = (known after apply)
+      + ebs_optimized                        = (known after apply)
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t4g.micro"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = (known after apply)
+      + monitoring                           = (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + subnet_id                            = (known after apply)
+      + tags                                 = {
+          + "Name" = "redis-server"
+        }
+      + tags_all                             = {
+          + "Name" = "redis-server"
+        }
+      + tenancy                              = (known after apply)
+      + user_data                            = (known after apply)
+      + user_data_base64                     = (known after apply)
+      + vpc_security_group_ids               = (known after apply)
+
+      + capacity_reservation_specification {
+          + capacity_reservation_preference = (known after apply)
+
+          + capacity_reservation_target {
+              + capacity_reservation_id = (known after apply)
+            }
+        }
+
+      + ebs_block_device {
+          + delete_on_termination = (known after apply)
+          + device_name           = (known after apply)
+          + encrypted             = (known after apply)
+          + iops                  = (known after apply)
+          + kms_key_id            = (known after apply)
+          + snapshot_id           = (known after apply)
+          + tags                  = (known after apply)
+          + throughput            = (known after apply)
+          + volume_id             = (known after apply)
+          + volume_size           = (known after apply)
+          + volume_type           = (known after apply)
+        }
+
+      + enclave_options {
+          + enabled = (known after apply)
+        }
+
+      + ephemeral_block_device {
+          + device_name  = (known after apply)
+          + no_device    = (known after apply)
+          + virtual_name = (known after apply)
+        }
+
+      + metadata_options {
+          + http_endpoint               = (known after apply)
+          + http_put_response_hop_limit = (known after apply)
+          + http_tokens                 = (known after apply)
+        }
+
+      + network_interface {
+          + delete_on_termination = (known after apply)
+          + device_index          = (known after apply)
+          + network_interface_id  = (known after apply)
+        }
+
+      + root_block_device {
+          + delete_on_termination = true
+          + device_name           = (known after apply)
+          + encrypted             = (known after apply)
+          + iops                  = (known after apply)
+          + kms_key_id            = (known after apply)
+          + throughput            = (known after apply)
+          + volume_id             = (known after apply)
+          + volume_size           = 8
+          + volume_type           = (known after apply)
+        }
+    }
+
+  # aws_internet_gateway.redis_internet_gateway will be created
+  + resource "aws_internet_gateway" "redis_internet_gateway" {
+      + arn      = (known after apply)
+      + id       = (known after apply)
+      + owner_id = (known after apply)
+      + tags     = {
+          + "Name" = "redis-internet-gateway"
+        }
+      + tags_all = {
+          + "Name" = "redis-internet-gateway"
+        }
+      + vpc_id   = (known after apply)
+    }
+
+  # aws_key_pair.redis_ssh_key will be created
+  + resource "aws_key_pair" "redis_ssh_key" {
+      + arn             = (known after apply)
+      + fingerprint     = (known after apply)
+      + id              = (known after apply)
+      + key_name        = (known after apply)
+      + key_name_prefix = "redis-ssh-key"
+      + key_pair_id     = (known after apply)
+      + public_key      = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFx7TEwvLYQEnPcH/eorh+4aAofEKR4bHisiy3Pia8FZ dummy@gmail.com"
+      + tags_all        = (known after apply)
+    }
+
+  # aws_route.redis_route_ipv4_internet_access will be created
+  + resource "aws_route" "redis_route_ipv4_internet_access" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + gateway_id             = (known after apply)
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + route_table_id         = (known after apply)
+      + state                  = (known after apply)
+    }
+
+  # aws_route.redis_route_ipv6_internet_access will be created
+  + resource "aws_route" "redis_route_ipv6_internet_access" {
+      + destination_ipv6_cidr_block = "::/0"
+      + gateway_id                  = (known after apply)
+      + id                          = (known after apply)
+      + instance_id                 = (known after apply)
+      + instance_owner_id           = (known after apply)
+      + network_interface_id        = (known after apply)
+      + origin                      = (known after apply)
+      + route_table_id              = (known after apply)
+      + state                       = (known after apply)
+    }
+
+  # aws_route_table.redis_route_table will be created
+  + resource "aws_route_table" "redis_route_table" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + route            = (known after apply)
+      + tags             = {
+          + "Name" = "redis-route-table"
+        }
+      + tags_all         = {
+          + "Name" = "redis-route-table"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # aws_route_table_association.redis_route_table_with_subnet will be created
+  + resource "aws_route_table_association" "redis_route_table_with_subnet" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # aws_security_group.redis_security_group will be created
+  + resource "aws_security_group" "redis_security_group" {
+      + arn                    = (known after apply)
+      + description            = "Allow Redis traffic"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = "allow_redis_traffic"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Name" = "allow-redis-traffic"
+        }
+      + tags_all               = {
+          + "Name" = "allow-redis-traffic"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # aws_security_group_rule.redis_security_group_egress will be created
+  + resource "aws_security_group_rule" "redis_security_group_egress" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + from_port                = 0
+      + id                       = (known after apply)
+      + ipv6_cidr_blocks         = [
+          + "::/0",
+        ]
+      + protocol                 = "-1"
+      + security_group_id        = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 0
+      + type                     = "egress"
+    }
+
+  # aws_security_group_rule.redis_security_group_ingress will be created
+  + resource "aws_security_group_rule" "redis_security_group_ingress" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + description              = "Redis Traffic from the Internet"
+      + from_port                = 50379
+      + id                       = (known after apply)
+      + ipv6_cidr_blocks         = [
+          + "::/0",
+        ]
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 50379
+      + type                     = "ingress"
+    }
+
+  # aws_security_group_rule.redis_security_group_ingress_ssh will be created
+  + resource "aws_security_group_rule" "redis_security_group_ingress_ssh" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + description              = "Redis Traffic from the Internet"
+      + from_port                = 22
+      + id                       = (known after apply)
+      + ipv6_cidr_blocks         = [
+          + "::/0",
+        ]
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 22
+      + type                     = "ingress"
+    }
+
+  # aws_subnet.redis_subnet will be created
+  + resource "aws_subnet" "redis_subnet" {
+      + arn                             = (known after apply)
+      + assign_ipv6_address_on_creation = false
+      + availability_zone               = (known after apply)
+      + availability_zone_id            = (known after apply)
+      + cidr_block                      = "10.0.0.0/24"
+      + id                              = (known after apply)
+      + ipv6_cidr_block_association_id  = (known after apply)
+      + map_public_ip_on_launch         = false
+      + owner_id                        = (known after apply)
+      + tags                            = {
+          + "Name" = "redis-subnet"
+        }
+      + tags_all                        = {
+          + "Name" = "redis-subnet"
+        }
+      + vpc_id                          = (known after apply)
+    }
+
+  # aws_vpc.redis_vpc will be created
+  + resource "aws_vpc" "redis_vpc" {
+      + arn                              = (known after apply)
+      + assign_generated_ipv6_cidr_block = false
+      + cidr_block                       = "10.0.0.0/16"
+      + default_network_acl_id           = (known after apply)
+      + default_route_table_id           = (known after apply)
+      + default_security_group_id        = (known after apply)
+      + dhcp_options_id                  = (known after apply)
+      + enable_classiclink               = (known after apply)
+      + enable_classiclink_dns_support   = (known after apply)
+      + enable_dns_hostnames             = (known after apply)
+      + enable_dns_support               = true
+      + id                               = (known after apply)
+      + instance_tenancy                 = "default"
+      + ipv6_association_id              = (known after apply)
+      + ipv6_cidr_block                  = (known after apply)
+      + main_route_table_id              = (known after apply)
+      + owner_id                         = (known after apply)
+      + tags                             = {
+          + "Name" = "redis-vpc"
+        }
+      + tags_all                         = {
+          + "Name" = "redis-vpc"
+        }
+    }
+
+Plan: 13 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + ip = (known after apply)
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "tfplan"
+trial1 $ terraform apply tfplan
+aws_key_pair.redis_ssh_key: Creating...
+aws_vpc.redis_vpc: Creating...
+aws_key_pair.redis_ssh_key: Creation complete after 3s [id=redis-ssh-key20211006174958787500000001]
+aws_vpc.redis_vpc: Still creating... [10s elapsed]
+aws_vpc.redis_vpc: Creation complete after 14s [id=vpc-0be9617e0a7bda7f6]
+aws_internet_gateway.redis_internet_gateway: Creating...
+aws_route_table.redis_route_table: Creating...
+aws_subnet.redis_subnet: Creating...
+aws_security_group.redis_security_group: Creating...
+aws_route_table.redis_route_table: Creation complete after 3s [id=rtb-0752fa0bfc2b09271]
+aws_subnet.redis_subnet: Creation complete after 4s [id=subnet-030e121d8df4c8e35]
+aws_route_table_association.redis_route_table_with_subnet: Creating...
+aws_internet_gateway.redis_internet_gateway: Creation complete after 5s [id=igw-0b16786eb4c597437]
+aws_route.redis_route_ipv4_internet_access: Creating...
+aws_route.redis_route_ipv6_internet_access: Creating...
+aws_route_table_association.redis_route_table_with_subnet: Creation complete after 3s [id=rtbassoc-068a11854a4097c60]
+aws_security_group.redis_security_group: Creation complete after 7s [id=sg-0e28992edf56a6df2]
+aws_security_group_rule.redis_security_group_ingress: Creating...
+aws_security_group_rule.redis_security_group_ingress_ssh: Creating...
+aws_security_group_rule.redis_security_group_egress: Creating...
+aws_instance.redis_server: Creating...
+aws_route.redis_route_ipv4_internet_access: Creation complete after 4s [id=r-rtb-0752fa0bfc2b092711080289494]
+aws_route.redis_route_ipv6_internet_access: Creation complete after 4s [id=r-rtb-0752fa0bfc2b092712750132062]
+aws_security_group_rule.redis_security_group_ingress: Creation complete after 3s [id=sgrule-2475062382]
+aws_security_group_rule.redis_security_group_ingress_ssh: Creation complete after 7s [id=sgrule-274546590]
+aws_security_group_rule.redis_security_group_egress: Still creating... [10s elapsed]
+aws_instance.redis_server: Still creating... [10s elapsed]
+aws_security_group_rule.redis_security_group_egress: Creation complete after 10s [id=sgrule-2164830592]
+aws_instance.redis_server: Still creating... [20s elapsed]
+aws_instance.redis_server: Creation complete after 22s [id=i-07ecf4e1b1c148f0a]
+
+Apply complete! Resources: 13 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+ip = "54.175.124.246"
+trial1 $ ssh -i dummy-key ec2-user@54.175.124.246
+The authenticity of host '54.175.124.246 (54.175.124.246)' can't be established.
+ECDSA key fingerprint is SHA256:LPSV70CRdpU7rwzYDr0NkkwfjnRAX9zN98GQjs/K03M.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '54.175.124.246' (ECDSA) to the list of known hosts.
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+11 package(s) needed for security, out of 34 available
+Run "sudo yum update" to apply all updates.
+-bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
+[ec2-user@ip-10-0-0-185 ~]$ redis-cli -p 50379 PING
+Could not connect to Redis at 127.0.0.1:50379: Connection refused
+[ec2-user@ip-10-0-0-185 ~]$ sudo systemctl status redis
+● redis.service - Redis
+   Loaded: loaded (/etc/systemd/system/redis.service; disabled; vendor preset: disabled)
+  Drop-In: /etc/systemd/system/redis.service.d
+           └─limit.conf
+   Active: inactive (dead)
+[ec2-user@ip-10-0-0-185 ~]$ sudo systemctl start redis
+[ec2-user@ip-10-0-0-185 ~]$ redis-cli -p 50379 PING
+PONG
+[ec2-user@ip-10-0-0-185 ~]$ ufw
+-bash: ufw: command not found
+[ec2-user@ip-10-0-0-185 ~]$ systemctl status firewalld.service
+Unit firewalld.service could not be found.
+[ec2-user@ip-10-0-0-185 ~]$ less /etc/re
+redis/            request-key.conf  request-key.d/    resolv.conf       
+[ec2-user@ip-10-0-0-185 ~]$ less /etc/re
+redis/            request-key.conf  request-key.d/    resolv.conf       
+[ec2-user@ip-10-0-0-185 ~]$ less /etc/redis/redis.conf
+/etc/redis/redis.conf: Permission denied
+[ec2-user@ip-10-0-0-185 ~]$ sudo su
+[root@ip-10-0-0-185 ec2-user]# less /etc/redis/redis.conf 
+[root@ip-10-0-0-185 ec2-user]# less /etc/redis/redis.conf 
+[root@ip-10-0-0-185 ec2-user]# less /etc/redis/redis.conf 
+[root@ip-10-0-0-185 ec2-user]# redis-cli
+Could not connect to Redis at 127.0.0.1:6379: Connection refused
+not connected> 
+[root@ip-10-0-0-185 ec2-user]# redis-cli -p 50379
+127.0.0.1:50379> ACL GENPASS
+"0cf2c249fdc91ac1d29a93718c93c74edfe1c2432c2765e812c7e2a8347c14fb"
+127.0.0.1:50379> 
+[root@ip-10-0-0-185 ec2-user]# vi /etc/redis/redis.conf 
+[root@ip-10-0-0-185 ec2-user]# vi /etc/redis/redis.conf 
+[root@ip-10-0-0-185 ec2-user]# systemctl restart redis
+[root@ip-10-0-0-185 ec2-user]# systemctl status redis
+● redis.service - Redis
+   Loaded: loaded (/etc/systemd/system/redis.service; disabled; vendor preset: disabled)
+  Drop-In: /etc/systemd/system/redis.service.d
+           └─limit.conf
+   Active: active (running) since Wed 2021-10-06 18:01:43 UTC; 4s ago
+ Main PID: 1406 (redis-server)
+   CGroup: /system.slice/redis.service
+           └─1406 /bin/redis-server *:50379
+
+Oct 06 18:01:43 ip-10-0-0-185.ec2.internal systemd[1]: Started Redis.
+[root@ip-10-0-0-185 ec2-user]# redis-cli -p 50379
+127.0.0.1:50379> ping
+(error) NOAUTH Authentication required.
+127.0.0.1:50379> auth 0cf2c249fdc91ac1d29a93718c93c74edfe1c2432c2765e812c7e2a8347c14fb
+OK
+127.0.0.1:50379> ACL GENPASS
+"791798fe5772841a68f3af9c31e8ba44495b16340b8fedba1cc6f10446838d4d"
+127.0.0.1:50379> ping
+PONG
+127.0.0.1:50379> 
+[root@ip-10-0-0-185 ec2-user]# exit
+[ec2-user@ip-10-0-0-185 ~]$ logout
+Connection to 54.175.124.246 closed.
+trial1 $ ssh -i dummy-key ec2-user@54.175.124.246
+Last login: Wed Oct  6 17:51:19 2021 from 27.5.243.173
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+11 package(s) needed for security, out of 34 available
+Run "sudo yum update" to apply all updates.
+-bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
+[ec2-user@ip-10-0-0-185 ~]$ sudo su
+[root@ip-10-0-0-185 ec2-user]# cat /etc/redis/redis.conf | grep requirepass
+# If the master is password protected (using the "requirepass" configuration
+# IMPORTANT NOTE: starting with Redis 6 "requirepass" is just a compatibility
+# The requirepass is not compatable with aclfile option and the ACL LOAD
+# command, these will cause requirepass to be ignored.
+requirepass 0cf2c249fdc91ac1d29a93718c93c74edfe1c2432c2765e812c7e2a8347c14fb
+# So use the 'requirepass' option to protect your instance.
+[root@ip-10-0-0-185 ec2-user]# cat /etc/redis/redis.conf | grep bind
+# By default, if no "bind" configuration directive is specified, Redis listens
+# the "bind" configuration directive, followed by one or more IP addresses.
+# bind 192.168.1.100 10.0.0.1     # listens on two specific IPv4 addresses
+# bind 127.0.0.1 ::1              # listens on loopback IPv4 and IPv6
+# bind * -::*                     # like the default, all available interfaces
+# internet, binding to all the interfaces is dangerous and will expose the
+# following bind directive, that will force Redis to listen only on the
+# bind 127.0.0.1 -::1
+# 1) The server is not binding explicitly to a set of addresses using the
+#    "bind" directive.
+# are explicitly listed using the "bind" directive.
+[root@ip-10-0-0-185 ec2-user]# cat /etc/redis/redis.conf | grep -C 10 bind
+################################## MODULES #####################################
+
+# Load modules at startup. If the server is not able to load modules
+# it will abort. It is possible to use multiple loadmodule directives.
+#
+# loadmodule /path/to/my_module.so
+# loadmodule /path/to/other_module.so
+
+################################## NETWORK #####################################
+
+# By default, if no "bind" configuration directive is specified, Redis listens
+# for connections from all available network interfaces on the host machine.
+# It is possible to listen to just one or multiple selected interfaces using
+# the "bind" configuration directive, followed by one or more IP addresses.
+# Each address can be prefixed by "-", which means that redis will not fail to
+# start if the address is not available. Being not available only refers to
+# addresses that does not correspond to any network interfece. Addresses that
+# are already in use will always fail, and unsupported protocols will always BE
+# silently skipped.
+#
+# Examples:
+#
+# bind 192.168.1.100 10.0.0.1     # listens on two specific IPv4 addresses
+# bind 127.0.0.1 ::1              # listens on loopback IPv4 and IPv6
+# bind * -::*                     # like the default, all available interfaces
+#
+# ~~~ WARNING ~~~ If the computer running Redis is directly exposed to the
+# internet, binding to all the interfaces is dangerous and will expose the
+# instance to everybody on the internet. So by default we uncomment the
+# following bind directive, that will force Redis to listen only on the
+# IPv4 and IPv6 (if available) loopback interface addresses (this means Redis
+# will only be able to accept client connections from the same host that it is
+# running on).
+#
+# IF YOU ARE SURE YOU WANT YOUR INSTANCE TO LISTEN TO ALL THE INTERFACES
+# JUST COMMENT OUT THE FOLLOWING LINE.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# bind 127.0.0.1 -::1
+
+# Protected mode is a layer of security protection, in order to avoid that
+# Redis instances left open on the internet are accessed and exploited.
+#
+# When protected mode is on and if:
+#
+# 1) The server is not binding explicitly to a set of addresses using the
+#    "bind" directive.
+# 2) No password is configured.
+#
+# The server only accepts connections from clients connecting from the
+# IPv4 and IPv6 loopback addresses 127.0.0.1 and ::1, and from Unix domain
+# sockets.
+#
+# By default protected mode is enabled. You should disable it only if
+# you are sure you want clients from other hosts to connect to Redis
+# even if no authentication is configured, nor a specific set of interfaces
+# are explicitly listed using the "bind" directive.
+protected-mode yes
+
+# Accept connections on the specified port, default is 6379 (IANA #815344).
+# If port 0 is specified Redis will not listen on a TCP socket.
+port 6379
+
+# TCP listen() backlog.
+#
+# In high requests-per-second environments you need a high backlog in order
+# to avoid slow clients connection issues. Note that the Linux kernel
+[root@ip-10-0-0-185 ec2-user]# exit
+[ec2-user@ip-10-0-0-185 ~]$ logout
+Connection to 54.175.124.246 closed.
+trial1 $ terraform destroy
+aws_key_pair.redis_ssh_key: Refreshing state... [id=redis-ssh-key20211006174958787500000001]
+aws_vpc.redis_vpc: Refreshing state... [id=vpc-0be9617e0a7bda7f6]
+^C
+Interrupt received.
+Please wait for Terraform to exit or data loss may occur.
+Gracefully shutting down...
+
+
+^C
+Two interrupts received. Exiting immediately. Note that data loss may have occurred.
+
+aws_route_table.redis_route_table: Refreshing state... [id=rtb-0752fa0bfc2b09271]
+aws_security_group.redis_security_group: Refreshing state... [id=sg-0e28992edf56a6df2]
+aws_internet_gateway.redis_internet_gateway: Refreshing state... [id=igw-0b16786eb4c597437]
+aws_subnet.redis_subnet: Refreshing state... [id=subnet-030e121d8df4c8e35]
+aws_security_group_rule.redis_security_group_ingress: Refreshing state... [id=sgrule-2475062382]
+aws_security_group_rule.redis_security_group_ingress_ssh: Refreshing state... [id=sgrule-274546590]
+aws_security_group_rule.redis_security_group_egress: Refreshing state... [id=sgrule-2164830592]
+aws_route.redis_route_ipv4_internet_access: Refreshing state... [id=r-rtb-0752fa0bfc2b092711080289494]
+aws_route.redis_route_ipv6_internet_access: Refreshing state... [id=r-rtb-0752fa0bfc2b092712750132062]
+aws_route_table_association.redis_route_table_with_subnet: Refreshing state... [id=rtbassoc-068a11854a4097c60]
+aws_instance.redis_server: Refreshing state... [id=i-07ecf4e1b1c148f0a]
+╷
+│ Error: operation canceled
+│ 
+│ 
+╵
+╷
+│ Error: Plugin did not respond
+│ 
+│   with aws_instance.redis_server,
+│   on main.tf line 115, in resource "aws_instance" "redis_server":
+│  115: resource "aws_instance" "redis_server" {
+│ 
+│ The plugin encountered an error, and failed to respond to the plugin.(*GRPCProvider).ReadResource call. The plugin
+│ logs may contain more details.
+╵
+trial1 $ terraform destroy -auto-approve
+aws_key_pair.redis_ssh_key: Refreshing state... [id=redis-ssh-key20211006174958787500000001]
+aws_vpc.redis_vpc: Refreshing state... [id=vpc-0be9617e0a7bda7f6]
+aws_security_group.redis_security_group: Refreshing state... [id=sg-0e28992edf56a6df2]
+aws_internet_gateway.redis_internet_gateway: Refreshing state... [id=igw-0b16786eb4c597437]
+aws_route_table.redis_route_table: Refreshing state... [id=rtb-0752fa0bfc2b09271]
+aws_subnet.redis_subnet: Refreshing state... [id=subnet-030e121d8df4c8e35]
+aws_route_table_association.redis_route_table_with_subnet: Refreshing state... [id=rtbassoc-068a11854a4097c60]
+aws_route.redis_route_ipv4_internet_access: Refreshing state... [id=r-rtb-0752fa0bfc2b092711080289494]
+aws_route.redis_route_ipv6_internet_access: Refreshing state... [id=r-rtb-0752fa0bfc2b092712750132062]
+aws_security_group_rule.redis_security_group_ingress: Refreshing state... [id=sgrule-2475062382]
+aws_security_group_rule.redis_security_group_egress: Refreshing state... [id=sgrule-2164830592]
+aws_security_group_rule.redis_security_group_ingress_ssh: Refreshing state... [id=sgrule-274546590]
+aws_instance.redis_server: Refreshing state... [id=i-07ecf4e1b1c148f0a]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the last "terraform apply":
+
+  # aws_instance.redis_server has been changed
+  ~ resource "aws_instance" "redis_server" {
+        id                                   = "i-07ecf4e1b1c148f0a"
+        tags                                 = {
+            "Name" = "redis-server"
+        }
+        # (28 unchanged attributes hidden)
+
+
+
+
+      ~ root_block_device {
+          + tags                  = {}
+            # (8 unchanged attributes hidden)
+        }
+        # (3 unchanged blocks hidden)
+    }
+  # aws_security_group_rule.redis_security_group_ingress_ssh has been changed
+  ~ resource "aws_security_group_rule" "redis_security_group_ingress_ssh" {
+        id                = "sgrule-274546590"
+      + prefix_list_ids   = []
+        # (9 unchanged attributes hidden)
+    }
+  # aws_security_group_rule.redis_security_group_ingress has been changed
+  ~ resource "aws_security_group_rule" "redis_security_group_ingress" {
+        id                = "sgrule-2475062382"
+      + prefix_list_ids   = []
+        # (9 unchanged attributes hidden)
+    }
+  # aws_key_pair.redis_ssh_key has been changed
+  ~ resource "aws_key_pair" "redis_ssh_key" {
+        id              = "redis-ssh-key20211006174958787500000001"
+      + tags            = {}
+        # (7 unchanged attributes hidden)
+    }
+  # aws_security_group.redis_security_group has been changed
+  ~ resource "aws_security_group" "redis_security_group" {
+      ~ egress                 = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + description      = ""
+              + from_port        = 0
+              + ipv6_cidr_blocks = [
+                  + "::/0",
+                ]
+              + prefix_list_ids  = []
+              + protocol         = "-1"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 0
+            },
+        ]
+        id                     = "sg-0e28992edf56a6df2"
+      ~ ingress                = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + description      = "Redis Traffic from the Internet"
+              + from_port        = 22
+              + ipv6_cidr_blocks = [
+                  + "::/0",
+                ]
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 22
+            },
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + description      = "Redis Traffic from the Internet"
+              + from_port        = 50379
+              + ipv6_cidr_blocks = [
+                  + "::/0",
+                ]
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 50379
+            },
+        ]
+        name                   = "allow_redis_traffic"
+        tags                   = {
+            "Name" = "allow-redis-traffic"
+        }
+        # (6 unchanged attributes hidden)
+    }
+  # aws_security_group_rule.redis_security_group_egress has been changed
+  ~ resource "aws_security_group_rule" "redis_security_group_egress" {
+        id                = "sgrule-2164830592"
+      + prefix_list_ids   = []
+        # (8 unchanged attributes hidden)
+    }
+  # aws_route_table.redis_route_table has been changed
+  ~ resource "aws_route_table" "redis_route_table" {
+        id               = "rtb-0752fa0bfc2b09271"
+      ~ route            = [
+          + {
+              + carrier_gateway_id         = ""
+              + cidr_block                 = ""
+              + destination_prefix_list_id = ""
+              + egress_only_gateway_id     = ""
+              + gateway_id                 = "igw-0b16786eb4c597437"
+              + instance_id                = ""
+              + ipv6_cidr_block            = "::/0"
+              + local_gateway_id           = ""
+              + nat_gateway_id             = ""
+              + network_interface_id       = ""
+              + transit_gateway_id         = ""
+              + vpc_endpoint_id            = ""
+              + vpc_peering_connection_id  = ""
+            },
+          + {
+              + carrier_gateway_id         = ""
+              + cidr_block                 = "0.0.0.0/0"
+              + destination_prefix_list_id = ""
+              + egress_only_gateway_id     = ""
+              + gateway_id                 = "igw-0b16786eb4c597437"
+              + instance_id                = ""
+              + ipv6_cidr_block            = ""
+              + local_gateway_id           = ""
+              + nat_gateway_id             = ""
+              + network_interface_id       = ""
+              + transit_gateway_id         = ""
+              + vpc_endpoint_id            = ""
+              + vpc_peering_connection_id  = ""
+            },
+        ]
+        tags             = {
+            "Name" = "redis-route-table"
+        }
+        # (5 unchanged attributes hidden)
+    }
+
+Unless you have made equivalent changes to your configuration, or ignored the relevant attributes using
+ignore_changes, the following plan may include actions to undo or respond to these changes.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with
+the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_instance.redis_server will be destroyed
+  - resource "aws_instance" "redis_server" {
+      - ami                                  = "ami-036b8becf28ac0ad9" -> null
+      - arn                                  = "arn:aws:ec2:us-east-1:469318448823:instance/i-07ecf4e1b1c148f0a" -> null
+      - associate_public_ip_address          = true -> null
+      - availability_zone                    = "us-east-1a" -> null
+      - cpu_core_count                       = 2 -> null
+      - cpu_threads_per_core                 = 1 -> null
+      - disable_api_termination              = false -> null
+      - ebs_optimized                        = false -> null
+      - get_password_data                    = false -> null
+      - hibernation                          = false -> null
+      - id                                   = "i-07ecf4e1b1c148f0a" -> null
+      - instance_initiated_shutdown_behavior = "stop" -> null
+      - instance_state                       = "running" -> null
+      - instance_type                        = "t4g.micro" -> null
+      - ipv6_address_count                   = 0 -> null
+      - ipv6_addresses                       = [] -> null
+      - key_name                             = "redis-ssh-key20211006174958787500000001" -> null
+      - monitoring                           = false -> null
+      - primary_network_interface_id         = "eni-057f8808204d2e3b8" -> null
+      - private_dns                          = "ip-10-0-0-185.ec2.internal" -> null
+      - private_ip                           = "10.0.0.185" -> null
+      - public_ip                            = "54.175.124.246" -> null
+      - secondary_private_ips                = [] -> null
+      - security_groups                      = [] -> null
+      - source_dest_check                    = true -> null
+      - subnet_id                            = "subnet-030e121d8df4c8e35" -> null
+      - tags                                 = {
+          - "Name" = "redis-server"
+        } -> null
+      - tags_all                             = {
+          - "Name" = "redis-server"
+        } -> null
+      - tenancy                              = "default" -> null
+      - vpc_security_group_ids               = [
+          - "sg-0e28992edf56a6df2",
+        ] -> null
+
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_put_response_hop_limit = 1 -> null
+          - http_tokens                 = "optional" -> null
+        }
+
+      - root_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/xvda" -> null
+          - encrypted             = false -> null
+          - iops                  = 100 -> null
+          - tags                  = {} -> null
+          - throughput            = 0 -> null
+          - volume_id             = "vol-0a5abf245ba354dd1" -> null
+          - volume_size           = 8 -> null
+          - volume_type           = "gp2" -> null
+        }
+    }
+
+  # aws_internet_gateway.redis_internet_gateway will be destroyed
+  - resource "aws_internet_gateway" "redis_internet_gateway" {
+      - arn      = "arn:aws:ec2:us-east-1:469318448823:internet-gateway/igw-0b16786eb4c597437" -> null
+      - id       = "igw-0b16786eb4c597437" -> null
+      - owner_id = "469318448823" -> null
+      - tags     = {
+          - "Name" = "redis-internet-gateway"
+        } -> null
+      - tags_all = {
+          - "Name" = "redis-internet-gateway"
+        } -> null
+      - vpc_id   = "vpc-0be9617e0a7bda7f6" -> null
+    }
+
+  # aws_key_pair.redis_ssh_key will be destroyed
+  - resource "aws_key_pair" "redis_ssh_key" {
+      - arn             = "arn:aws:ec2:us-east-1:469318448823:key-pair/redis-ssh-key20211006174958787500000001" -> null
+      - fingerprint     = "e0Q0MJQbEgD3Omap1nZ/OXZTs8HhcvanjW1+AvkGabw=" -> null
+      - id              = "redis-ssh-key20211006174958787500000001" -> null
+      - key_name        = "redis-ssh-key20211006174958787500000001" -> null
+      - key_name_prefix = "redis-ssh-key" -> null
+      - key_pair_id     = "key-056d21d172dd0fee1" -> null
+      - public_key      = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFx7TEwvLYQEnPcH/eorh+4aAofEKR4bHisiy3Pia8FZ dummy@gmail.com" -> null
+      - tags            = {} -> null
+      - tags_all        = {} -> null
+    }
+
+  # aws_route.redis_route_ipv4_internet_access will be destroyed
+  - resource "aws_route" "redis_route_ipv4_internet_access" {
+      - destination_cidr_block = "0.0.0.0/0" -> null
+      - gateway_id             = "igw-0b16786eb4c597437" -> null
+      - id                     = "r-rtb-0752fa0bfc2b092711080289494" -> null
+      - origin                 = "CreateRoute" -> null
+      - route_table_id         = "rtb-0752fa0bfc2b09271" -> null
+      - state                  = "active" -> null
+    }
+
+  # aws_route.redis_route_ipv6_internet_access will be destroyed
+  - resource "aws_route" "redis_route_ipv6_internet_access" {
+      - destination_ipv6_cidr_block = "::/0" -> null
+      - gateway_id                  = "igw-0b16786eb4c597437" -> null
+      - id                          = "r-rtb-0752fa0bfc2b092712750132062" -> null
+      - origin                      = "CreateRoute" -> null
+      - route_table_id              = "rtb-0752fa0bfc2b09271" -> null
+      - state                       = "active" -> null
+    }
+
+  # aws_route_table.redis_route_table will be destroyed
+  - resource "aws_route_table" "redis_route_table" {
+      - arn              = "arn:aws:ec2:us-east-1:469318448823:route-table/rtb-0752fa0bfc2b09271" -> null
+      - id               = "rtb-0752fa0bfc2b09271" -> null
+      - owner_id         = "469318448823" -> null
+      - propagating_vgws = [] -> null
+      - route            = [
+          - {
+              - carrier_gateway_id         = ""
+              - cidr_block                 = ""
+              - destination_prefix_list_id = ""
+              - egress_only_gateway_id     = ""
+              - gateway_id                 = "igw-0b16786eb4c597437"
+              - instance_id                = ""
+              - ipv6_cidr_block            = "::/0"
+              - local_gateway_id           = ""
+              - nat_gateway_id             = ""
+              - network_interface_id       = ""
+              - transit_gateway_id         = ""
+              - vpc_endpoint_id            = ""
+              - vpc_peering_connection_id  = ""
+            },
+          - {
+              - carrier_gateway_id         = ""
+              - cidr_block                 = "0.0.0.0/0"
+              - destination_prefix_list_id = ""
+              - egress_only_gateway_id     = ""
+              - gateway_id                 = "igw-0b16786eb4c597437"
+              - instance_id                = ""
+              - ipv6_cidr_block            = ""
+              - local_gateway_id           = ""
+              - nat_gateway_id             = ""
+              - network_interface_id       = ""
+              - transit_gateway_id         = ""
+              - vpc_endpoint_id            = ""
+              - vpc_peering_connection_id  = ""
+            },
+        ] -> null
+      - tags             = {
+          - "Name" = "redis-route-table"
+        } -> null
+      - tags_all         = {
+          - "Name" = "redis-route-table"
+        } -> null
+      - vpc_id           = "vpc-0be9617e0a7bda7f6" -> null
+    }
+
+  # aws_route_table_association.redis_route_table_with_subnet will be destroyed
+  - resource "aws_route_table_association" "redis_route_table_with_subnet" {
+      - id             = "rtbassoc-068a11854a4097c60" -> null
+      - route_table_id = "rtb-0752fa0bfc2b09271" -> null
+      - subnet_id      = "subnet-030e121d8df4c8e35" -> null
+    }
+
+  # aws_security_group.redis_security_group will be destroyed
+  - resource "aws_security_group" "redis_security_group" {
+      - arn                    = "arn:aws:ec2:us-east-1:469318448823:security-group/sg-0e28992edf56a6df2" -> null
+      - description            = "Allow Redis traffic" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = ""
+              - from_port        = 0
+              - ipv6_cidr_blocks = [
+                  - "::/0",
+                ]
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+            },
+        ] -> null
+      - id                     = "sg-0e28992edf56a6df2" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "Redis Traffic from the Internet"
+              - from_port        = 22
+              - ipv6_cidr_blocks = [
+                  - "::/0",
+                ]
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 22
+            },
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "Redis Traffic from the Internet"
+              - from_port        = 50379
+              - ipv6_cidr_blocks = [
+                  - "::/0",
+                ]
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 50379
+            },
+        ] -> null
+      - name                   = "allow_redis_traffic" -> null
+      - owner_id               = "469318448823" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {
+          - "Name" = "allow-redis-traffic"
+        } -> null
+      - tags_all               = {
+          - "Name" = "allow-redis-traffic"
+        } -> null
+      - vpc_id                 = "vpc-0be9617e0a7bda7f6" -> null
+    }
+
+  # aws_security_group_rule.redis_security_group_egress will be destroyed
+  - resource "aws_security_group_rule" "redis_security_group_egress" {
+      - cidr_blocks       = [
+          - "0.0.0.0/0",
+        ] -> null
+      - from_port         = 0 -> null
+      - id                = "sgrule-2164830592" -> null
+      - ipv6_cidr_blocks  = [
+          - "::/0",
+        ] -> null
+      - prefix_list_ids   = [] -> null
+      - protocol          = "-1" -> null
+      - security_group_id = "sg-0e28992edf56a6df2" -> null
+      - self              = false -> null
+      - to_port           = 0 -> null
+      - type              = "egress" -> null
+    }
+
+  # aws_security_group_rule.redis_security_group_ingress will be destroyed
+  - resource "aws_security_group_rule" "redis_security_group_ingress" {
+      - cidr_blocks       = [
+          - "0.0.0.0/0",
+        ] -> null
+      - description       = "Redis Traffic from the Internet" -> null
+      - from_port         = 50379 -> null
+      - id                = "sgrule-2475062382" -> null
+      - ipv6_cidr_blocks  = [
+          - "::/0",
+        ] -> null
+      - prefix_list_ids   = [] -> null
+      - protocol          = "tcp" -> null
+      - security_group_id = "sg-0e28992edf56a6df2" -> null
+      - self              = false -> null
+      - to_port           = 50379 -> null
+      - type              = "ingress" -> null
+    }
+
+  # aws_security_group_rule.redis_security_group_ingress_ssh will be destroyed
+  - resource "aws_security_group_rule" "redis_security_group_ingress_ssh" {
+      - cidr_blocks       = [
+          - "0.0.0.0/0",
+        ] -> null
+      - description       = "Redis Traffic from the Internet" -> null
+      - from_port         = 22 -> null
+      - id                = "sgrule-274546590" -> null
+      - ipv6_cidr_blocks  = [
+          - "::/0",
+        ] -> null
+      - prefix_list_ids   = [] -> null
+      - protocol          = "tcp" -> null
+      - security_group_id = "sg-0e28992edf56a6df2" -> null
+      - self              = false -> null
+      - to_port           = 22 -> null
+      - type              = "ingress" -> null
+    }
+
+  # aws_subnet.redis_subnet will be destroyed
+  - resource "aws_subnet" "redis_subnet" {
+      - arn                             = "arn:aws:ec2:us-east-1:469318448823:subnet/subnet-030e121d8df4c8e35" -> null
+      - assign_ipv6_address_on_creation = false -> null
+      - availability_zone               = "us-east-1a" -> null
+      - availability_zone_id            = "use1-az2" -> null
+      - cidr_block                      = "10.0.0.0/24" -> null
+      - id                              = "subnet-030e121d8df4c8e35" -> null
+      - map_customer_owned_ip_on_launch = false -> null
+      - map_public_ip_on_launch         = false -> null
+      - owner_id                        = "469318448823" -> null
+      - tags                            = {
+          - "Name" = "redis-subnet"
+        } -> null
+      - tags_all                        = {
+          - "Name" = "redis-subnet"
+        } -> null
+      - vpc_id                          = "vpc-0be9617e0a7bda7f6" -> null
+    }
+
+  # aws_vpc.redis_vpc will be destroyed
+  - resource "aws_vpc" "redis_vpc" {
+      - arn                              = "arn:aws:ec2:us-east-1:469318448823:vpc/vpc-0be9617e0a7bda7f6" -> null
+      - assign_generated_ipv6_cidr_block = false -> null
+      - cidr_block                       = "10.0.0.0/16" -> null
+      - default_network_acl_id           = "acl-0141b87f71cdcdb74" -> null
+      - default_route_table_id           = "rtb-0f17d301a87787fcf" -> null
+      - default_security_group_id        = "sg-0972ad45388de999b" -> null
+      - dhcp_options_id                  = "dopt-6fb3e10a" -> null
+      - enable_classiclink               = false -> null
+      - enable_classiclink_dns_support   = false -> null
+      - enable_dns_hostnames             = false -> null
+      - enable_dns_support               = true -> null
+      - id                               = "vpc-0be9617e0a7bda7f6" -> null
+      - instance_tenancy                 = "default" -> null
+      - main_route_table_id              = "rtb-0f17d301a87787fcf" -> null
+      - owner_id                         = "469318448823" -> null
+      - tags                             = {
+          - "Name" = "redis-vpc"
+        } -> null
+      - tags_all                         = {
+          - "Name" = "redis-vpc"
+        } -> null
+    }
+
+Plan: 0 to add, 0 to change, 13 to destroy.
+
+Changes to Outputs:
+  - ip = "54.175.124.246" -> null
+aws_route_table_association.redis_route_table_with_subnet: Destroying... [id=rtbassoc-068a11854a4097c60]
+aws_security_group_rule.redis_security_group_egress: Destroying... [id=sgrule-2164830592]
+aws_route.redis_route_ipv4_internet_access: Destroying... [id=r-rtb-0752fa0bfc2b092711080289494]
+aws_security_group_rule.redis_security_group_ingress: Destroying... [id=sgrule-2475062382]
+aws_security_group_rule.redis_security_group_ingress_ssh: Destroying... [id=sgrule-274546590]
+aws_route.redis_route_ipv6_internet_access: Destroying... [id=r-rtb-0752fa0bfc2b092712750132062]
+aws_instance.redis_server: Destroying... [id=i-07ecf4e1b1c148f0a]
+aws_route_table_association.redis_route_table_with_subnet: Destruction complete after 2s
+aws_security_group_rule.redis_security_group_egress: Destruction complete after 2s
+aws_route.redis_route_ipv4_internet_access: Destruction complete after 3s
+aws_route.redis_route_ipv6_internet_access: Destruction complete after 3s
+aws_internet_gateway.redis_internet_gateway: Destroying... [id=igw-0b16786eb4c597437]
+aws_route_table.redis_route_table: Destroying... [id=rtb-0752fa0bfc2b09271]
+aws_security_group_rule.redis_security_group_ingress_ssh: Destruction complete after 4s
+aws_route_table.redis_route_table: Destruction complete after 3s
+aws_security_group_rule.redis_security_group_ingress: Destruction complete after 6s
+aws_instance.redis_server: Still destroying... [id=i-07ecf4e1b1c148f0a, 10s elapsed]
+aws_internet_gateway.redis_internet_gateway: Still destroying... [id=igw-0b16786eb4c597437, 10s elapsed]
+aws_instance.redis_server: Still destroying... [id=i-07ecf4e1b1c148f0a, 20s elapsed]
+aws_internet_gateway.redis_internet_gateway: Still destroying... [id=igw-0b16786eb4c597437, 20s elapsed]
+aws_instance.redis_server: Still destroying... [id=i-07ecf4e1b1c148f0a, 30s elapsed]
+aws_internet_gateway.redis_internet_gateway: Still destroying... [id=igw-0b16786eb4c597437, 30s elapsed]
+aws_instance.redis_server: Still destroying... [id=i-07ecf4e1b1c148f0a, 40s elapsed]
+aws_internet_gateway.redis_internet_gateway: Still destroying... [id=igw-0b16786eb4c597437, 40s elapsed]
+aws_instance.redis_server: Still destroying... [id=i-07ecf4e1b1c148f0a, 50s elapsed]
+aws_internet_gateway.redis_internet_gateway: Still destroying... [id=igw-0b16786eb4c597437, 50s elapsed]
+aws_internet_gateway.redis_internet_gateway: Destruction complete after 53s
+aws_instance.redis_server: Destruction complete after 58s
+aws_key_pair.redis_ssh_key: Destroying... [id=redis-ssh-key20211006174958787500000001]
+aws_subnet.redis_subnet: Destroying... [id=subnet-030e121d8df4c8e35]
+aws_security_group.redis_security_group: Destroying... [id=sg-0e28992edf56a6df2]
+aws_key_pair.redis_ssh_key: Destruction complete after 1s
+aws_security_group.redis_security_group: Destruction complete after 3s
+aws_subnet.redis_subnet: Destruction complete after 3s
+aws_vpc.redis_vpc: Destroying... [id=vpc-0be9617e0a7bda7f6]
+aws_vpc.redis_vpc: Destruction complete after 1s
+
+Destroy complete! Resources: 13 destroyed.
+trial1 $ 
+```
+
+```bash
+trial1 $ redis-cli -h 54.175.124.246 -p 50379 PING
+Could not connect to Redis at 54.175.124.246:50379: Connection refused
+trial1 $ redis-cli -h 54.175.124.246 -p 50379 PING
+Could not connect to Redis at 54.175.124.246:50379: Connection refused
+trial1 $ telnet 54.175.124.246 50379
+Trying 54.175.124.246...
+telnet: connect to address 54.175.124.246: Connection refused
+telnet: Unable to connect to remote host
+trial1 $ telnet 54.175.124.246 50379
+Trying 54.175.124.246...
+Connected to ec2-54-175-124-246.compute-1.amazonaws.com.
+Escape character is '^]'.
+^C^[^]
+telnet> Connection closed.
+trial1 $ redis-cli -h 54.175.124.246 -p 50379 PING
+(error) NOAUTH Authentication required.
+trial1 $ redis-cli -h 54.175.124.246 -p 50379 
+54.175.124.246:50379> AUTH 0cf2c249fdc91ac1d29a93718c93c74edfe1c2432c2765e812c7e2a8347c14fb
+OK
+54.175.124.246:50379> ping
+PONG
+54.175.124.246:50379> 
+trial1 $ 
+```
+
+---
+
+Things to fix [TODO]
+- Ensure that when the VM starts, the systemd starts the redis service - check why it didn't do it the last time
+- Ensure that Redis binds to all the network interfaces and not just to loop back interfaces (127.0.0.1, ::1). Either comment out the Redis conf file where there's a config binding Redis server to loop back interfaces, or explicitly have a bind directive to bind to the other network interfaces, especially the one connected to the Sub network and the one connected to the Internet allowing incoming connections
+- Ensure there's a Redis password - the alternative is to disable protected-mode which seems unnessary as protected-mode is a good thing when Redis is exposed to the Internet but does not have a password, then has to not allow clients from outside the local machine to access the Redis server. For generating and setting the password -
+  - Generating - use `ACL GENPASS`, this was picked up from https://redis.io/topics/acl#how-passwords-are-stored-internally
+  - Setting the password - use the Redis config file maybe and use the `requirepass` directive / config
+
+And that's it, with those fixes, voila, the Redis server should be up and ready for use from the outside world! :D
+
+---
+
+```bash
+$ source .env
+
+$ envsubst < aws-nuke-config-template.yaml > aws-nuke-config.yaml
+
+trial1 $ aws-nuke -c aws-nuke-config.yaml --access-key-id "$AWS_ACCESS_KEY_ID" --secret-access-key "$AWS_SECRET_ACCESS_KEY" --force --no-dry-run
+aws-nuke version v2.15.0 - Thu Apr 15 10:00:09 UTC 2021 - b5ccc0056f070379678264ccae7c88ddf8b5dfa5
+
+Do you really want to nuke the account with the ID 469318448823 and the alias 'karuppiahn'?
+Waiting 15s before continuing.
+us-east-1 - EC2Instance - i-03081a2d8b58c2c09 - [tag:Name: "Packer Builder"] - already terminated
+us-east-1 - EC2Instance - i-07ecf4e1b1c148f0a - [tag:Name: "redis-server"] - already terminated
+us-east-1 - EC2Snapshot - snap-0046dc76a8dc514bf - [] - would remove
+us-east-1 - EC2Image - ami-036b8becf28ac0ad9 - [] - would remove
+Scan complete: 4 total, 2 nukeable, 2 filtered.
+
+Do you really want to nuke these resources on the account with the ID 469318448823 and the alias 'karuppiahn'?
+Waiting 15s before continuing.
+us-east-1 - EC2Snapshot - snap-0046dc76a8dc514bf - [] - failed
+us-east-1 - EC2Image - ami-036b8becf28ac0ad9 - [] - triggered remove
+
+Removal requested: 1 waiting, 1 failed, 2 skipped, 0 finished
+
+us-east-1 - EC2Snapshot - snap-0046dc76a8dc514bf - [] - removed
+us-east-1 - EC2Image - ami-036b8becf28ac0ad9 - [] - waiting
+
+Removal requested: 1 waiting, 0 failed, 2 skipped, 1 finished
+
+us-east-1 - EC2Image - ami-036b8becf28ac0ad9 - [] - removed
+
+Removal requested: 0 waiting, 0 failed, 2 skipped, 2 finished
+
+Nuke complete: 0 failed, 2 skipped, 2 finished.
+
+trial1 $ aws-nuke -c aws-nuke-config.yaml --access-key-id "$AWS_ACCESS_KEY_ID" --secret-access-key "$AWS_SECRET_ACCESS_KEY" --force --no-dry-run
+aws-nuke version v2.15.0 - Thu Apr 15 10:00:09 UTC 2021 - b5ccc0056f070379678264ccae7c88ddf8b5dfa5
+
+Do you really want to nuke the account with the ID 469318448823 and the alias 'karuppiahn'?
+Waiting 15s before continuing.
+us-east-1 - EC2Instance - i-03081a2d8b58c2c09 - [tag:Name: "Packer Builder"] - already terminated
+us-east-1 - EC2Instance - i-07ecf4e1b1c148f0a - [tag:Name: "redis-server"] - already terminated
+Scan complete: 2 total, 0 nukeable, 2 filtered.
+
+No resource to delete.
+trial1 $ 
+```
