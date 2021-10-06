@@ -1,0 +1,11 @@
+regions:
+  - us-east-1
+
+resource-types:
+  targets:
+    - EC2Image
+    - EC2Instance
+    - EC2Snapshot
+
+accounts:
+  ${AWS_ACCOUNT_ID}: {} # aws-nuke-example

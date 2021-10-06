@@ -4641,3 +4641,727 @@ repl_backlog_first_byte_offset:0
 repl_backlog_histlen:0
 [root@ip-10-0-0-67 ec2-user]#
 ```
+
+---
+
+```bash
+trial1 $ packer validate .
+trial1 $ source .env
+trial1 $ packer build redis-server.pkr.hcl 
+redis.amazon-ebs.redis: output will be in this color.
+
+==> redis.amazon-ebs.redis: Prevalidating any provided VPC information
+==> redis.amazon-ebs.redis: Prevalidating AMI Name: redis-server
+    redis.amazon-ebs.redis: Found Image ID: ami-029c64b3c205e6cce
+==> redis.amazon-ebs.redis: Creating temporary keypair: packer_615d1878-c74e-7400-46ed-c69f320303e9
+==> redis.amazon-ebs.redis: Creating temporary security group for this instance: packer_615d187e-2958-a278-d3d2-ea99e03665d9
+==> redis.amazon-ebs.redis: Authorizing access to port 22 from [0.0.0.0/0] in the temporary security groups...
+==> redis.amazon-ebs.redis: Launching a source AWS instance...
+==> redis.amazon-ebs.redis: Adding tags to source instance
+    redis.amazon-ebs.redis: Adding tag: "Name": "Packer Builder"
+    redis.amazon-ebs.redis: Instance ID: i-0c02ebdb98e689ba2
+==> redis.amazon-ebs.redis: Waiting for instance (i-0c02ebdb98e689ba2) to become ready...
+==> redis.amazon-ebs.redis: Using SSH communicator to connect: 52.70.93.69
+==> redis.amazon-ebs.redis: Waiting for SSH to become available...
+==> redis.amazon-ebs.redis: Connected to SSH!
+==> redis.amazon-ebs.redis: Provisioning with shell script: ./install-redis.sh
+==> redis.amazon-ebs.redis: ++ sudo amazon-linux-extras enable redis6
+    redis.amazon-ebs.redis:   0  ansible2                 available    [ =2.4.6  =2.8  =stable ]
+    redis.amazon-ebs.redis:   1  httpd_modules            available    [ =1.0  =stable ]
+    redis.amazon-ebs.redis:   2  memcached1.5             available    \
+    redis.amazon-ebs.redis:         [ =1.5.1  =1.5.16  =1.5.17 ]
+    redis.amazon-ebs.redis:   4  postgresql9.6            available    [ =9.6.8  =stable ]
+    redis.amazon-ebs.redis:   5  postgresql10             available    [ =10  =stable ]
+    redis.amazon-ebs.redis:   7  R3.4                     available    [ =3.4.3  =stable ]
+    redis.amazon-ebs.redis:   8  rust1                    available    [ =stable ]
+    redis.amazon-ebs.redis:  11  php7.2                   available    \
+    redis.amazon-ebs.redis:         [ =7.2.13  =7.2.14  =7.2.16  =7.2.17  =7.2.19  =7.2.21
+    redis.amazon-ebs.redis:           =7.2.22  =7.2.23  =7.2.24  =7.2.26  =stable ]
+    redis.amazon-ebs.redis:  13  lamp-mariadb10.2-php7.2  available    \
+    redis.amazon-ebs.redis:         [ =10.2.10_7.2.11  =10.2.10_7.2.14  =10.2.10_7.2.16
+    redis.amazon-ebs.redis:           =10.2.10_7.2.17  =10.2.10_7.2.19  =10.2.10_7.2.22
+==> redis.amazon-ebs.redis: ++ yum clean metadata
+    redis.amazon-ebs.redis:           =10.2.10_7.2.23  =10.2.10_7.2.24  =stable ]
+    redis.amazon-ebs.redis:  14  libreoffice              available    [ =5.3.6.1  =stable ]
+    redis.amazon-ebs.redis:  16  docker=latest            enabled      \
+    redis.amazon-ebs.redis:         [ =18.06.1  =18.09.9  =stable ]
+    redis.amazon-ebs.redis:  17  mate-desktop1.x          available    [ =stable ]
+    redis.amazon-ebs.redis:  18  GraphicsMagick1.3        available    \
+    redis.amazon-ebs.redis:         [ =1.3.29  =1.3.32  =1.3.34  =stable ]
+    redis.amazon-ebs.redis:  19  tomcat8.5                available    \
+    redis.amazon-ebs.redis:         [ =8.5.32  =8.5.38  =8.5.40  =8.5.42  =8.5.50  =stable ]
+    redis.amazon-ebs.redis:  20  epel                     available    [ =7.11  =stable ]
+    redis.amazon-ebs.redis:  21  testing                  available    [ =1.0  =stable ]
+    redis.amazon-ebs.redis:  22  ecs                      available    [ =stable ]
+    redis.amazon-ebs.redis:  23  corretto8                available    \
+    redis.amazon-ebs.redis:         [ =1.8.0_202  =1.8.0_212  =1.8.0_222  =1.8.0_232  =1.8.0_242
+    redis.amazon-ebs.redis:           =stable ]
+    redis.amazon-ebs.redis:  24  golang1.11               available    \
+    redis.amazon-ebs.redis:         [ =1.11.3  =1.11.11  =1.11.13  =stable ]
+    redis.amazon-ebs.redis:  25  squid4                   available    [ =4  =stable ]
+    redis.amazon-ebs.redis:  26  php7.3                   available    \
+    redis.amazon-ebs.redis:         [ =7.3.2  =7.3.3  =7.3.4  =7.3.6  =7.3.8  =7.3.9  =7.3.10
+    redis.amazon-ebs.redis:           =7.3.11  =7.3.13  =stable ]
+    redis.amazon-ebs.redis:  27  java-openjdk11           available    [ =11  =stable ]
+    redis.amazon-ebs.redis:  28  lynis                    available    [ =stable ]
+    redis.amazon-ebs.redis:  29  kernel-ng                available    [ =stable ]
+    redis.amazon-ebs.redis:  30  BCC                      available    [ =0.x  =stable ]
+    redis.amazon-ebs.redis:  31  nginx1                   available    [ =stable ]
+    redis.amazon-ebs.redis:  32  ruby2.6                  available    [ =2.6  =stable ]
+    redis.amazon-ebs.redis:  33  mock                     available    [ =stable ]
+    redis.amazon-ebs.redis:  34  postgresql11             available    [ =11  =stable ]
+    redis.amazon-ebs.redis:  35  php7.4                   available    [ =stable ]
+    redis.amazon-ebs.redis:  36  python3.8                available    [ =stable ]
+    redis.amazon-ebs.redis:  37  lustre2.10               available    [ =stable ]
+    redis.amazon-ebs.redis:  38  haproxy2                 available    [ =stable ]
+    redis.amazon-ebs.redis:  39  collectd                 available    [ =stable ]
+    redis.amazon-ebs.redis:  40  R4                       available    [ =stable ]
+    redis.amazon-ebs.redis:  41  kernel-5.4               available    [ =stable ]
+    redis.amazon-ebs.redis:  42  selinux-ng               available    [ =stable ]
+    redis.amazon-ebs.redis:  43  php8.0                   available    [ =stable ]
+    redis.amazon-ebs.redis:  44  tomcat9                  available    [ =stable ]
+    redis.amazon-ebs.redis:  45  unbound1.13              available    [ =stable ]
+    redis.amazon-ebs.redis:  46  mariadb10.5              available    [ =stable ]
+    redis.amazon-ebs.redis:  47  kernel-5.10              available    [ =stable ]
+    redis.amazon-ebs.redis:  48  redis6=latest            enabled      [ =stable ]
+    redis.amazon-ebs.redis:  49  ruby3.0                  available    [ =stable ]
+    redis.amazon-ebs.redis:  50  postgresql12             available    [ =stable ]
+    redis.amazon-ebs.redis:  51  postgresql13             available    [ =stable ]
+    redis.amazon-ebs.redis:  52  mock2                    available    [ =stable ]
+    redis.amazon-ebs.redis:  53  dnsmasq2.85              available    [ =stable ]
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Now you can install:
+    redis.amazon-ebs.redis:  # yum clean metadata
+    redis.amazon-ebs.redis:  # yum install redis
+    redis.amazon-ebs.redis: Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+    redis.amazon-ebs.redis: Cleaning repos: amzn2-core amzn2extra-docker amzn2extra-redis6
+    redis.amazon-ebs.redis: 6 metadata files removed
+    redis.amazon-ebs.redis: 0 sqlite files removed
+    redis.amazon-ebs.redis: 0 metadata files removed
+==> redis.amazon-ebs.redis: ++ sudo yum install redis
+    redis.amazon-ebs.redis: Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+==> redis.amazon-ebs.redis: Existing lock /var/run/yum.pid: another copy is running as pid 1270.
+==> redis.amazon-ebs.redis: Another app is currently holding the yum lock; waiting for it to exit...
+==> redis.amazon-ebs.redis:   The other application is: yum
+==> redis.amazon-ebs.redis:     Memory : 140 M RSS (161 MB VSZ)
+==> redis.amazon-ebs.redis:     Started: Wed Oct  6 03:31:48 2021 - 00:03 ago
+==> redis.amazon-ebs.redis:     State  : Running, pid: 1270
+    redis.amazon-ebs.redis: Resolving Dependencies
+    redis.amazon-ebs.redis: --> Running transaction check
+    redis.amazon-ebs.redis: ---> Package redis.aarch64 0:6.2.5-1.amzn2.0.1 will be installed
+    redis.amazon-ebs.redis: --> Finished Dependency Resolution
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Dependencies Resolved
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: ================================================================================
+    redis.amazon-ebs.redis:  Package    Arch         Version                   Repository              Size
+    redis.amazon-ebs.redis: ================================================================================
+    redis.amazon-ebs.redis: Installing:
+    redis.amazon-ebs.redis:  redis      aarch64      6.2.5-1.amzn2.0.1         amzn2extra-redis6      1.1 M
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Transaction Summary
+    redis.amazon-ebs.redis: ================================================================================
+    redis.amazon-ebs.redis: Install  1 Package
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Total download size: 1.1 M
+    redis.amazon-ebs.redis: Installed size: 3.7 M
+    redis.amazon-ebs.redis: Is this ok [y/d/N]: Exiting on user command
+    redis.amazon-ebs.redis: Your transaction was saved, rerun it with:
+    redis.amazon-ebs.redis:  yum load-transaction /tmp/yum_save_tx.2021-10-06.03-31.Khe2si.yumtx
+==> redis.amazon-ebs.redis: Provisioning step had errors: Running the cleanup provisioner, if present...
+==> redis.amazon-ebs.redis: Terminating the source AWS instance...
+==> redis.amazon-ebs.redis: Cleaning up any extra volumes...
+==> redis.amazon-ebs.redis: No volumes to clean up, skipping
+==> redis.amazon-ebs.redis: Deleting temporary security group...
+==> redis.amazon-ebs.redis: Deleting temporary keypair...
+Build 'redis.amazon-ebs.redis' errored after 2 minutes 213 milliseconds: Script exited with non-zero exit status: 1.Allowed exit codes are: [0]
+
+==> Wait completed after 2 minutes 213 milliseconds
+
+==> Some builds didn't complete successfully and had errors:
+--> redis.amazon-ebs.redis: Script exited with non-zero exit status: 1.Allowed exit codes are: [0]
+
+==> Builds finished but no artifacts were created.
+trial1 $ 
+```
+
+---
+
+```bash
+trial1 $ packer build redis-server.pkr.hcl 
+redis.amazon-ebs.redis: output will be in this color.
+
+==> redis.amazon-ebs.redis: Prevalidating any provided VPC information
+==> redis.amazon-ebs.redis: Prevalidating AMI Name: redis-server
+    redis.amazon-ebs.redis: Found Image ID: ami-029c64b3c205e6cce
+==> redis.amazon-ebs.redis: Creating temporary keypair: packer_615d1db1-3044-61ab-b803-0a7f42a7e9a3
+==> redis.amazon-ebs.redis: Creating temporary security group for this instance: packer_615d1db8-a466-6795-c9df-d65b259f60a1
+==> redis.amazon-ebs.redis: Authorizing access to port 22 from [0.0.0.0/0] in the temporary security groups...
+==> redis.amazon-ebs.redis: Launching a source AWS instance...
+==> redis.amazon-ebs.redis: Adding tags to source instance
+    redis.amazon-ebs.redis: Adding tag: "Name": "Packer Builder"
+    redis.amazon-ebs.redis: Instance ID: i-022a8006da87b7360
+==> redis.amazon-ebs.redis: Waiting for instance (i-022a8006da87b7360) to become ready...
+==> redis.amazon-ebs.redis: Using SSH communicator to connect: 34.205.141.34
+==> redis.amazon-ebs.redis: Waiting for SSH to become available...
+==> redis.amazon-ebs.redis: Connected to SSH!
+==> redis.amazon-ebs.redis: Provisioning with shell script: ./install-redis.sh
+==> redis.amazon-ebs.redis: ++ sudo amazon-linux-extras enable redis6
+    redis.amazon-ebs.redis:   0  ansible2                 available    [ =2.4.6  =2.8  =stable ]
+    redis.amazon-ebs.redis:   1  httpd_modules            available    [ =1.0  =stable ]
+    redis.amazon-ebs.redis:   2  memcached1.5             available    \
+    redis.amazon-ebs.redis:         [ =1.5.1  =1.5.16  =1.5.17 ]
+    redis.amazon-ebs.redis:   4  postgresql9.6            available    [ =9.6.8  =stable ]
+    redis.amazon-ebs.redis:   5  postgresql10             available    [ =10  =stable ]
+    redis.amazon-ebs.redis:   7  R3.4                     available    [ =3.4.3  =stable ]
+    redis.amazon-ebs.redis:   8  rust1                    available    [ =stable ]
+    redis.amazon-ebs.redis:  11  php7.2                   available    \
+    redis.amazon-ebs.redis:         [ =7.2.13  =7.2.14  =7.2.16  =7.2.17  =7.2.19  =7.2.21
+    redis.amazon-ebs.redis:           =7.2.22  =7.2.23  =7.2.24  =7.2.26  =stable ]
+    redis.amazon-ebs.redis:  13  lamp-mariadb10.2-php7.2  available    \
+    redis.amazon-ebs.redis:         [ =10.2.10_7.2.11  =10.2.10_7.2.14  =10.2.10_7.2.16
+==> redis.amazon-ebs.redis: ++ yum clean metadata
+    redis.amazon-ebs.redis:           =10.2.10_7.2.17  =10.2.10_7.2.19  =10.2.10_7.2.22
+    redis.amazon-ebs.redis:           =10.2.10_7.2.23  =10.2.10_7.2.24  =stable ]
+    redis.amazon-ebs.redis:  14  libreoffice              available    [ =5.3.6.1  =stable ]
+    redis.amazon-ebs.redis:  16  docker=latest            enabled      \
+    redis.amazon-ebs.redis:         [ =18.06.1  =18.09.9  =stable ]
+    redis.amazon-ebs.redis:  17  mate-desktop1.x          available    [ =stable ]
+    redis.amazon-ebs.redis:  18  GraphicsMagick1.3        available    \
+    redis.amazon-ebs.redis:         [ =1.3.29  =1.3.32  =1.3.34  =stable ]
+    redis.amazon-ebs.redis:  19  tomcat8.5                available    \
+    redis.amazon-ebs.redis:         [ =8.5.32  =8.5.38  =8.5.40  =8.5.42  =8.5.50  =stable ]
+    redis.amazon-ebs.redis:  20  epel                     available    [ =7.11  =stable ]
+    redis.amazon-ebs.redis:  21  testing                  available    [ =1.0  =stable ]
+    redis.amazon-ebs.redis:  22  ecs                      available    [ =stable ]
+    redis.amazon-ebs.redis:  23  corretto8                available    \
+    redis.amazon-ebs.redis:         [ =1.8.0_202  =1.8.0_212  =1.8.0_222  =1.8.0_232  =1.8.0_242
+    redis.amazon-ebs.redis:           =stable ]
+    redis.amazon-ebs.redis:  24  golang1.11               available    \
+    redis.amazon-ebs.redis:         [ =1.11.3  =1.11.11  =1.11.13  =stable ]
+    redis.amazon-ebs.redis:  25  squid4                   available    [ =4  =stable ]
+    redis.amazon-ebs.redis:  26  php7.3                   available    \
+    redis.amazon-ebs.redis:         [ =7.3.2  =7.3.3  =7.3.4  =7.3.6  =7.3.8  =7.3.9  =7.3.10
+    redis.amazon-ebs.redis:           =7.3.11  =7.3.13  =stable ]
+    redis.amazon-ebs.redis:  27  java-openjdk11           available    [ =11  =stable ]
+    redis.amazon-ebs.redis:  28  lynis                    available    [ =stable ]
+    redis.amazon-ebs.redis:  29  kernel-ng                available    [ =stable ]
+    redis.amazon-ebs.redis:  30  BCC                      available    [ =0.x  =stable ]
+    redis.amazon-ebs.redis:  31  nginx1                   available    [ =stable ]
+    redis.amazon-ebs.redis:  32  ruby2.6                  available    [ =2.6  =stable ]
+    redis.amazon-ebs.redis:  33  mock                     available    [ =stable ]
+    redis.amazon-ebs.redis:  34  postgresql11             available    [ =11  =stable ]
+    redis.amazon-ebs.redis:  35  php7.4                   available    [ =stable ]
+    redis.amazon-ebs.redis:  36  python3.8                available    [ =stable ]
+    redis.amazon-ebs.redis:  37  lustre2.10               available    [ =stable ]
+    redis.amazon-ebs.redis:  38  haproxy2                 available    [ =stable ]
+    redis.amazon-ebs.redis:  39  collectd                 available    [ =stable ]
+    redis.amazon-ebs.redis:  40  R4                       available    [ =stable ]
+    redis.amazon-ebs.redis:  41  kernel-5.4               available    [ =stable ]
+    redis.amazon-ebs.redis:  42  selinux-ng               available    [ =stable ]
+    redis.amazon-ebs.redis:  43  php8.0                   available    [ =stable ]
+    redis.amazon-ebs.redis:  44  tomcat9                  available    [ =stable ]
+    redis.amazon-ebs.redis:  45  unbound1.13              available    [ =stable ]
+    redis.amazon-ebs.redis:  46  mariadb10.5              available    [ =stable ]
+    redis.amazon-ebs.redis:  47  kernel-5.10              available    [ =stable ]
+    redis.amazon-ebs.redis:  48  redis6=latest            enabled      [ =stable ]
+    redis.amazon-ebs.redis:  49  ruby3.0                  available    [ =stable ]
+    redis.amazon-ebs.redis:  50  postgresql12             available    [ =stable ]
+    redis.amazon-ebs.redis:  51  postgresql13             available    [ =stable ]
+    redis.amazon-ebs.redis:  52  mock2                    available    [ =stable ]
+    redis.amazon-ebs.redis:  53  dnsmasq2.85              available    [ =stable ]
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Now you can install:
+    redis.amazon-ebs.redis:  # yum clean metadata
+    redis.amazon-ebs.redis:  # yum install redis
+    redis.amazon-ebs.redis: Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+==> redis.amazon-ebs.redis: ++ sudo yum install redis -y
+    redis.amazon-ebs.redis: Cleaning repos: amzn2-core amzn2extra-docker amzn2extra-redis6
+    redis.amazon-ebs.redis: 6 metadata files removed
+    redis.amazon-ebs.redis: 0 sqlite files removed
+    redis.amazon-ebs.redis: 0 metadata files removed
+    redis.amazon-ebs.redis: Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+==> redis.amazon-ebs.redis: Existing lock /var/run/yum.pid: another copy is running as pid 1270.
+==> redis.amazon-ebs.redis: Another app is currently holding the yum lock; waiting for it to exit...
+==> redis.amazon-ebs.redis:   The other application is: yum
+==> redis.amazon-ebs.redis:     Memory : 119 M RSS (141 MB VSZ)
+==> redis.amazon-ebs.redis:     Started: Wed Oct  6 03:54:05 2021 - 00:02 ago
+==> redis.amazon-ebs.redis:     State  : Running, pid: 1270
+    redis.amazon-ebs.redis: Resolving Dependencies
+    redis.amazon-ebs.redis: --> Running transaction check
+    redis.amazon-ebs.redis: ---> Package redis.aarch64 0:6.2.5-1.amzn2.0.1 will be installed
+    redis.amazon-ebs.redis: --> Finished Dependency Resolution
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Dependencies Resolved
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: ================================================================================
+    redis.amazon-ebs.redis:  Package    Arch         Version                   Repository              Size
+    redis.amazon-ebs.redis: ================================================================================
+    redis.amazon-ebs.redis: Installing:
+    redis.amazon-ebs.redis:  redis      aarch64      6.2.5-1.amzn2.0.1         amzn2extra-redis6      1.1 M
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Transaction Summary
+    redis.amazon-ebs.redis: ================================================================================
+    redis.amazon-ebs.redis: Install  1 Package
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Total download size: 1.1 M
+    redis.amazon-ebs.redis: Installed size: 3.7 M
+    redis.amazon-ebs.redis: Downloading packages:
+    redis.amazon-ebs.redis: Running transaction check
+    redis.amazon-ebs.redis: Running transaction test
+    redis.amazon-ebs.redis: Transaction test succeeded
+    redis.amazon-ebs.redis: Running transaction
+    redis.amazon-ebs.redis:   Installing : redis-6.2.5-1.amzn2.0.1.aarch64                              1/1
+    redis.amazon-ebs.redis:   Verifying  : redis-6.2.5-1.amzn2.0.1.aarch64                              1/1
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Installed:
+    redis.amazon-ebs.redis:   redis.aarch64 0:6.2.5-1.amzn2.0.1
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Complete!
+==> redis.amazon-ebs.redis: ++ export PORT=50379
+==> redis.amazon-ebs.redis: ++ PORT=50379
+==> redis.amazon-ebs.redis: ++ sudo tee /etc/systemd/system/redis.service
+==> redis.amazon-ebs.redis: ++ echo '[Unit]
+==> redis.amazon-ebs.redis: Description=Redis
+==> redis.amazon-ebs.redis: After=syslog.target
+==> redis.amazon-ebs.redis:
+==> redis.amazon-ebs.redis: [Service]
+==> redis.amazon-ebs.redis: ExecStart=/bin/redis-server /etc/redis/redis.conf --port 50379
+==> redis.amazon-ebs.redis: RestartSec=5s
+==> redis.amazon-ebs.redis: Restart=on-success
+==> redis.amazon-ebs.redis:
+==> redis.amazon-ebs.redis: [Install]
+==> redis.amazon-ebs.redis: WantedBy=multi-user.target
+==> redis.amazon-ebs.redis: '
+    redis.amazon-ebs.redis: [Unit]
+    redis.amazon-ebs.redis: Description=Redis
+    redis.amazon-ebs.redis: After=syslog.target
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: [Service]
+    redis.amazon-ebs.redis: ExecStart=/bin/redis-server /etc/redis/redis.conf --port 50379
+==> redis.amazon-ebs.redis: ++ cat /etc/systemd/system/redis.service
+    redis.amazon-ebs.redis: RestartSec=5s
+==> redis.amazon-ebs.redis: ++ sudo systemctl daemon-reload
+    redis.amazon-ebs.redis: Restart=on-success
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: [Install]
+    redis.amazon-ebs.redis: WantedBy=multi-user.target
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: [Unit]
+    redis.amazon-ebs.redis: Description=Redis
+    redis.amazon-ebs.redis: After=syslog.target
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: [Service]
+    redis.amazon-ebs.redis: ExecStart=/bin/redis-server /etc/redis/redis.conf --port 50379
+    redis.amazon-ebs.redis: RestartSec=5s
+    redis.amazon-ebs.redis: Restart=on-success
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: [Install]
+    redis.amazon-ebs.redis: WantedBy=multi-user.target
+    redis.amazon-ebs.redis:
+==> redis.amazon-ebs.redis: ++ sudo systemctl status redis
+    redis.amazon-ebs.redis: ● redis.service - Redis
+    redis.amazon-ebs.redis:    Loaded: loaded (/etc/systemd/system/redis.service; disabled; vendor preset: disabled)
+    redis.amazon-ebs.redis:   Drop-In: /etc/systemd/system/redis.service.d
+    redis.amazon-ebs.redis:            └─limit.conf
+    redis.amazon-ebs.redis:    Active: inactive (dead)
+==> redis.amazon-ebs.redis: ++ true
+==> redis.amazon-ebs.redis: ++ sudo systemctl start redis
+==> redis.amazon-ebs.redis: ++ sudo systemctl status redis
+    redis.amazon-ebs.redis: ● redis.service - Redis
+    redis.amazon-ebs.redis:    Loaded: loaded (/etc/systemd/system/redis.service; disabled; vendor preset: disabled)
+    redis.amazon-ebs.redis:   Drop-In: /etc/systemd/system/redis.service.d
+    redis.amazon-ebs.redis:            └─limit.conf
+==> redis.amazon-ebs.redis: ++ redis-cli -p 50379 PING
+    redis.amazon-ebs.redis:    Active: active (running) since Wed 2021-10-06 03:54:10 UTC; 25ms ago
+    redis.amazon-ebs.redis:  Main PID: 1418 (redis-server)
+    redis.amazon-ebs.redis:    CGroup: /system.slice/redis.service
+    redis.amazon-ebs.redis:            └─1418 /bin/redis-server 127.0.0.1:50379
+    redis.amazon-ebs.redis:
+    redis.amazon-ebs.redis: Oct 06 03:54:10 ip-172-31-55-208.ec2.internal systemd[1]: Started Redis.
+    redis.amazon-ebs.redis: PONG
+==> redis.amazon-ebs.redis: Stopping the source instance...
+    redis.amazon-ebs.redis: Stopping instance
+==> redis.amazon-ebs.redis: Waiting for the instance to stop...
+==> redis.amazon-ebs.redis: Creating AMI redis-server from instance i-022a8006da87b7360
+    redis.amazon-ebs.redis: AMI: ami-06d002a0dcaaa385f
+==> redis.amazon-ebs.redis: Waiting for AMI to become ready...
+==> redis.amazon-ebs.redis: Skipping Enable AMI deprecation...
+==> redis.amazon-ebs.redis: Terminating the source AWS instance...
+==> redis.amazon-ebs.redis: Cleaning up any extra volumes...
+==> redis.amazon-ebs.redis: No volumes to clean up, skipping
+==> redis.amazon-ebs.redis: Deleting temporary security group...
+==> redis.amazon-ebs.redis: Deleting temporary keypair...
+Build 'redis.amazon-ebs.redis' finished after 3 minutes 34 seconds.
+
+==> Wait completed after 3 minutes 34 seconds
+
+==> Builds finished. The artifacts of successful builds are:
+--> redis.amazon-ebs.redis: AMIs were created:
+us-east-1: ami-06d002a0dcaaa385f
+
+```
+
+---
+
+I'm planning to use aws-nuke to nuke the EC2 images, snapshots later
+
+```bash
+trial1 $ aws-nuke resource-types
+ACMCertificate
+ACMPCACertificateAuthority
+ACMPCACertificateAuthorityState
+APIGatewayAPIKey
+APIGatewayClientCertificate
+APIGatewayDomainName
+APIGatewayRestAPI
+APIGatewayUsagePlan
+APIGatewayV2API
+APIGatewayV2VpcLink
+APIGatewayVpcLink
+AWSBackupPlan
+AWSBackupRecoveryPoint
+AWSBackupSelection
+AWSBackupVault
+AppMeshMesh
+AppMeshRoute
+AppMeshVirtualGateway
+AppMeshVirtualNode
+AppMeshVirtualRouter
+AppMeshVirtualService
+AppStreamDirectoryConfig
+AppStreamFleet
+AppStreamFleetState
+AppStreamImage
+AppStreamImageBuilder
+AppStreamImageBuilderWaiter
+AppStreamStack
+AppStreamStackFleetAttachment
+AppSyncGraphqlAPI
+ApplicationAutoScalingScalableTarget
+AthenaNamedQuery
+AthenaWorkGroup
+AutoScalingGroup
+AutoScalingPlansScalingPlan
+BatchComputeEnvironment
+BatchComputeEnvironmentState
+BatchJobQueue
+BatchJobQueueState
+Cloud9Environment
+CloudDirectoryDirectory
+CloudDirectorySchema
+CloudFormationStack
+CloudFormationStackSet
+CloudFormationType
+CloudFrontDistribution
+CloudFrontDistributionDeployment
+CloudFrontOriginAccessIdentity
+CloudHSMV2Cluster
+CloudHSMV2ClusterHSM
+CloudSearchDomain
+CloudTrailTrail
+CloudWatchAlarm
+CloudWatchDashboard
+CloudWatchEventsRule
+CloudWatchEventsTarget
+CloudWatchLogsDestination
+CloudWatchLogsLogGroup
+CloudWatchLogsResourcePolicy
+CodeBuildProject
+CodeCommitRepository
+CodeDeployApplication
+CodePipelinePipeline
+CodeStarConnection
+CodeStarNotificationRule
+CodeStarProject
+CognitoIdentityPool
+CognitoIdentityProvider
+CognitoUserPool
+CognitoUserPoolClient
+CognitoUserPoolDomain
+ComprehendDocumentClassifier
+ComprehendDominantLanguageDetectionJob
+ComprehendEndpoint
+ComprehendEntitiesDetectionJob
+ComprehendEntityRecognizer
+ComprehendKeyPhrasesDetectionJob
+ComprehendSentimentDetectionJob
+ConfigServiceConfigRule
+ConfigServiceConfigurationRecorder
+ConfigServiceDeliveryChannel
+DAXCluster
+DAXParameterGroup
+DAXSubnetGroup
+DataPipelinePipeline
+DatabaseMigrationServiceCertificate
+DatabaseMigrationServiceEndpoint
+DatabaseMigrationServiceEventSubscription
+DatabaseMigrationServiceReplicationInstance
+DatabaseMigrationServiceReplicationTask
+DatabaseMigrationServiceSubnetGroup
+DeviceFarmProject
+DirectoryServiceDirectory
+DynamoDBTable
+DynamoDBTableItem
+EC2Address
+EC2ClientVpnEndpoint
+EC2ClientVpnEndpointAttachment
+EC2CustomerGateway
+EC2DHCPOption
+EC2EgressOnlyInternetGateway
+EC2Image
+EC2Instance
+EC2InternetGateway
+EC2InternetGatewayAttachment
+EC2KeyPair
+EC2LaunchTemplate
+EC2NATGateway
+EC2NetworkACL
+EC2NetworkInterface
+EC2PlacementGroup
+EC2RouteTable
+EC2SecurityGroup
+EC2Snapshot
+EC2SpotFleetRequest
+EC2Subnet
+EC2TGW
+EC2TGWAttachment
+EC2VPC
+EC2VPCEndpoint
+EC2VPCEndpointServiceConfiguration
+EC2VPCPeeringConnection
+EC2VPNConnection
+EC2VPNGateway
+EC2VPNGatewayAttachment
+EC2Volume
+ECRRepository
+ECSCluster
+ECSClusterInstance
+ECSService
+ECSTaskDefinition
+EFSFileSystem
+EFSMountTarget
+EKSCluster
+EKSFargateProfiles
+EKSNodegroups
+ELB
+ELBv2
+ELBv2TargetGroup
+EMRCluster
+EMRSecurityConfiguration
+ESDomain
+ElasticBeanstalkApplication
+ElasticBeanstalkEnvironment
+ElasticTranscoderPipeline
+ElasticacheCacheCluster
+ElasticacheCacheParameterGroup
+ElasticacheReplicationGroup
+ElasticacheSubnetGroup
+FMSNotificationChannel
+FMSPolicy
+FSxBackup
+FSxFileSystem
+FirehoseDeliveryStream
+GlobalAccelerator
+GlobalAcceleratorEndpointGroup
+GlobalAcceleratorListener
+GlueClassifier
+GlueConnection
+GlueCrawler
+GlueDatabase
+GlueDevEndpoint
+GlueJob
+GlueTrigger
+IAMGroup
+IAMGroupPolicy
+IAMGroupPolicyAttachment
+IAMInstanceProfile
+IAMInstanceProfileRole
+IAMLoginProfile
+IAMOpenIDConnectProvider
+IAMPolicy
+IAMRole
+IAMRolePolicy
+IAMRolePolicyAttachment
+IAMSAMLProvider
+IAMServerCertificate
+IAMServiceSpecificCredential
+IAMUser
+IAMUserAccessKey
+IAMUserGroupAttachment
+IAMUserPolicy
+IAMUserPolicyAttachment
+IAMUserSSHPublicKey
+IAMVirtualMFADevice
+ImageBuilderComponent
+ImageBuilderDistributionConfiguration
+ImageBuilderImage
+ImageBuilderInfrastructureConfiguration
+ImageBuilderPipeline
+ImageBuilderRecipe
+IoTAuthorizer
+IoTCACertificate
+IoTCertificate
+IoTJob
+IoTOTAUpdate
+IoTPolicy
+IoTRoleAlias
+IoTStream
+IoTThing
+IoTThingGroup
+IoTThingType
+IoTThingTypeState
+IoTTopicRule
+KMSAlias
+KMSKey
+KinesisAnalyticsApplication
+KinesisStream
+KinesisVideoProject
+LambdaEventSourceMapping
+LambdaFunction
+LambdaLayer
+LaunchConfiguration
+LexBot
+LexIntent
+LexSlotType
+LifecycleHook
+LightsailDisk
+LightsailDomain
+LightsailInstance
+LightsailKeyPair
+LightsailLoadBalancer
+LightsailStaticIP
+MQBroker
+MSKCluster
+MachineLearningBranchPrediction
+MachineLearningDataSource
+MachineLearningEvaluation
+MachineLearningMLModel
+MediaConvertJobTemplate
+MediaConvertPreset
+MediaConvertQueue
+MediaLiveChannel
+MediaLiveInput
+MediaLiveInputSecurityGroup
+MediaPackageChannel
+MediaPackageOriginEndpoint
+MediaStoreContainer
+MediaStoreDataItems
+MediaTailorConfiguration
+MobileProject
+NeptuneCluster
+NeptuneInstance
+NetpuneSnapshot
+OpsWorksApp
+OpsWorksCMBackup
+OpsWorksCMServer
+OpsWorksCMServerState
+OpsWorksInstance
+OpsWorksLayer
+OpsWorksUserProfile
+RDSDBCluster
+RDSDBClusterParameterGroup
+RDSDBParameterGroup
+RDSDBSubnetGroup
+RDSEventSubscription
+RDSInstance
+RDSSnapshot
+RedshiftCluster
+RedshiftParameterGroup
+RedshiftSnapshot
+RedshiftSubnetGroup
+RekognitionCollection
+ResourceGroupGroup
+RoboMakerDeploymentJob
+RoboMakerFleet
+RoboMakerRobot
+RoboMakerRobotApplication
+RoboMakerSimulationApplication
+RoboMakerSimulationJob
+Route53HealthCheck
+Route53HostedZone
+Route53ResolverEndpoint
+Route53ResolverRule
+Route53ResourceRecordSet
+Route53TrafficPolicy
+S3Bucket
+S3MultipartUpload
+S3Object
+SESConfigurationSet
+SESIdentity
+SESReceiptFilter
+SESReceiptRuleSet
+SESTemplate
+SFNStateMachine
+SNSEndpoint
+SNSPlatformApplication
+SNSSubscription
+SNSTopic
+SQSQueue
+SSMActivation
+SSMAssociation
+SSMDocument
+SSMMaintenanceWindow
+SSMParameter
+SSMPatchBaseline
+SSMResourceDataSync
+SageMakerApp
+SageMakerDomain
+SageMakerEndpoint
+SageMakerEndpointConfig
+SageMakerModel
+SageMakerNotebookInstance
+SageMakerNotebookInstanceLifecycleConfig
+SageMakerNotebookInstanceState
+SageMakerUserProfiles
+SecretsManagerSecret
+SecurityHub
+ServiceCatalogConstraintPortfolioAttachment
+ServiceCatalogPortfolio
+ServiceCatalogPortfolioProductAttachment
+ServiceCatalogPortfolioShareAttachment
+ServiceCatalogPrincipalPortfolioAttachment
+ServiceCatalogProduct
+ServiceCatalogProvisionedProduct
+ServiceCatalogTagOption
+ServiceCatalogTagOptionPortfolioAttachment
+ServiceDiscoveryInstance
+ServiceDiscoveryNamespace
+ServiceDiscoveryService
+SimpleDBDomain
+StorageGatewayFileShare
+StorageGatewayGateway
+StorageGatewayTape
+StorageGatewayVolume
+TransferServer
+TransferServerUser
+WAFRegionalByteMatchSet
+WAFRegionalByteMatchSetIP
+WAFRegionalIPSet
+WAFRegionalIPSetIP
+WAFRegionalRateBasedRule
+WAFRegionalRateBasedRulePredicate
+WAFRegionalRegexMatchSet
+WAFRegionalRegexMatchTuple
+WAFRegionalRegexPatternSet
+WAFRegionalRegexPatternString
+WAFRegionalRule
+WAFRegionalRuleGroup
+WAFRegionalRulePredicate
+WAFRegionalWebACL
+WAFRegionalWebACLRuleAttachment
+WAFRule
+WAFWebACL
+WAFWebACLRuleAttachment
+WAFv2IPSet
+WAFv2RegexPatternSet
+WAFv2RuleGroup
+WAFv2WebACL
+WorkLinkFleet
+WorkSpacesWorkspace
+trial1 $ 
+```
+
+
+
+
