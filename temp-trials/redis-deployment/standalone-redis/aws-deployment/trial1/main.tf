@@ -50,8 +50,8 @@ resource "aws_security_group" "redis_security_group" {
 resource "aws_security_group_rule" "redis_security_group_ingress" {
   type              = "ingress"
   description       = "Redis Traffic from the Internet"
-  from_port         = 22
-  to_port           = 22
+  from_port         = 50379
+  to_port           = 50379
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
@@ -101,7 +101,7 @@ resource "aws_route_table_association" "redis_route_table_with_subnet" {
 }
 
 resource "aws_instance" "redis_server" {
-  ami                         = "ami-029c64b3c205e6cce"
+  ami                         = "ami-06d002a0dcaaa385f"
   instance_type               = "t4g.micro"
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.redis_security_group.id]
