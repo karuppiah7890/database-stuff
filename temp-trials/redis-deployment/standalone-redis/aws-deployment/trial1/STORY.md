@@ -5362,6 +5362,356 @@ WorkSpacesWorkspace
 trial1 $ 
 ```
 
+---
 
+```bash
+trial1 $ terraform plan -out tfplan 
 
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with
+the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_instance.redis_server will be created
+  + resource "aws_instance" "redis_server" {
+      + ami                                  = "ami-06d002a0dcaaa385f"
+      + arn                                  = (known after apply)
+      + associate_public_ip_address          = true
+      + availability_zone                    = (known after apply)
+      + cpu_core_count                       = (known after apply)
+      + cpu_threads_per_core                 = (known after apply)
+      + disable_api_termination              = (known after apply)
+      + ebs_optimized                        = (known after apply)
+      + get_password_data                    = false
+      + host_id                              = (known after apply)
+      + id                                   = (known after apply)
+      + instance_initiated_shutdown_behavior = (known after apply)
+      + instance_state                       = (known after apply)
+      + instance_type                        = "t4g.micro"
+      + ipv6_address_count                   = (known after apply)
+      + ipv6_addresses                       = (known after apply)
+      + key_name                             = (known after apply)
+      + monitoring                           = (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      + primary_network_interface_id         = (known after apply)
+      + private_dns                          = (known after apply)
+      + private_ip                           = (known after apply)
+      + public_dns                           = (known after apply)
+      + public_ip                            = (known after apply)
+      + secondary_private_ips                = (known after apply)
+      + security_groups                      = (known after apply)
+      + source_dest_check                    = true
+      + subnet_id                            = (known after apply)
+      + tags                                 = {
+          + "Name" = "redis-server"
+        }
+      + tags_all                             = {
+          + "Name" = "redis-server"
+        }
+      + tenancy                              = (known after apply)
+      + user_data                            = (known after apply)
+      + user_data_base64                     = (known after apply)
+      + vpc_security_group_ids               = (known after apply)
+
+      + capacity_reservation_specification {
+          + capacity_reservation_preference = (known after apply)
+
+          + capacity_reservation_target {
+              + capacity_reservation_id = (known after apply)
+            }
+        }
+
+      + ebs_block_device {
+          + delete_on_termination = (known after apply)
+          + device_name           = (known after apply)
+          + encrypted             = (known after apply)
+          + iops                  = (known after apply)
+          + kms_key_id            = (known after apply)
+          + snapshot_id           = (known after apply)
+          + tags                  = (known after apply)
+          + throughput            = (known after apply)
+          + volume_id             = (known after apply)
+          + volume_size           = (known after apply)
+          + volume_type           = (known after apply)
+        }
+
+      + enclave_options {
+          + enabled = (known after apply)
+        }
+
+      + ephemeral_block_device {
+          + device_name  = (known after apply)
+          + no_device    = (known after apply)
+          + virtual_name = (known after apply)
+        }
+
+      + metadata_options {
+          + http_endpoint               = (known after apply)
+          + http_put_response_hop_limit = (known after apply)
+          + http_tokens                 = (known after apply)
+        }
+
+      + network_interface {
+          + delete_on_termination = (known after apply)
+          + device_index          = (known after apply)
+          + network_interface_id  = (known after apply)
+        }
+
+      + root_block_device {
+          + delete_on_termination = true
+          + device_name           = (known after apply)
+          + encrypted             = (known after apply)
+          + iops                  = (known after apply)
+          + kms_key_id            = (known after apply)
+          + throughput            = (known after apply)
+          + volume_id             = (known after apply)
+          + volume_size           = 8
+          + volume_type           = (known after apply)
+        }
+    }
+
+  # aws_internet_gateway.redis_internet_gateway will be created
+  + resource "aws_internet_gateway" "redis_internet_gateway" {
+      + arn      = (known after apply)
+      + id       = (known after apply)
+      + owner_id = (known after apply)
+      + tags     = {
+          + "Name" = "redis-internet-gateway"
+        }
+      + tags_all = {
+          + "Name" = "redis-internet-gateway"
+        }
+      + vpc_id   = (known after apply)
+    }
+
+  # aws_key_pair.redis_ssh_key will be created
+  + resource "aws_key_pair" "redis_ssh_key" {
+      + arn             = (known after apply)
+      + fingerprint     = (known after apply)
+      + id              = (known after apply)
+      + key_name        = (known after apply)
+      + key_name_prefix = "redis-ssh-key"
+      + key_pair_id     = (known after apply)
+      + public_key      = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFx7TEwvLYQEnPcH/eorh+4aAofEKR4bHisiy3Pia8FZ dummy@gmail.com"
+      + tags_all        = (known after apply)
+    }
+
+  # aws_route.redis_route_ipv4_internet_access will be created
+  + resource "aws_route" "redis_route_ipv4_internet_access" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + gateway_id             = (known after apply)
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + route_table_id         = (known after apply)
+      + state                  = (known after apply)
+    }
+
+  # aws_route.redis_route_ipv6_internet_access will be created
+  + resource "aws_route" "redis_route_ipv6_internet_access" {
+      + destination_ipv6_cidr_block = "::/0"
+      + gateway_id                  = (known after apply)
+      + id                          = (known after apply)
+      + instance_id                 = (known after apply)
+      + instance_owner_id           = (known after apply)
+      + network_interface_id        = (known after apply)
+      + origin                      = (known after apply)
+      + route_table_id              = (known after apply)
+      + state                       = (known after apply)
+    }
+
+  # aws_route_table.redis_route_table will be created
+  + resource "aws_route_table" "redis_route_table" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + route            = (known after apply)
+      + tags             = {
+          + "Name" = "redis-route-table"
+        }
+      + tags_all         = {
+          + "Name" = "redis-route-table"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # aws_route_table_association.redis_route_table_with_subnet will be created
+  + resource "aws_route_table_association" "redis_route_table_with_subnet" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # aws_security_group.redis_security_group will be created
+  + resource "aws_security_group" "redis_security_group" {
+      + arn                    = (known after apply)
+      + description            = "Allow Redis traffic"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = "allow_redis_traffic"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Name" = "allow-redis-traffic"
+        }
+      + tags_all               = {
+          + "Name" = "allow-redis-traffic"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # aws_security_group_rule.redis_security_group_egress will be created
+  + resource "aws_security_group_rule" "redis_security_group_egress" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + from_port                = 0
+      + id                       = (known after apply)
+      + ipv6_cidr_blocks         = [
+          + "::/0",
+        ]
+      + protocol                 = "-1"
+      + security_group_id        = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 0
+      + type                     = "egress"
+    }
+
+  # aws_security_group_rule.redis_security_group_ingress will be created
+  + resource "aws_security_group_rule" "redis_security_group_ingress" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + description              = "Redis Traffic from the Internet"
+      + from_port                = 50379
+      + id                       = (known after apply)
+      + ipv6_cidr_blocks         = [
+          + "::/0",
+        ]
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 50379
+      + type                     = "ingress"
+    }
+
+  # aws_subnet.redis_subnet will be created
+  + resource "aws_subnet" "redis_subnet" {
+      + arn                             = (known after apply)
+      + assign_ipv6_address_on_creation = false
+      + availability_zone               = (known after apply)
+      + availability_zone_id            = (known after apply)
+      + cidr_block                      = "10.0.0.0/24"
+      + id                              = (known after apply)
+      + ipv6_cidr_block_association_id  = (known after apply)
+      + map_public_ip_on_launch         = false
+      + owner_id                        = (known after apply)
+      + tags                            = {
+          + "Name" = "redis-subnet"
+        }
+      + tags_all                        = {
+          + "Name" = "redis-subnet"
+        }
+      + vpc_id                          = (known after apply)
+    }
+
+  # aws_vpc.redis_vpc will be created
+  + resource "aws_vpc" "redis_vpc" {
+      + arn                              = (known after apply)
+      + assign_generated_ipv6_cidr_block = false
+      + cidr_block                       = "10.0.0.0/16"
+      + default_network_acl_id           = (known after apply)
+      + default_route_table_id           = (known after apply)
+      + default_security_group_id        = (known after apply)
+      + dhcp_options_id                  = (known after apply)
+      + enable_classiclink               = (known after apply)
+      + enable_classiclink_dns_support   = (known after apply)
+      + enable_dns_hostnames             = (known after apply)
+      + enable_dns_support               = true
+      + id                               = (known after apply)
+      + instance_tenancy                 = "default"
+      + ipv6_association_id              = (known after apply)
+      + ipv6_cidr_block                  = (known after apply)
+      + main_route_table_id              = (known after apply)
+      + owner_id                         = (known after apply)
+      + tags                             = {
+          + "Name" = "redis-vpc"
+        }
+      + tags_all                         = {
+          + "Name" = "redis-vpc"
+        }
+    }
+
+Plan: 12 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + ip = (known after apply)
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "tfplan"
+trial1 $ terraform apply tfplan -auto-approve
+╷
+│ Error: Too many command line arguments
+│ 
+│ Expected at most one positional argument.
+╵
+
+For more help on using this command, run:
+  terraform apply -help
+trial1 $ terraform apply tfplan 
+aws_key_pair.redis_ssh_key: Creating...
+aws_vpc.redis_vpc: Creating...
+aws_key_pair.redis_ssh_key: Creation complete after 3s [id=redis-ssh-key20211006041811593600000001]
+aws_vpc.redis_vpc: Still creating... [10s elapsed]
+aws_vpc.redis_vpc: Creation complete after 12s [id=vpc-0c7908007c90fbcec]
+aws_internet_gateway.redis_internet_gateway: Creating...
+aws_route_table.redis_route_table: Creating...
+aws_subnet.redis_subnet: Creating...
+aws_security_group.redis_security_group: Creating...
+aws_route_table.redis_route_table: Creation complete after 4s [id=rtb-0bb52396d5110a954]
+aws_subnet.redis_subnet: Creation complete after 4s [id=subnet-021714cdfc43b2153]
+aws_route_table_association.redis_route_table_with_subnet: Creating...
+aws_internet_gateway.redis_internet_gateway: Creation complete after 6s [id=igw-0ffc328669c6040f0]
+aws_route.redis_route_ipv4_internet_access: Creating...
+aws_route.redis_route_ipv6_internet_access: Creating...
+aws_route_table_association.redis_route_table_with_subnet: Creation complete after 3s [id=rtbassoc-00d657ab0b2420076]
+aws_security_group.redis_security_group: Creation complete after 7s [id=sg-047aa488f9ea2862c]
+aws_security_group_rule.redis_security_group_egress: Creating...
+aws_security_group_rule.redis_security_group_ingress: Creating...
+aws_instance.redis_server: Creating...
+aws_route.redis_route_ipv4_internet_access: Creation complete after 3s [id=r-rtb-0bb52396d5110a9541080289494]
+aws_route.redis_route_ipv6_internet_access: Creation complete after 4s [id=r-rtb-0bb52396d5110a9542750132062]
+aws_security_group_rule.redis_security_group_egress: Creation complete after 4s [id=sgrule-4058504472]
+aws_security_group_rule.redis_security_group_ingress: Creation complete after 7s [id=sgrule-359928857]
+aws_instance.redis_server: Still creating... [10s elapsed]
+aws_instance.redis_server: Still creating... [20s elapsed]
+aws_instance.redis_server: Creation complete after 22s [id=i-0d279d8515171acea]
+
+Apply complete! Resources: 12 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+ip = "54.85.164.255"
+trial1 $ redis-cli -h 54.85.164.255 -p 50379
+Could not connect to Redis at 54.85.164.255:50379: Connection refused
+not connected> 
+trial1 $ 
+```
+
+[TODO]
+- Find out what's causing the error in connectivity - I think it might the firewall inside the VM at OS level. Gotta check this out! Something like `ufw` etc
 
