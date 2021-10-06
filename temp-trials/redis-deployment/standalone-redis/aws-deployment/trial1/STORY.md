@@ -1,18 +1,18 @@
-
 I'm working on https://github.com/karuppiah7890/simple-dbaas/issues/2
 
 TODOs
+
 - Documentation
 - Code
 - Tests? Using terratest ?
 
 Low Level TODOs
+
 - Understand the different AWS resources required to deploy the Standalone Redis DB
 - Expose only one port from the VM to the outside world / public Internet - this port will be used by Redis clients to connect to the Redis
 - Password authentication for the Redis server
 - Output the redis-cli command to use to connect to the server
 - Output the file containing the generated SSH keys required to SSH into the machine running the Redis. Since SSH port won't be exposed to the public Internet, a bastion host has to be used. We can think about this later - how to automatically deploy a bastion and kill it off once we are done using it, all using Terraform
-
 
 ---
 
@@ -38,6 +38,7 @@ But I gotta check more on them - what they do, why exactly they are needed and h
 ---
 
 Documentation TODOs
+
 - Document what access the access key ID and secret access key pair should have to deploy the Standalone Redis DB. This is important as users may not want to provide an automation script a token which has too much access. It's best to validate the required permissions - by creating credentials with those permissions and trying out the automation with those credentials, and only then document it!
 
 ---
@@ -61,7 +62,6 @@ https://aws.amazon.com/vpc/
 https://aws.amazon.com/vpc/details
 
 https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html
-
 
 VPC Pricing
 
@@ -105,22 +105,23 @@ https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Security.html#VPC_Security_
 
 ```terraform
 resource "aws_security_group" "redis_sg" {
-  
+
 }
 ```
 
 ---
 
 Low level TODOs
+
 - AWS resources to create using Terraform - [DONE]
-    - VPC
-    - Subnet
-    - Key Pair
-    - Network interface
-    - Security Group
-    - Internet Gateway
-    - VPC Route Table
-    - EC2 instance
+  - VPC
+  - Subnet
+  - Key Pair
+  - Network interface
+  - Security Group
+  - Internet Gateway
+  - VPC Route Table
+  - EC2 instance
 - Create Amazon Machine Images (AMIs) for Redis and use it
 - Check about the max number of open files in the VM using `ulimit -n` and increase the value
 
@@ -138,7 +139,7 @@ Installing Redis? Use pre-built executables or use package managers to install R
 
 ---
 
-Redis server process basic monitoring and running - 
+Redis server process basic monitoring and running -
 
 It's best to run the Redis server as a systemd unit and let systemd run it whenever the machine starts instead of someone having to run the Redis server manually
 
@@ -334,10 +335,10 @@ on darwin_amd64
 trial1 $ terraform plan -out tfplan
 ╷
 │ Error: Unsupported Terraform Core version
-│ 
+│
 │   on main.tf line 9, in terraform:
 │    9:   required_version = "1.0.8"
-│ 
+│
 │ This configuration does not support Terraform version 1.0.7. To proceed, either choose another supported Terraform
 │ version or update this version constraint. Version constraints are normally set for good reason, so updating the
 │ constraint may lead to other errors or unexpected behavior.
@@ -385,7 +386,7 @@ Saved the plan to: tfplan
 
 To perform exactly these actions, run the following command to apply:
     terraform apply "tfplan"
-trial1 $ 
+trial1 $
 ```
 
 ---
@@ -407,8 +408,8 @@ trial1 $ ssh-keygen -t ed25519 -b 4096 -f dummy-key -C dummy@gmail.com
 Generating public/private ed25519 key pair.
 dummy-key already exists.
 Overwrite (y/n)? y
-Enter passphrase (empty for no passphrase): 
-Enter same passphrase again: 
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
 Your identification has been saved in dummy-key.
 Your public key has been saved in dummy-key.pub.
 The key fingerprint is:
@@ -426,7 +427,7 @@ The key's randomart image is:
 |        .o o oo=*|
 +----[SHA256]-----+
 trial1 $ cat dummy-key.pub  | pbcopy
-trial1 $ 
+trial1 $
 ```
 
 ---
@@ -573,7 +574,7 @@ aws_key_pair.redis_ssh_key: Destruction complete after 1s
 aws_vpc.redis_vpc: Destruction complete after 1s
 
 Destroy complete! Resources: 2 destroyed.
-trial1 $ 
+trial1 $
 ```
 
 ---
@@ -664,7 +665,7 @@ aws_subnet.redis_subnet: Creating...
 aws_subnet.redis_subnet: Creation complete after 3s [id=subnet-0e86df5f7278f53a3]
 
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
-trial1 $ 
+trial1 $
 trial1 $ terraform destroy
 aws_key_pair.redis_ssh_key: Refreshing state... [id=redis-ssh-key20210925145653893800000001]
 aws_vpc.redis_vpc: Refreshing state... [id=vpc-04e12ac450c884deb]
@@ -766,7 +767,7 @@ aws_vpc.redis_vpc: Destroying... [id=vpc-04e12ac450c884deb]
 aws_vpc.redis_vpc: Destruction complete after 1s
 
 Destroy complete! Resources: 3 destroyed.
-trial1 $ 
+trial1 $
 
 ```
 
@@ -810,7 +811,7 @@ No tag called `Name` for key pair as it has prefix for the name and adding a tag
 trial1 $ terraform plan -out tfplan
 ╷
 │ Error: Incorrect attribute value type
-│ 
+│
 │   on main.tf line 54, in resource "aws_security_group" "redis_security_group":
 │   54:   ingress = [
 │   55:     {
@@ -822,13 +823,13 @@ trial1 $ terraform plan -out tfplan
 │   61:       ipv6_cidr_blocks = ["::/0"]
 │   62:     }
 │   63:   ]
-│ 
+│
 │ Inappropriate value for attribute "ingress": element 0: attributes "prefix_list_ids", "security_groups", and
 │ "self" are required.
 ╵
 ╷
 │ Error: Incorrect attribute value type
-│ 
+│
 │   on main.tf line 65, in resource "aws_security_group" "redis_security_group":
 │   65:   egress = [
 │   66:     {
@@ -839,22 +840,22 @@ trial1 $ terraform plan -out tfplan
 │   71:       ipv6_cidr_blocks = ["::/0"]
 │   72:     }
 │   73:   ]
-│ 
+│
 │ Inappropriate value for attribute "egress": element 0: attributes "description", "prefix_list_ids",
 │ "security_groups", and "self" are required.
 ╵
 ╷
 │ Error: Reference to undeclared resource
-│ 
+│
 │   on main.tf line 89, in resource "aws_route_table" "redis_route_table":
 │   89:   vpc_id = aws_vpc.example.id
-│ 
+│
 │ A managed resource "aws_vpc" "example" has not been declared in the root module.
 ╵
 trial1 $ terraform plan -out tfplan
 ╷
 │ Error: Incorrect attribute value type
-│ 
+│
 │   on main.tf line 54, in resource "aws_security_group" "redis_security_group":
 │   54:   ingress = [
 │   55:     {
@@ -866,13 +867,13 @@ trial1 $ terraform plan -out tfplan
 │   61:       ipv6_cidr_blocks = ["::/0"]
 │   62:     }
 │   63:   ]
-│ 
+│
 │ Inappropriate value for attribute "ingress": element 0: attributes "prefix_list_ids", "security_groups", and
 │ "self" are required.
 ╵
 ╷
 │ Error: Incorrect attribute value type
-│ 
+│
 │   on main.tf line 65, in resource "aws_security_group" "redis_security_group":
 │   65:   egress = [
 │   66:     {
@@ -883,13 +884,13 @@ trial1 $ terraform plan -out tfplan
 │   71:       ipv6_cidr_blocks = ["::/0"]
 │   72:     }
 │   73:   ]
-│ 
+│
 │ Inappropriate value for attribute "egress": element 0: attributes "description", "prefix_list_ids",
 │ "security_groups", and "self" are required.
 ╵
 ╷
 │ Error: Incorrect attribute value type
-│ 
+│
 │   on main.tf line 91, in resource "aws_route_table" "redis_route_table":
 │   91:   route = [
 │   92:     {
@@ -900,13 +901,13 @@ trial1 $ terraform plan -out tfplan
 │     ├────────────────
 │     │ aws_internet_gateway.redis_internet_gateway.id will be known only after apply
 │     │ aws_subnet.redis_subnet.id will be known only after apply
-│ 
+│
 │ Inappropriate value for attribute "route": element 0: attributes "carrier_gateway_id",
 │ "destination_prefix_list_id", "egress_only_gateway_id", "instance_id", "ipv6_cidr_block", "local_gateway_id",
 │ "nat_gateway_id", "network_interface_id", "transit_gateway_id", "vpc_endpoint_id", and "vpc_peering_connection_id"
 │ are required.
 ╵
-trial1 $ 
+trial1 $
 ```
 
 ---
@@ -915,40 +916,40 @@ trial1 $
 trial1 $ terraform plan -out tfplan
 ╷
 │ Error: Missing required argument
-│ 
+│
 │   on main.tf line 58, in resource "aws_security_group_rule" "redis_security_group_ingress":
 │   58: resource "aws_security_group_rule" "redis_security_group_ingress" {
-│ 
+│
 │ The argument "type" is required, but no definition was found.
 ╵
 ╷
 │ Error: Missing required argument
-│ 
+│
 │   on main.tf line 68, in resource "aws_security_group_rule" "redis_security_group_egress":
 │   68: resource "aws_security_group_rule" "redis_security_group_egress" {
-│ 
+│
 │ The argument "security_group_id" is required, but no definition was found.
 ╵
 ╷
 │ Error: Missing required argument
-│ 
+│
 │   on main.tf line 68, in resource "aws_security_group_rule" "redis_security_group_egress":
 │   68: resource "aws_security_group_rule" "redis_security_group_egress" {
-│ 
+│
 │ The argument "type" is required, but no definition was found.
 ╵
-trial1 $ 
+trial1 $
 
 trial1 $ terraform plan -out tfplan
 ╷
 │ Error: expected type to be one of [ingress egress], got egess
-│ 
+│
 │   with aws_security_group_rule.redis_security_group_egress,
 │   on main.tf line 70, in resource "aws_security_group_rule" "redis_security_group_egress":
 │   70:   type              = "egess"
-│ 
+│
 ╵
-trial1 $ 
+trial1 $
 ```
 
 ---
@@ -1258,7 +1259,7 @@ Saved the plan to: tfplan
 
 To perform exactly these actions, run the following command to apply:
     terraform apply "tfplan"
-trial1 $ terraform apply tfplan 
+trial1 $ terraform apply tfplan
 aws_key_pair.redis_ssh_key: Creating...
 aws_vpc.redis_vpc: Creating...
 aws_key_pair.redis_ssh_key: Creation complete after 2s [id=redis-ssh-key20210925154911290700000001]
@@ -1286,22 +1287,22 @@ aws_network_interface.redis_network_interface: Creation complete after 34s [id=e
 ╷
 │ Error: error creating Route in Route Table (rtb-0c7905f6350207b2b) with destination (10.0.0.0/24): InvalidParameterValue: The destination CIDR block 10.0.0.0/24 is equal to or more specific than one of this VPC's CIDR blocks. This route can target only an interface or an instance.
 │ 	status code: 400, request id: 8524f26c-35cb-45f6-b0e4-fb16d295da55
-│ 
+│
 │   with aws_route.redis_route,
 │   on main.tf line 94, in resource "aws_route" "redis_route":
 │   94: resource "aws_route" "redis_route" {
-│ 
+│
 ╵
 ╷
 │ Error: Error launching source instance: InvalidParameter: Security group sg-0080f02036d1153f2 and subnet subnet-ceb020ab belong to different networks.
 │ 	status code: 400, request id: b65b31bc-8e24-4b1d-beec-28af659b127b
-│ 
+│
 │   with aws_instance.redis_server,
 │   on main.tf line 100, in resource "aws_instance" "redis_server":
 │  100: resource "aws_instance" "redis_server" {
-│ 
+│
 ╵
-trial1 $ 
+trial1 $
 ```
 
 ```bash
@@ -1317,11 +1318,11 @@ aws_security_group_rule.redis_security_group_ingress: Refreshing state... [id=sg
 aws_network_interface.redis_network_interface: Refreshing state... [id=eni-0dc814d94374f3b44]
 ╷
 │ Error: Conflicting configuration arguments
-│ 
+│
 │   with aws_instance.redis_server,
 │   on main.tf line 101, in resource "aws_instance" "redis_server":
 │  101: resource "aws_instance" "redis_server" {
-│ 
+│
 │ "network_interface": conflicts with associate_public_ip_address
 ╵
 trial1 $ terraform destroy
@@ -1642,7 +1643,7 @@ aws_vpc.redis_vpc: Destroying... [id=vpc-00228dd0c114f8550]
 aws_vpc.redis_vpc: Destruction complete after 1s
 
 Destroy complete! Resources: 9 destroyed.
-trial1 $ 
+trial1 $
 ```
 
 ---
@@ -1985,7 +1986,7 @@ Untracked files:
 	../../../../../cmu-database-systems-course/placeholder/
 
 trial1 $ ga .
-trial1 $ 
+trial1 $
 trial1 $ terraform plan -out tfplan
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with
@@ -2289,12 +2290,12 @@ Saved the plan to: tfplan
 
 To perform exactly these actions, run the following command to apply:
     terraform apply "tfplan"
-trial1 $ 
+trial1 $
 
 ```
 
 ```bash
-trial1 $ terraform apply tfplan 
+trial1 $ terraform apply tfplan
 aws_key_pair.redis_ssh_key: Creating...
 aws_vpc.redis_vpc: Creating...
 aws_key_pair.redis_ssh_key: Creation complete after 2s [id=redis-ssh-key20210925161011968600000001]
@@ -2321,22 +2322,22 @@ aws_route.redis_route: Creating...
 ╷
 │ Error: error creating Route in Route Table (rtb-040ff4d3f4319adbb) with destination (10.0.0.120/32): InvalidParameterValue: The destination CIDR block 10.0.0.120/32 is equal to or more specific than one of this VPC's CIDR blocks. This route can target only an interface or an instance.
 │ 	status code: 400, request id: 2ceaf0a1-ad38-4755-938e-cb0d8934999a
-│ 
+│
 │   with aws_route.redis_route,
 │   on main.tf line 94, in resource "aws_route" "redis_route":
 │   94: resource "aws_route" "redis_route" {
-│ 
+│
 ╵
 ╷
 │ Error: Conflicting configuration arguments
-│ 
+│
 │   with aws_instance.redis_server,
 │   on main.tf line 100, in resource "aws_instance" "redis_server":
 │  100: resource "aws_instance" "redis_server" {
-│ 
+│
 │ "network_interface": conflicts with associate_public_ip_address
 ╵
-trial1 $ 
+trial1 $
 ```
 
 ```bash
@@ -2352,11 +2353,11 @@ aws_security_group_rule.redis_security_group_ingress: Refreshing state... [id=sg
 aws_network_interface.redis_network_interface: Refreshing state... [id=eni-04c3db1b609153c16]
 ╷
 │ Error: Conflicting configuration arguments
-│ 
+│
 │   with aws_instance.redis_server,
 │   on main.tf line 100, in resource "aws_instance" "redis_server":
 │  100: resource "aws_instance" "redis_server" {
-│ 
+│
 │ "network_interface": conflicts with associate_public_ip_address
 ╵
 trial1 $ terraform destroy
@@ -2677,7 +2678,7 @@ aws_vpc.redis_vpc: Destroying... [id=vpc-0d321af6048b821e5]
 aws_vpc.redis_vpc: Destruction complete after 1s
 
 Destroy complete! Resources: 9 destroyed.
-trial1 $ 
+trial1 $
 ```
 
 ---
@@ -2696,21 +2697,21 @@ https://docs.aws.amazon.com/vpc/latest/userguide/managed-prefix-lists.html
 trial1 $ terraform plan -out tfplan
 ╷
 │ Error: expected "destination_cidr_block" to be an empty string: got ::/0
-│ 
+│
 │   with aws_route.redis_route_ipv6_internet_access,
 │   on main.tf line 94, in resource "aws_route" "redis_route_ipv6_internet_access":
 │   94:   destination_cidr_block = "::/0"
-│ 
+│
 ╵
 ╷
 │ Error: "::/0" is not a valid IPv4 CIDR block
-│ 
+│
 │   with aws_route.redis_route_ipv6_internet_access,
 │   on main.tf line 94, in resource "aws_route" "redis_route_ipv6_internet_access":
 │   94:   destination_cidr_block = "::/0"
-│ 
+│
 ╵
-trial1 $ 
+trial1 $
 ```
 
 ---
@@ -3011,7 +3012,7 @@ Saved the plan to: tfplan
 
 To perform exactly these actions, run the following command to apply:
     terraform apply "tfplan"
-trial1 $ terraform apply tfplan 
+trial1 $ terraform apply tfplan
 aws_key_pair.redis_ssh_key: Creating...
 aws_vpc.redis_vpc: Creating...
 aws_key_pair.redis_ssh_key: Creation complete after 2s [id=redis-ssh-key20210925173804304400000001]
@@ -3123,7 +3124,7 @@ debug1: Offering public key: karuppiahn@vmware.com ED25519 SHA256:3vku70losGmr1k
 debug1: Authentications that can continue: publickey,gssapi-keyex,gssapi-with-mic
 debug1: Offering public key: /Users/karuppiahn/.ssh/aws RSA SHA256:qImJtkIChdPcSAPsZkAhWxOfMBBJEIm4wQ/792Yf6NU explicit
 debug1: Server accepts key: /Users/karuppiahn/.ssh/aws RSA SHA256:qImJtkIChdPcSAPsZkAhWxOfMBBJEIm4wQ/792Yf6NU explicit
-Enter passphrase for key '/Users/karuppiahn/.ssh/aws': 
+Enter passphrase for key '/Users/karuppiahn/.ssh/aws':
 debug1: Authentication succeeded (publickey).
 Authenticated to 34.236.33.160 ([34.236.33.160]:22).
 debug1: channel 0: new [client-session]
@@ -3150,7 +3151,7 @@ Connection to 34.236.33.160 closed.
 Transferred: sent 3212, received 3316 bytes, in 2.2 seconds
 Bytes per second: sent 1453.3, received 1500.3
 debug1: Exit status 0
-trial1 $ 
+trial1 $
 ```
 
 ---
@@ -3645,7 +3646,7 @@ aws_vpc.redis_vpc: Destroying... [id=vpc-0b45c36773ac7882c]
 aws_vpc.redis_vpc: Destruction complete after 1s
 
 Destroy complete! Resources: 12 destroyed.
-trial1 $ 
+trial1 $
 ```
 
 ---
@@ -3949,7 +3950,7 @@ Saved the plan to: tfplan
 
 To perform exactly these actions, run the following command to apply:
     terraform apply "tfplan"
-trial1 $ terraform apply tfplan 
+trial1 $ terraform apply tfplan
 aws_key_pair.redis_ssh_key: Creating...
 aws_vpc.redis_vpc: Creating...
 aws_key_pair.redis_ssh_key: Creation complete after 2s [id=redis-ssh-key20210925174953991200000001]
@@ -4052,7 +4053,7 @@ Connection to 52.91.70.219 closed.
 Transferred: sent 2776, received 3368 bytes, in 6.6 seconds
 Bytes per second: sent 423.7, received 514.0
 debug1: Exit status 0
-trial1 $ 
+trial1 $
 
 trial1 $ terraform destroy
 aws_key_pair.redis_ssh_key: Refreshing state... [id=redis-ssh-key20210925174953991200000001]
@@ -4549,14 +4550,94 @@ aws_vpc.redis_vpc: Destroying... [id=vpc-03d7951ba6c86ba72]
 aws_vpc.redis_vpc: Destruction complete after 2s
 
 Destroy complete! Resources: 12 destroyed.
-trial1 $ 
+trial1 $
 
 ```
 
 TODO
+
 - Checkout about Amazon Machine Images
 
 ---
 
+Checking out systemctl unit file for running Redis
 
+https://duckduckgo.com/?t=ffab&q=systemctl+unit+for+redis&ia=web
 
+https://gist.github.com/mkocikowski/aeca878d58d313e902bb
+
+```
+[Unit]
+Description=Redis
+After=syslog.target
+
+[Service]
+ExecStart=/bin/redis-server /etc/redis/redis.conf
+RestartSec=5s
+Restart=on-success
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+[root@ip-10-0-0-67 ec2-user]# systemctl status redis
+● redis.service - Redis
+   Loaded: loaded (/etc/systemd/system/redis.service; disabled; vendor preset: disabled)
+  Drop-In: /etc/systemd/system/redis.service.d
+           └─limit.conf
+   Active: failed (Result: exit-code) since Wed 2021-10-06 03:03:57 UTC; 3min 34s ago
+  Process: 1678 ExecStart=/usr/local/bin/redis-server /etc/redis/redis.conf (code=exited, status=203/EXEC)
+ Main PID: 1678 (code=exited, status=203/EXEC)
+
+Oct 06 03:03:57 ip-10-0-0-67.ec2.internal systemd[1]: Started Redis.
+Oct 06 03:03:57 ip-10-0-0-67.ec2.internal systemd[1]: redis.service: main process exited, code=exited, status=...EXEC
+Oct 06 03:03:57 ip-10-0-0-67.ec2.internal systemd[1]: Unit redis.service entered failed state.
+Oct 06 03:03:57 ip-10-0-0-67.ec2.internal systemd[1]: redis.service failed.
+Warning: redis.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@ip-10-0-0-67 ec2-user]# systemctl start redis
+Warning: redis.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+[root@ip-10-0-0-67 ec2-user]# systemctl daemon-relod
+Unknown operation 'daemon-relod'.
+[root@ip-10-0-0-67 ec2-user]# systemctl daemon-reload
+[root@ip-10-0-0-67 ec2-user]# systemctl start redis
+[root@ip-10-0-0-67 ec2-user]# systemctl status redis
+● redis.service - Redis
+   Loaded: loaded (/etc/systemd/system/redis.service; disabled; vendor preset: disabled)
+  Drop-In: /etc/systemd/system/redis.service.d
+           └─limit.conf
+   Active: active (running) since Wed 2021-10-06 03:07:52 UTC; 4s ago
+ Main PID: 1764 (redis-server)
+   CGroup: /system.slice/redis.service
+           └─1764 /bin/redis-server 127.0.0.1:6379
+
+Oct 06 03:07:52 ip-10-0-0-67.ec2.internal systemd[1]: Started Redis.
+[root@ip-10-0-0-67 ec2-user]#
+```
+
+```bash
+[root@ip-10-0-0-67 ec2-user]# redis-cli
+127.0.0.1:6379> keys *
+(empty array)
+127.0.0.1:6379>
+[root@ip-10-0-0-67 ec2-user]# redis-cli dbsize
+(integer) 0
+[root@ip-10-0-0-67 ec2-user]# redis-cli info cluster
+# Cluster
+cluster_enabled:0
+[root@ip-10-0-0-67 ec2-user]# redis-cli info replication
+# Replication
+role:master
+connected_slaves:0
+master_failover_state:no-failover
+master_replid:a79b6916035bd4f3edb1a732ca5521503bc3a58d
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+[root@ip-10-0-0-67 ec2-user]#
+```
