@@ -128,4 +128,80 @@ https://www.percona.com/software/mysql-database/percona-xtradb-cluster
 
 https://www.percona.com/software/mysql-database/percona-xtrabackup
 
+# AWS
 
+https://aws.amazon.com/products/databases/
+
+https://docs.aws.amazon.com/whitepapers/latest/aws-overview/database.html
+
+https://aws.amazon.com/rds/aurora
+
+https://aws.amazon.com/rds/
+
+https://aws.amazon.com/redshift/
+
+https://aws.amazon.com/dynamodb
+
+https://aws.amazon.com/elasticache/
+
+https://aws.amazon.com/memorydb/
+
+https://aws.amazon.com/documentdb/
+
+https://aws.amazon.com/keyspaces/
+
+https://aws.amazon.com/neptune/
+
+https://aws.amazon.com/timestream/
+
+https://aws.amazon.com/qldb/
+
+# GCP
+
+https://cloud.google.com/products/databases/
+
+Oracle - https://cloud.google.com/bare-metal
+
+Cloud SQL - MySQL, PostgreSQL, SQL Server - https://cloud.google.com/sql
+
+Cloud Spanner - https://cloud.google.com/spanner
+
+Cloud Bigtable - https://cloud.google.com/bigtable
+
+Firestore - https://cloud.google.com/firestore
+
+Firebase Realtime Database - https://firebase.google.com/products/realtime-database/
+
+Memorystore - https://cloud.google.com/memorystore
+
+# Azure
+
+https://azure.microsoft.com/en-us/solutions/databases - PostgreSQL, MySQL, MariaDB, Redis, Cosmos DB, Azure SQL
+
+https://azure.microsoft.com/en-us/solutions/databases/#products
+
+https://azure.microsoft.com/en-us/product-categories/databases/
+
+# DigitalOcean
+
+https://www.digitalocean.com/products/managed-databases/
+
+https://www.digitalocean.com/products/managed-databases-mongodb/
+
+https://www.digitalocean.com/products/managed-databases-mysql/
+
+https://www.digitalocean.com/products/managed-databases-postgresql/
+
+https://www.digitalocean.com/products/managed-databases-redis/
+
+# Yandex
+
+Managed ClickHouse DB - https://cloud.yandex.com/en/services/managed-clickhouse
+
+Managed PostgreSQL - https://cloud.yandex.com/en/services/managed-postgresql
+
+Yandex DB - https://cloud.yandex.com/en/services/ydb
+
+# Kamino / Clickhouse Cloud
+
+Managed ClickHouse DB - https://www.clickhousecloud.com/

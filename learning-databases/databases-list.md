@@ -37,7 +37,7 @@ This is just me listing out databases I come across or tried out or hear about. 
 - [Metabase](https://www.metabase.com/) - https://github.com/metabase/metabase
 - [Meilisearch](https://www.meilisearch.com/) - https://github.com/meilisearch/MeiliSearch
 - Bolt DB - https://github.com/boltdb/bolt . Maintained Fork - https://github.com/etcd-io/bbolt
-- [ClickHouse](https://clickhouse.tech/) - https://github.com/ClickHouse/ClickHouse
+- [ClickHouse](https://clickhouse.com/) - https://github.com/ClickHouse/ClickHouse
 - [Timescale](https://www.timescale.com/) - https://github.com/timescale/timescaledb
 - [Promscale](https://www.timescale.com/promscale) - https://github.com/timescale/promscale
 - [Apache Druid](https://druid.apache.org/) - https://github.com/apache/druid
