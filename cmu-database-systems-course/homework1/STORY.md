@@ -451,3 +451,151 @@ HILARION-Abastos
 Hungry Owl All-Night Grocers
 sqlite> 
 ```
+
+https://duckduckgo.com/?t=ffab&q=sqlite+functions+list&ia=web
+
+https://sqlite.org/c3ref/funclist.html
+
+https://sqlite.org/lang_corefunc.html
+
+https://sqlite.org/lang_corefunc.html#substr
+
+https://sqlite.org/lang_corefunc.html#instr
+
+```bash
+sqlite> SELECT DISTINCT ShipName, instr(ShipName, '-') FROM "Order" WHERE ShipName LIKE '%-%' ORDER BY ShipName ASC; Bottom-Dollar Markets|7
+Chop-suey Chinese|5
+GROSELLA-Restaurante|9
+HILARION-Abastos|9
+Hungry Owl All-Night Grocers|15
+LILA-Supermercado|5
+LINO-Delicateses|5
+QUICK-Stop|6
+Save-a-lot Markets|5
+sqlite> SELECT DISTINCT ShipName, substr(ShipName, 1, instr(ShipName, '-')) FROM "Order" WHERE ShipName LIKE '%-%' ORDER BY ShipName ASC;
+Bottom-Dollar Markets|Bottom-
+Chop-suey Chinese|Chop-
+GROSELLA-Restaurante|GROSELLA-
+HILARION-Abastos|HILARION-
+Hungry Owl All-Night Grocers|Hungry Owl All-
+LILA-Supermercado|LILA-
+LINO-Delicateses|LINO-
+QUICK-Stop|QUICK-
+Save-a-lot Markets|Save-
+sqlite> SELECT DISTINCT ShipName, substr(ShipName, 1, instr(ShipName, '-')-1) FROM "Order" WHERE ShipName LIKE '%-%' ORDER BY ShipName ASC;
+Bottom-Dollar Markets|Bottom
+Chop-suey Chinese|Chop
+GROSELLA-Restaurante|GROSELLA
+HILARION-Abastos|HILARION
+Hungry Owl All-Night Grocers|Hungry Owl All
+LILA-Supermercado|LILA
+LINO-Delicateses|LINO
+QUICK-Stop|QUICK
+Save-a-lot Markets|Save
+sqlite> 
+```
+
+---
+
+Q3. Indicate if an order's ShipCountry is in North America. For our purposes, this is 'USA', 'Mexico', 'Canada'
+
+Details: You should print the Order Id, ShipCountry, and another column that is either 'NorthAmerica' or 'OtherPlace' depending on the Ship Country.
+Order by the primary key (Id) ascending and return 20 rows starting from Order Id 15445 Your output should look like 15445|France|OtherPlace or 15454|Canada|NorthAmerica 
+
+```bash
+sqlite> .schema Order
+CREATE TABLE IF NOT EXISTS "Order" 
+(
+  "Id" INTEGER PRIMARY KEY, 
+  "CustomerId" VARCHAR(8000) NULL, 
+  "EmployeeId" INTEGER NOT NULL, 
+  "OrderDate" VARCHAR(8000) NULL, 
+  "RequiredDate" VARCHAR(8000) NULL, 
+  "ShippedDate" VARCHAR(8000) NULL, 
+  "ShipVia" INTEGER NULL, 
+  "Freight" DECIMAL NOT NULL, 
+  "ShipName" VARCHAR(8000) NULL, 
+  "ShipAddress" VARCHAR(8000) NULL, 
+  "ShipCity" VARCHAR(8000) NULL, 
+  "ShipRegion" VARCHAR(8000) NULL, 
+  "ShipPostalCode" VARCHAR(8000) NULL, 
+  "ShipCountry" VARCHAR(8000) NULL 
+);
+sqlite> SELECT COUNT(*) FROM 'Order';
+16818
+sqlite> SELECT ShipCountry FROM 'Order' LIMIT 10;
+France
+Germany
+Brazil
+France
+Belgium
+Brazil
+Switzerland
+Switzerland
+Brazil
+Venezuela
+sqlite> SELECT ShipCountry FROM 'Order' WHERE ShipCountry = 'USA';
+USA
+USA
+USA
+...
+...
+sqlite> 
+```
+
+```bash
+sqlite> SELECT ShipCountry FROM 'Order' WHERE ShipCountry = 'USA' OR ShipCountry = 'Mexico' LIMIT 5;
+Mexico
+USA
+USA
+USA
+USA
+sqlite> SELECT ShipCountry FROM 'Order' WHERE ShipCountry = 'USA' OR ShipCountry = 'Mexico' OR ShipCountry = 'Canada' LIMIT 5;
+Mexico
+USA
+USA
+USA
+USA
+sqlite> SELECT Id, ShipCountry FROM 'Order' WHERE ShipCountry = 'USA' OR ShipCountry = 'Mexico' OR ShipCountry = 'Canada' LIMIT 5;
+10259|Mexico
+10262|USA
+10269|USA
+10271|USA
+10272|USA
+sqlite> SELECT Id, ShipCountry, 1 as AnotherColumn FROM 'Order' WHERE ShipCountry = 'USA' OR ShipCountry = 'Mexico' OR ShipCountry = 'Canada' LIMIT 5;
+10259|Mexico|1
+10262|USA|1
+10269|USA|1
+10271|USA|1
+10272|USA|1
+sqlite> SELECT Id, ShipCountry, (ShipCountry = 'USA' OR ShipCountry = 'Mexico' OR ShipCountry = 'Canada') FROM 'Order' LIMIT 5;
+10248|France|0
+10249|Germany|0
+10250|Brazil|0
+10251|France|0
+10252|Belgium|0
+sqlite> SELECT Id, ShipCountry, (ShipCountry = 'USA' OR ShipCountry = 'Mexico' OR ShipCountry = 'Canada') FROM 'Order' LIMIT 20;
+10248|France|0
+10249|Germany|0
+10250|Brazil|0
+10251|France|0
+10252|Belgium|0
+10253|Brazil|0
+10254|Switzerland|0
+10255|Switzerland|0
+10256|Brazil|0
+10257|Venezuela|0
+10258|Austria|0
+10259|Mexico|1
+10260|Germany|0
+10261|Brazil|0
+10262|USA|1
+10263|Austria|0
+10264|Sweden|0
+10265|France|0
+10266|Finland|0
+10267|Germany|0
+sqlite>                                                                                                              
+```
+
+
