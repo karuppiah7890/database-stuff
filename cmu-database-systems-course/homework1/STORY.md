@@ -598,4 +598,390 @@ sqlite> SELECT Id, ShipCountry, (ShipCountry = 'USA' OR ShipCountry = 'Mexico' O
 sqlite>                                                                                                              
 ```
 
+https://sqlite.org/lang_corefunc.html#iif
+
+```bash
+sqlite> SELECT Id, ShipCountry, iif(ShipCountry = 'USA' OR ShipCountry = 'Mexico' OR ShipCountry = 'Canada', 'NorthAmerica', 'OtherPlace') FROM 'Order' LIMIT 20;
+10248|France|OtherPlace
+10249|Germany|OtherPlace
+10250|Brazil|OtherPlace
+10251|France|OtherPlace
+10252|Belgium|OtherPlace
+10253|Brazil|OtherPlace
+10254|Switzerland|OtherPlace
+10255|Switzerland|OtherPlace
+10256|Brazil|OtherPlace
+10257|Venezuela|OtherPlace
+10258|Austria|OtherPlace
+10259|Mexico|NorthAmerica
+10260|Germany|OtherPlace
+10261|Brazil|OtherPlace
+10262|USA|NorthAmerica
+10263|Austria|OtherPlace
+10264|Sweden|OtherPlace
+10265|France|OtherPlace
+10266|Finland|OtherPlace
+10267|Germany|OtherPlace
+sqlite> SELECT Id, ShipCountry, iif(ShipCountry = 'USA' OR ShipCountry = 'Mexico' OR ShipCountry = 'Canada', 'NorthAmerica', 'OtherPlace') FROM 'Order' ORDER BY Id ASC WHERE Id >= 15445 LIMIT 20;
+Error: near "WHERE": syntax error
+sqlite> SELECT Id, ShipCountry, iif(ShipCountry = 'USA' OR ShipCountry = 'Mexico' OR ShipCountry = 'Canada', 'NorthAmerica', 'OtherPlace') FROM 'Order' WHERE Id >= 15445 ORDER BY Id ASC LIMIT 20;
+15445|France|OtherPlace
+15446|Italy|OtherPlace
+15447|Portugal|OtherPlace
+15448|Argentina|OtherPlace
+15449|Portugal|OtherPlace
+15450|Venezuela|OtherPlace
+15451|Brazil|OtherPlace
+15452|France|OtherPlace
+15453|France|OtherPlace
+15454|Canada|NorthAmerica
+15455|USA|NorthAmerica
+15456|France|OtherPlace
+15457|Mexico|NorthAmerica
+15458|USA|NorthAmerica
+15459|Germany|OtherPlace
+15460|Argentina|OtherPlace
+15461|Austria|OtherPlace
+15462|Austria|OtherPlace
+15463|Finland|OtherPlace
+15464|Brazil|OtherPlace
+sqlite> 
+```
+
+---
+
+Q4. For each Shipper, find the percentage of orders which are late.
+
+Details: An order is considered late if ShippedDate > RequiredDate. Print the following format, order by descending precentage, rounded to the nearest hundredths, like United Package|23.44 
+
+```bash
+sqlite> .schema Shipper
+CREATE TABLE IF NOT EXISTS "Shipper" 
+(
+  "Id" INTEGER PRIMARY KEY, 
+  "CompanyName" VARCHAR(8000) NULL, 
+  "Phone" VARCHAR(8000) NULL 
+);
+sqlite> .schema Ship
+sqlite> .schema Ship
+ShipAddress    ShipCountry    ShippedDate    ShipPostalCode ShipVia       
+ShipCity       ShipName       Shipper        ShipRegion    
+sqlite> .schema ShippedDate
+sqlite> .tables
+Category              EmployeeTerritory     Region              
+Customer              Order                 Shipper             
+CustomerCustomerDemo  OrderDetail           Supplier            
+CustomerDemographic   Product               Territory           
+Employee              ProductDetails_V    
+sqlite> .schema Order
+CREATE TABLE IF NOT EXISTS "Order" 
+(
+  "Id" INTEGER PRIMARY KEY, 
+  "CustomerId" VARCHAR(8000) NULL, 
+  "EmployeeId" INTEGER NOT NULL, 
+  "OrderDate" VARCHAR(8000) NULL, 
+  "RequiredDate" VARCHAR(8000) NULL, 
+  "ShippedDate" VARCHAR(8000) NULL, 
+  "ShipVia" INTEGER NULL, 
+  "Freight" DECIMAL NOT NULL, 
+  "ShipName" VARCHAR(8000) NULL, 
+  "ShipAddress" VARCHAR(8000) NULL, 
+  "ShipCity" VARCHAR(8000) NULL, 
+  "ShipRegion" VARCHAR(8000) NULL, 
+  "ShipPostalCode" VARCHAR(8000) NULL, 
+  "ShipCountry" VARCHAR(8000) NULL 
+);
+sqlite> .schema OrderDetail
+CREATE TABLE IF NOT EXISTS "OrderDetail" 
+(
+  "Id" VARCHAR(8000) PRIMARY KEY, 
+  "OrderId" INTEGER NOT NULL, 
+  "ProductId" INTEGER NOT NULL, 
+  "UnitPrice" DECIMAL NOT NULL, 
+  "Quantity" INTEGER NOT NULL, 
+  "Discount" DOUBLE NOT NULL 
+);
+sqlite> SELECT * FROM 'Order' LIMIT 2;
+10248|VINET|5|2012-07-04|2012-08-01|2012-07-16|3|16.75|Vins et alcools Chevalier|59 rue de l'Abbaye|Reims|Western Europe|51100|France
+10249|TOMSP|6|2012-07-05|2012-08-16|2012-07-10|1|22.25|Toms Spezialitäten|Luisenstr. 48|Münster|Western Europe|44087|Germany
+sqlite> SELECT RequiredDate, ShippedDate FROM 'Order' LIMIT 2;
+2012-08-01|2012-07-16
+2012-08-16|2012-07-10
+sqlite> SELECT RequiredDate < ShippedDate FROM 'Order' LIMIT 2;
+0
+0
+sqlite> SELECT RequiredDate < ShippedDate FROM 'Order' LIMIT 10;
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+sqlite> SELECT RequiredDate < ShippedDate FROM 'Order' LIMIT 20;
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1
+0
+0
+0
+sqlite> SELECT Id FROM 'Order' WHERE RequiredDate < ShippedDate;
+10264
+10271
+10280
+10302
+10309
+10320
+10380
+10423
+10427
+...
+sqlite> 
+```
+
+```bash
+sqlite> SELECT COUNT(*) FROM 'Order' WHERE RequiredDate < ShippedDate;
+3953
+sqlite> 
+```
+
+Percentage of Orders that are shipped late by the Shipper = Number of Orders shipped late by the Shipper / Total number of Orders shipped by the Shipper
+
+How are Order and Shipper related? Hmm, where are those details - "this order has been shipped by this shipper"
+
+```bash
+sqlite> .schema Shipper
+CREATE TABLE IF NOT EXISTS "Shipper" 
+(
+  "Id" INTEGER PRIMARY KEY, 
+  "CompanyName" VARCHAR(8000) NULL, 
+  "Phone" VARCHAR(8000) NULL 
+);
+sqlite> SELECT COUNT(*) FROM Shipper;
+3
+sqlite> SELECT * FROM Shipper;
+1|Speedy Express|(503) 555-9831
+2|United Package|(503) 555-3199
+3|Federal Shipping|(503) 555-9931
+sqlite> SELECT * FROM 'Order' LIMIT 2;
+10248|VINET|5|2012-07-04|2012-08-01|2012-07-16|3|16.75|Vins et alcools Chevalier|59 rue de l'Abbaye|Reims|Western Europe|51100|France
+10249|TOMSP|6|2012-07-05|2012-08-16|2012-07-10|1|22.25|Toms Spezialitäten|Luisenstr. 48|Münster|Western Europe|44087|Germany
+sqlite> .schema Order
+CREATE TABLE IF NOT EXISTS "Order" 
+(
+  "Id" INTEGER PRIMARY KEY, 
+  "CustomerId" VARCHAR(8000) NULL, 
+  "EmployeeId" INTEGER NOT NULL, 
+  "OrderDate" VARCHAR(8000) NULL, 
+  "RequiredDate" VARCHAR(8000) NULL, 
+  "ShippedDate" VARCHAR(8000) NULL, 
+  "ShipVia" INTEGER NULL, 
+  "Freight" DECIMAL NOT NULL, 
+  "ShipName" VARCHAR(8000) NULL, 
+  "ShipAddress" VARCHAR(8000) NULL, 
+  "ShipCity" VARCHAR(8000) NULL, 
+  "ShipRegion" VARCHAR(8000) NULL, 
+  "ShipPostalCode" VARCHAR(8000) NULL, 
+  "ShipCountry" VARCHAR(8000) NULL 
+);
+sqlite> .tables
+Category              EmployeeTerritory     Region              
+Customer              Order                 Shipper             
+CustomerCustomerDemo  OrderDetail           Supplier            
+CustomerDemographic   Product               Territory           
+Employee              ProductDetails_V    
+sqlite> .Schema OrderDetail
+Error: unknown command or invalid arguments:  "Schema". Enter ".help" for help
+sqlite> .schema OrderDetail
+CREATE TABLE IF NOT EXISTS "OrderDetail" 
+(
+  "Id" VARCHAR(8000) PRIMARY KEY, 
+  "OrderId" INTEGER NOT NULL, 
+  "ProductId" INTEGER NOT NULL, 
+  "UnitPrice" DECIMAL NOT NULL, 
+  "Quantity" INTEGER NOT NULL, 
+  "Discount" DOUBLE NOT NULL 
+);
+sqlite> .schema Order
+CREATE TABLE IF NOT EXISTS "Order" 
+(
+  "Id" INTEGER PRIMARY KEY, 
+  "CustomerId" VARCHAR(8000) NULL, 
+  "EmployeeId" INTEGER NOT NULL, 
+  "OrderDate" VARCHAR(8000) NULL, 
+  "RequiredDate" VARCHAR(8000) NULL, 
+  "ShippedDate" VARCHAR(8000) NULL, 
+  "ShipVia" INTEGER NULL, 
+  "Freight" DECIMAL NOT NULL, 
+  "ShipName" VARCHAR(8000) NULL, 
+  "ShipAddress" VARCHAR(8000) NULL, 
+  "ShipCity" VARCHAR(8000) NULL, 
+  "ShipRegion" VARCHAR(8000) NULL, 
+  "ShipPostalCode" VARCHAR(8000) NULL, 
+  "ShipCountry" VARCHAR(8000) NULL 
+);
+sqlite> SELECT ShipName FROM 'Order' LIMIT 2;
+Vins et alcools Chevalier
+Toms Spezialitäten
+sqlite> .schema Supplier
+CREATE TABLE IF NOT EXISTS "Supplier" 
+(
+  "Id" INTEGER PRIMARY KEY, 
+  "CompanyName" VARCHAR(8000) NULL, 
+  "ContactName" VARCHAR(8000) NULL, 
+  "ContactTitle" VARCHAR(8000) NULL, 
+  "Address" VARCHAR(8000) NULL, 
+  "City" VARCHAR(8000) NULL, 
+  "Region" VARCHAR(8000) NULL, 
+  "PostalCode" VARCHAR(8000) NULL, 
+  "Country" VARCHAR(8000) NULL, 
+  "Phone" VARCHAR(8000) NULL, 
+  "Fax" VARCHAR(8000) NULL, 
+  "HomePage" VARCHAR(8000) NULL 
+);
+sqlite> SELECT ShipVia FROM 'Order' LIMIT 2;
+3
+1
+sqlite> SELECT DISTINCE ShipVia FROM 'Order';
+Error: no such column: DISTINCE
+sqlite> SELECT DISTINCT ShipVia FROM 'Order';
+3
+1
+2
+sqlite> 
+```
+
+```
+Contains details for a shipper referenced by an Order's ShipVia column. For example, this is a row from the table:
+```
+
+Ah, the `ShipVia` column in `Order` table, okay
+
+Output - we need shipper name and the percentage, hmm
+
+```bash
+sqlite> SELECT CompanyName FROM Shipper;
+Speedy Express
+United Package
+Federal Shipping
+sqlite> 
+```
+
+Shipper name is easy, next percentage, hmm
+
+Rounding off to two digits / hundredths position - https://sqlite.org/lang_corefunc.html#round
+
+https://duckduckgo.com/?t=ffab&q=sqlite+divide&ia=web
+
+https://datacomy.com/sql/sqlite/division/
+
+```bash
+sqlite> SELECT CompanyName FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id LIMIT 5 ;
+Federal Shipping
+Speedy Express
+United Package
+Speedy Express
+United Package
+sqlite> .scheme Shipper
+Error: unknown command or invalid arguments:  "scheme". Enter ".help" for help
+sqlite> .schema Shipper
+CREATE TABLE IF NOT EXISTS "Shipper" 
+(
+  "Id" INTEGER PRIMARY KEY, 
+  "CompanyName" VARCHAR(8000) NULL, 
+  "Phone" VARCHAR(8000) NULL 
+);
+sqlite> SELECT CompanyName FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY o.ShipVia LIMIT 5 ;
+Speedy Express
+United Package
+Federal Shipping
+sqlite> SELECT CompanyName FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY CompanyName LIMIT 5 ;
+Federal Shipping
+Speedy Express
+United Package
+sqlite> SELECT CompanyName FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY CompanyName LIMIT 5 ;
+Federal Shipping
+Speedy Express
+United Package
+sqlite> SELECT CompanyName FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY o.ShipVia LIMIT 5 ;
+Speedy Express
+United Package
+Federal Shipping
+sqlite> SELECT CompanyName, COUNT(*) FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY CompanyName LIMIT 5 ;
+Federal Shipping|5654
+Speedy Express|5572
+United Package|5592
+sqlite> SELECT CompanyName, COUNT(*) FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY CompanyName;
+Federal Shipping|5654
+Speedy Express|5572
+United Package|5592
+sqlite> SELECT COUNT(*) FROM 'Order';
+16818
+sqlite> SELECT CompanyName, COUNT(*) FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY CompanyName WHERE RequiredDate < ShippedDate;
+Error: near "WHERE": syntax error
+sqlite> SELECT CompanyName, COUNT(*) FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName;
+Federal Shipping|1335
+Speedy Express|1307
+United Package|1311
+sqlite> SELECT CompanyName, COUNT(*) as LateOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName;
+Federal Shipping|1335
+Speedy Express|1307
+United Package|1311
+sqlite> WITH LateOrderDetails AS (SELECT CompanyName, COUNT(*) as LateOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName);
+Error: near ";": syntax error
+sqlite> WITH LateOrderDetails AS (SELECT CompanyName, COUNT(*) as LateOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName;);
+Error: near ";": syntax error
+sqlite> WITH LateOrderDetails AS (SELECT CompanyName, COUNT(*) as LateOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName;)
+   ...> ;
+Error: near ";": syntax error
+sqlite> WITH LateOrderDetails AS (SELECT CompanyName, COUNT(*) as LateOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName) SELECT * FROM LateOrderDetails;
+Federal Shipping|1335
+Speedy Express|1307
+United Package|1311
+sqlite> WITH LateOrderDetails AS (SELECT CompanyName, COUNT(*) as LateOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName) SELECT lod.CompanyName, lod.LateOrderCount / aod.AllOrderCount FROM LateOrderDetails as lod JOIN (SELECT CompanyName, COUNT(*) as AllOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY CompanyName) as aod JOIN on lod.CompanyName = aod.CompanyName;
+Error: near "on": syntax error
+sqlite> WITH LateOrderDetails AS (SELECT CompanyName, COUNT(*) as LateOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName) SELECT lod.CompanyName, lod.LateOrderCount / aod.AllOrderCount FROM LateOrderDetails as lod JOIN (SELECT CompanyName, COUNT(*) as AllOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY CompanyName) as aod ON lod.CompanyName = aod.CompanyName;
+Federal Shipping|0
+Speedy Express|0
+United Package|0
+sqlite> WITH LateOrderDetails AS (SELECT CompanyName, COUNT(*) as LateOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName) SELECT lod.CompanyName, lod.LateOrderCount * 100 / aod.AllOrderCount FROM LateOrderDetails as lod JOIN (SELECT CompanyName, COUNT(*) as AllOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY CompanyName) as aod ON lod.CompanyName = aod.CompanyName;
+Federal Shipping|23
+Speedy Express|23
+United Package|23
+sqlite> WITH LateOrderDetails AS (SELECT CompanyName, COUNT(*) as LateOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName) SELECT lod.CompanyName, CAST(lod.LateOrderCount AS REAL) * 100 / CAST(aod.AllOrderCount AS REAL) FROM LateOrderDetails as lod JOIN (SELECT CompanyName, COUNT(*) as AllOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY CompanyName) as aod ON lod.CompanyName = aod.CompanyName;
+Federal Shipping|23.6116024053767
+Speedy Express|23.4565685570711
+United Package|23.4442060085837
+sqlite> WITH LateOrderDetails AS (SELECT CompanyName, COUNT(*) as LateOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName) SELECT lod.CompanyName, round(CAST(lod.LateOrderCount AS REAL) * 100 / CAST(aod.AllOrderCount AS REAL), 2) FROM LateOrderDetails as lod JOIN (SELECT CompanyName, COUNT(*) as AllOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY CompanyName) as aod ON lod.CompanyName = aod.CompanyName;
+Federal Shipping|23.61
+Speedy Express|23.46
+United Package|23.44
+sqlite> WITH LateOrderDetails AS (SELECT CompanyName, COUNT(*) as LateOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName) SELECT lod.CompanyName, round(CAST(lod.LateOrderCount AS REAL) * 100 / CAST(aod.AllOrderCount AS REAL), 2) as percentage FROM LateOrderDetails as lod JOIN (SELECT CompanyName, COUNT(*) as AllOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY CompanyName) as aod ON lod.CompanyName = aod.CompanyName ORDER BY percentage ASC;
+United Package|23.44
+Speedy Express|23.46
+Federal Shipping|23.61
+sqlite> WITH LateOrderDetails AS (SELECT CompanyName, COUNT(*) as LateOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id WHERE RequiredDate < ShippedDate GROUP BY CompanyName) SELECT lod.CompanyName, round(CAST(lod.LateOrderCount AS REAL) * 100 / CAST(aod.AllOrderCount AS REAL), 2) as percentage FROM LateOrderDetails as lod JOIN (SELECT CompanyName, COUNT(*) as AllOrderCount FROM 'Order' as o JOIN Shipper as s ON o.ShipVia = s.Id GROUP BY CompanyName) as aod ON lod.CompanyName = aod.CompanyName ORDER BY percentage DESC;
+Federal Shipping|23.61
+Speedy Express|23.46
+United Package|23.44
+sqlite> 
+```
+
 
