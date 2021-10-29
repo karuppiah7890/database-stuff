@@ -143,4 +143,47 @@ https://www.digitalocean.com/blog/custom-images/?
 
 https://docs.digitalocean.com/reference/api/api-reference/#tag/Images
 
+---
 
+I was checking out how Digital Ocean managed Redis is deployed, it was pretty interesting! The UI/UX etc :D They take users on a journey and help them connect to their Redis DB
+
+First choose Redis version. They had v6 alone, and then asked region for deployment, and then asked the size of the Redis
+
+The deployment took a few moments, while they were showing how to get started and gave details like - connection details - just a list of things - username, password, host, port to form the username:password@host:port format which is generic for any network service especially DBs, in DBs a database name is also included at the end, protocol://username:password@host:port/database-name . They also showed connection string format with rediss protocol, I think it's Redis Secured protocol, with credentials and host connection details. They also showed how to connect using Redis CLI, but not `redis-cli` CLI, instead of `redli` which I mistook to be a typo for a moment, and smiled, silly me.
+
+redli is a third party CLI tool https://github.com/IBM-Cloud/redli
+
+```
+username = default
+password = tcNP2VtiBcCyYV5C
+host = db-redis-blr1-79526-do-user-2265104-0.b.db.ondigitalocean.com
+port = 25061
+```
+
+```bash
+redli --tls -h db-redis-blr1-79526-do-user-2265104-0.b.db.ondigitalocean.com -a tcNP2VtiBcCyYV5C -p 25061
+```
+
+```bash
+go install -v github.com/IBM-Cloud/redli@latest
+```
+
+https://www.digitalocean.com/community/tutorials/how-to-encrypt-traffic-to-redis-with-stunnel-on-ubuntu-16-04
+
+https://docs.digitalocean.com/products/databases/redis/how-to/connect/
+
+I also noticed how Digital Ocean provides an experience for the Redis
+
+They make it easy to increase the size of the instance of the Redis, make it secure by securing the network connectivity by asking if you want to restrict connections to just - from your IP address mentioning that it's open to all initially
+
+They also had alert policies, and it asked for DB cluster name and then the kind of alert - it had disk utilization and a few other kind of alerts!
+
+Also, as part of the installation, they also asked the kind of maxmemory eviction policy the user wants, and provided the options and also explained those options in a very simple manner! It was pretty cool! :D There was no option to "increase instance size automatically when memory is full" ;) I guess that's manual if it's needed ;)
+
+I also saw that one can change the window of updates and that during updates, the DNS will remain the same so that applications can talk to the Redis but that underlying IP address will change. Not sure how they handle that! On client side, I think it's hard because some clients cache the IP address resolved from the domain and maintain that state and keep doing it until the Redis does not work and it won't retry to resolve the DNS again. Some weird behavior that I have heard of before, and the apps I have seen, it does not enforce resolving the DNS again when current (possibly cached) IP address resolved from the DNS does not work and avoiding any sort of state as much as possible at the app level. Ideally I would expect IP address to not change, which would help a lot of developers I think, who don't have to face any possible issues due to IP caching!
+
+It said that there won't be any downtime during maintenance updates / upgrades and that there won't be any downtime while increasing the size of the Redis instances from small to big etc
+
+I also saw logs in the Digital Ocean dashboard. It showed the Redis server logs, which showed that's being managed by the systemd and I was like "ah, wow, nice!" as I was thinking to use the same thing for automatic configuration and restart / start of service when machine boots
+
+Digital Ocean also had insights tab which had alerts stuff and also the graphs to show CPU and Memory usage graphs
