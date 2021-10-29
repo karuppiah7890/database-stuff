@@ -205,3 +205,30 @@ Yandex DB - https://cloud.yandex.com/en/services/ydb
 # Kamino / Clickhouse Cloud
 
 Managed ClickHouse DB - https://www.clickhousecloud.com/
+
+# ScaleGrid
+
+https://scalegrid.io/
+
+https://scalegrid.io/pricing.html
+
+https://scalegrid.io/pricing.html?db=MYSQL&cloud=cloud_digital_ocean&replica=deployment_standalone&instance=Nano#section_pricing_dedicated
+
+# dgraph
+
+https://dgraph.io
+
+https://dgraph.io/pricing/
+
+https://cloud.dgraph.io/
+
+# Exoscale
+
+https://www.exoscale.com
+
+https://www.exoscale.com/dbaas/ - PostgreSQL, Apache Kafka, MySQL, Redis
+
+# ObjectRocket
+
+https://www.objectrocket.com/dbaas-for-redis-jetpack/
+
