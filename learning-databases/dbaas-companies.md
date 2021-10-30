@@ -232,3 +232,16 @@ https://www.exoscale.com/dbaas/ - PostgreSQL, Apache Kafka, MySQL, Redis
 
 https://www.objectrocket.com/dbaas-for-redis-jetpack/
 
+# ScaleChamp
+
+https://github.com/scalechamp
+
+https://www.scalechamp.com/
+
+# severalnines
+
+ClusterControl - https://severalnines.com/product/clustercontrol
+
+CCX - https://ccx.severalnines.com/
+
+Backup Ninja - https://backup.ninja/
