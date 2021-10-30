@@ -4189,7 +4189,7 @@ root@ubuntu-s-1vcpu-1gb-blr1-01:~# cat /var/log/redis/redis-server.log
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# 
 ```
 
-https://duckduckgo.com/?q=redis+memory+allocation&t=ffab&ia=web
+https://duckduckgo.com/?q=redis+memory+allocation&t=ffab&ia=web&iax=qa
 
 https://redis.io/commands/#server
 
@@ -4335,6 +4335,170 @@ large:          size ind    allocated      nmalloc      ndalloc    nrequests  cu
                      ---
 --- End jemalloc statistics ---
 127.0.0.1:6379> 
+```
+
+```bash
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# systemctl status redis
+Unit redis.service could not be found.
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# systemctl status redis-server
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Sat 2021-10-30 05:32:10 UTC; 1h 47min ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 29156 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.2M
+     CGroup: /system.slice/redis-server.service
+             └─29156 /usr/bin/redis-server 127.0.0.1:6379
+
+Oct 30 05:32:09 ubuntu-s-1vcpu-1gb-blr1-01 systemd[1]: Starting Advanced key-value store...
+Oct 30 05:32:10 ubuntu-s-1vcpu-1gb-blr1-01 systemd[1]: Started Advanced key-value store.
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# cat /lib/systemd/system/redis-server.service
+[Unit]
+Description=Advanced key-value store
+After=network.target
+Documentation=http://redis.io/documentation, man:redis-server(1)
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/redis-server /etc/redis/redis.conf
+ExecStop=/bin/kill -s TERM $MAINPID
+PIDFile=/run/redis/redis-server.pid
+TimeoutStopSec=0
+Restart=always
+User=redis
+Group=redis
+RuntimeDirectory=redis
+RuntimeDirectoryMode=2755
+
+UMask=007
+PrivateTmp=yes
+LimitNOFILE=65535
+PrivateDevices=yes
+ProtectHome=yes
+ReadOnlyDirectories=/
+ReadWriteDirectories=-/var/lib/redis
+ReadWriteDirectories=-/var/log/redis
+ReadWriteDirectories=-/run/redis
+
+NoNewPrivileges=true
+CapabilityBoundingSet=CAP_SETGID CAP_SETUID CAP_SYS_RESOURCE
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+MemoryDenyWriteExecute=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictRealtime=true
+RestrictNamespaces=true
+
+# redis-server can write to its own config file when in cluster mode so we
+# permit writing there by default. If you are not using this feature, it is
+# recommended that you replace the following lines with "ProtectSystem=full".
+ProtectSystem=true
+ReadWriteDirectories=-/etc/redis
+
+[Install]
+WantedBy=multi-user.target
+Alias=redis.service
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# vi /etc/redis/redis.conf
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-cli ACL GEN
+(error) ERR Unknown subcommand or wrong number of arguments for 'GEN'. Try ACL HELP.
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-cli ACL HELP
+ 1) ACL <subcommand> [<arg> [value] [opt] ...]. Subcommands are:
+ 2) CAT [<category>]
+ 3)     List all commands that belong to <category>, or all command categories
+ 4)     when no category is specified.
+ 5) DELUSER <username> [<username> ...]
+ 6)     Delete a list of users.
+ 7) GETUSER <username>
+ 8)     Get the user's details.
+ 9) GENPASS [<bits>]
+10)     Generate a secure 256-bit user password. The optional `bits` argument can
+11)     be used to specify a different size.
+12) LIST
+13)     Show users details in config file format.
+14) LOAD
+15)     Reload users from the ACL file.
+16) LOG [<count> | RESET]
+17)     Show the ACL log entries.
+18) SAVE
+19)     Save the current config to the ACL file.
+20) SETUSER <username> <attribute> [<attribute> ...]
+21)     Create or modify a user with the specified attributes.
+22) USERS
+23)     List all the registered usernames.
+24) WHOAMI
+25)     Return the current connection username.
+26) HELP
+27)     Prints this help.
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-cli ACL GENPASS
+"e07298ecf7f56b7877d5f757ecc1faf6379baa6870b2511c52a33a80fad225aa"
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-cli 
+127.0.0.1:6379> ACL GENPASS
+"79ed52ffc63da1e60d77c41e8bc2c3fa303ad2de425b7f010bd7df1f160d2874"
+127.0.0.1:6379> 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# vi /etc/redis/redis.conf
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# system
+systemctl                       systemd-escape                  systemd-run
+systemd                         systemd-hwdb                    systemd-socket-activate
+systemd-analyze                 systemd-id128                   systemd-stdio-bridge
+systemd-ask-password            systemd-inhibit                 systemd-sysusers
+systemd-cat                     systemd-machine-id-setup        systemd-tmpfiles
+systemd-cgls                    systemd-mount                   systemd-tty-ask-password-agent
+systemd-cgtop                   systemd-notify                  systemd-umount
+systemd-delta                   systemd-path                    
+systemd-detect-virt             systemd-resolve                 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# systemctl restart redis-server
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# 
+```
+
+```bash
+database-stuff $ telnet 139.59.5.149 6379
+Trying 139.59.5.149...
+telnet: connect to address 139.59.5.149: Connection refused
+telnet: Unable to connect to remote host
+^C
+database-stuff $ telnet 139.59.5.149 56379
+Trying 139.59.5.149...
+Connected to 139.59.5.149.
+Escape character is '^]'.
+^]
+telnet> Connection closed.
+database-stuff $ redis-cli -h 139.59.5.149 -p 56379
+139.59.5.149:56379> ping
+(error) NOAUTH Authentication required.
+139.59.5.149:56379> AUTH e07298ecf7f56b7877d5f757ecc1faf6379baa6870b2511c52a33a80fad225aa
+OK
+139.59.5.149:56379> PING
+PONG
+139.59.5.149:56379> 
+database-stuff $ 
+```
+
+```bash
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+udev            474M     0  474M   0% /dev
+tmpfs            99M  968K   98M   1% /run
+/dev/vda1        25G  2.3G   22G  10% /
+tmpfs           491M     0  491M   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           491M     0  491M   0% /sys/fs/cgroup
+/dev/loop0       62M   62M     0 100% /snap/core20/1081
+/dev/loop1       68M   68M     0 100% /snap/lxd/21545
+/dev/loop2       33M   33M     0 100% /snap/snapd/13170
+/dev/vda15      105M  5.2M  100M   5% /boot/efi
+/dev/sda        9.8G   37M  9.3G   1% /mnt/volume_blr1_01
+tmpfs            99M     0   99M   0% /run/user/0
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# 
+```
+
+Below is the external disk that I had created
+
+```
+/dev/sda        9.8G   37M  9.3G   1% /mnt/volume_blr1_01
 ```
 
 
