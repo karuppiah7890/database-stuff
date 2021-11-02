@@ -5955,3 +5955,7 @@ database-stuff $
 - Implement TLS/SSL support for the Redis deployment
 
 - Deploy 2 droplets - one droplet runs the Redis server and any monitoring agents required to monitor it. Another droplet instance to run redis benchmark tool and benchmark the redis server. Maybe monitoring agents can also run on other droplets. All droplets will be of size 1 GB RAM and 1 vCPU
+
+--
+
+https://redis.io/topics/lru-cache
