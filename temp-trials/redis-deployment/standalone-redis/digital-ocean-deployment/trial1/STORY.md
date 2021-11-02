@@ -1,7 +1,7 @@
-
 Goal - Create a virtual machine image for Digital Ocean that can deploy a Redis server when a droplet is created using that virtual machine image along with some user data to inject configuration like port, password etc
 
 [TODO]
+
 - Create a packer file to automate the creation of a Digital Ocean VM image
 - Check where and how the VM images are stored in Digital Ocean and the cost of the storage and if it is publicly available to all or a private registry or if both are available
 - Check how to pass user data and how to use it to configure Redis exactly once for the first time when the VM is created / booted. Should we use cloud init or bash script? Maybe bash?
@@ -13,12 +13,12 @@ Goal - Create a virtual machine image for Digital Ocean that can deploy a Redis 
 https://www.packer.io/docs/builders/digitalocean
 
 [Level-2] [TODO]
-- Packer file automation for VM image
-    - Use a Linux OS image as base image, maybe Ubuntu
-    - Create a bash script for Redis installation
-        - The script can install using `apt` maybe. I think it comes with service unit along with it
-        - Preferably install the latest Redis - v6.2.6
 
+- Packer file automation for VM image
+  - Use a Linux OS image as base image, maybe Ubuntu
+  - Create a bash script for Redis installation
+    - The script can install using `apt` maybe. I think it comes with service unit along with it
+    - Preferably install the latest Redis - v6.2.6
 
 https://www.packer.io/docs/builders/digitalocean#api_token
 
@@ -58,7 +58,7 @@ trial1 $ packer validate .
 The configuration is valid.
 trial1 $ packer fmt .
 redis-server.pkr.hcl
-trial1 $ packer build 
+trial1 $ packer build
 Usage: packer build [options] TEMPLATE
 
   Will execute multiple builds in parallel as defined in the template.
@@ -77,10 +77,10 @@ Options:
   -timestamp-ui                 Enable prefixing of each ui output with an RFC3339 timestamp.
   -var 'key=value'              Variable for templates, can be used multiple times.
   -var-file=path                JSON or HCL2 file containing user variables.
-trial1 $ 
-trial1 $ packer build 
-STORY.md              redis-server.pkr.hcl  
-trial1 $ packer build redis-server.pkr.hcl 
+trial1 $
+trial1 $ packer build
+STORY.md              redis-server.pkr.hcl
+trial1 $ packer build redis-server.pkr.hcl
 redis.digitalocean.redis: output will be in this color.
 
 ==> redis.digitalocean.redis: Creating temporary RSA SSH key for instance...
@@ -99,7 +99,7 @@ Build 'redis.digitalocean.redis' errored after 4 seconds 573 milliseconds: Error
 ```
 
 ```bash
-trial1 $ packer build redis-server.pkr.hcl 
+trial1 $ packer build redis-server.pkr.hcl
 redis.digitalocean.redis: output will be in this color.
 
 ==> redis.digitalocean.redis: Creating temporary RSA SSH key for instance...
@@ -120,7 +120,7 @@ Build 'redis.digitalocean.redis' finished after 2 minutes 38 seconds.
 
 ==> Builds finished. The artifacts of successful builds are:
 --> redis.digitalocean.redis: A snapshot was created: 'redis-server' (ID: 94611958) in regions 'nyc3'
-trial1 $ 
+trial1 $
 ```
 
 That took about 1.52 GB space
@@ -193,6 +193,7 @@ Digital Ocean also had insights tab which had alerts stuff and also the graphs t
 Trying to deploy a Redis server on Digital Ocean Droplet
 
 - Created a Droplet of size 1GB RAM, 1vCPU, 25 GB Disk (boot disk) + 10 GB external volume (block storage)
+
   - Basic Droplet, in Shared CPU plan
   - Regular Intel with SSD disk
   - Chose Ubuntu 20.04 LTS (x64) OS version
@@ -247,14 +248,14 @@ HTTP request sent, awaiting response... 200 OK
 Length: 2476542 (2.4M) [application/octet-stream]
 Saving to: ‘redis-6.2.6.tar.gz’
 
-redis-6.2.6.tar.gz              100%[=====================================================>]   2.36M  13.2MB/s    in 0.2s    
+redis-6.2.6.tar.gz              100%[=====================================================>]   2.36M  13.2MB/s    in 0.2s
 
 2021-10-30 05:04:42 (13.2 MB/s) - ‘redis-6.2.6.tar.gz’ saved [2476542/2476542]
 
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# tar
 tar: You must specify one of the '-Acdtrux', '--delete' or '--test-label' options
 Try 'tar --help' or 'tar --usage' for more information.
-root@ubuntu-s-1vcpu-1gb-blr1-01:~# tar -xvzf redis-6.2.6.tar.gz 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# tar -xvzf redis-6.2.6.tar.gz
 redis-6.2.6/
 redis-6.2.6/.github/
 redis-6.2.6/.github/ISSUE_TEMPLATE/
@@ -1225,7 +1226,7 @@ apt install make-guile  # version 4.2.1-1.2
 
 root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6# apt install make
 Reading package lists... Done
-Building dependency tree       
+Building dependency tree
 Reading state information... Done
 Suggested packages:
   make-doc
@@ -1292,7 +1293,7 @@ make[2]: Entering directory '/root/redis-6.2.6/deps'
 (echo "" > .make-cflags)
 (echo "" > .make-ldflags)
 MAKE hiredis
-cd hiredis && make static 
+cd hiredis && make static
 make[3]: Entering directory '/root/redis-6.2.6/deps/hiredis'
 cc -std=c99 -pedantic -c -O3 -fPIC   -Wall -W -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -g -ggdb alloc.c
 make[3]: cc: Command not found
@@ -1308,12 +1309,12 @@ make[1]: Leaving directory '/root/redis-6.2.6/src'
 make: *** [Makefile:6: all] Error 2
 root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6# apt install cc
 Reading package lists... Done
-Building dependency tree       
+Building dependency tree
 Reading state information... Done
 E: Unable to locate package cc
 root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6# apt install gcc
 Reading package lists... Done
-Building dependency tree       
+Building dependency tree
 Reading state information... Done
 The following additional packages will be installed:
   binutils binutils-common binutils-x86-64-linux-gnu cpp cpp-9 gcc-9 gcc-9-base libasan5 libatomic1 libbinutils libc-dev-bin
@@ -1358,7 +1359,7 @@ Get:25 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 linux-lib
 Get:26 http://mirrors.digitalocean.com/ubuntu focal/main amd64 libcrypt-dev amd64 1:4.4.10-10ubuntu4 [104 kB]
 Get:27 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 libc6-dev amd64 2.31-0ubuntu9.2 [2520 kB]
 Get:28 http://mirrors.digitalocean.com/ubuntu focal/main amd64 manpages-dev all 5.05-1 [2266 kB]
-Fetched 31.6 MB in 5s (6512 kB/s)   
+Fetched 31.6 MB in 5s (6512 kB/s)
 Selecting previously unselected package binutils-common:amd64.
 (Reading database ... 63571 files and directories currently installed.)
 Preparing to unpack .../00-binutils-common_2.34-6ubuntu1.3_amd64.deb ...
@@ -1503,11 +1504,11 @@ HTTP request sent, awaiting response... 200 OK
 Length: 554279 (541K) [application/octet-stream]
 Saving to: ‘jemalloc-5.2.1.tar.bz2’
 
-jemalloc-5.2.1.tar.bz2          100%[=====================================================>] 541.29K  --.-KB/s    in 0.03s   
+jemalloc-5.2.1.tar.bz2          100%[=====================================================>] 541.29K  --.-KB/s    in 0.03s
 
 2021-10-30 05:08:19 (19.3 MB/s) - ‘jemalloc-5.2.1.tar.bz2’ saved [554279/554279]
 
-root@ubuntu-s-1vcpu-1gb-blr1-01:~# tar xvf jemalloc-5.2.1.tar.bz2 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# tar xvf jemalloc-5.2.1.tar.bz2
 jemalloc-5.2.1/
 jemalloc-5.2.1/.appveyor.yml
 jemalloc-5.2.1/.autom4te.cfg
@@ -1864,12 +1865,12 @@ jemalloc-5.2.1/test/unit/zero.sh
 jemalloc-5.2.1/VERSION
 jemalloc-5.2.1/configure
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# cd jemalloc-5.2.1/
-root@ubuntu-s-1vcpu-1gb-blr1-01:~/jemalloc-5.2.1# ./configure 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~/jemalloc-5.2.1# ./configure
 checking for xsltproc... false
 checking for gcc... gcc
 checking whether the C compiler works... yes
 checking for C compiler default output file name... a.out
-checking for suffix of executables... 
+checking for suffix of executables...
 checking whether we are cross compiling... no
 checking for suffix of object files... o
 checking whether we are using the GNU C compiler... yes
@@ -2057,24 +2058,24 @@ config.status: executing include/jemalloc/jemalloc.h commands
 jemalloc version   : 5.2.1-0-gea6b3e973b477b8061e0076bb257dbd7f3faa756
 library revision   : 2
 
-CONFIG             : 
+CONFIG             :
 CC                 : gcc
 CONFIGURE_CFLAGS   : -std=gnu11 -Wall -Wextra -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops
-SPECIFIED_CFLAGS   : 
-EXTRA_CFLAGS       : 
+SPECIFIED_CFLAGS   :
+EXTRA_CFLAGS       :
 CPPFLAGS           : -D_GNU_SOURCE -D_REENTRANT
 CXX                : g++
-CONFIGURE_CXXFLAGS : 
-SPECIFIED_CXXFLAGS : 
-EXTRA_CXXFLAGS     : 
-LDFLAGS            : 
-EXTRA_LDFLAGS      : 
+CONFIGURE_CXXFLAGS :
+SPECIFIED_CXXFLAGS :
+EXTRA_CXXFLAGS     :
+LDFLAGS            :
+EXTRA_LDFLAGS      :
 DSO_LDFLAGS        : -shared -Wl,-soname,$(@F)
 LIBS               : -lm  -pthread -ldl
-RPATH_EXTRA        : 
+RPATH_EXTRA        :
 
 XSLTPROC           : false
-XSLROOT            : 
+XSLROOT            :
 
 PREFIX             : /usr/local
 BINDIR             : /usr/local/bin
@@ -2083,16 +2084,16 @@ INCLUDEDIR         : /usr/local/include
 LIBDIR             : /usr/local/lib
 MANDIR             : /usr/local/share/man
 
-srcroot            : 
+srcroot            :
 abs_srcroot        : /root/jemalloc-5.2.1/
-objroot            : 
+objroot            :
 abs_objroot        : /root/jemalloc-5.2.1/
 
-JEMALLOC_PREFIX    : 
+JEMALLOC_PREFIX    :
 JEMALLOC_PRIVATE_NAMESPACE
                    : je_
-install_suffix     : 
-malloc_conf        : 
+install_suffix     :
+malloc_conf        :
 documentation      : 1
 shared libs        : 1
 static libs        : 1
@@ -2328,7 +2329,7 @@ gcc -std=gnu11 -Wall -Wextra -Wsign-compare -Wundef -Wno-format-zero-length -pip
 gcc -std=gnu11 -Wall -Wextra -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -fPIC -DPIC -c -D_GNU_SOURCE -D_REENTRANT -Iinclude -Iinclude -o src/ticker.pic.o src/ticker.c
 gcc -std=gnu11 -Wall -Wextra -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -fPIC -DPIC -c -D_GNU_SOURCE -D_REENTRANT -Iinclude -Iinclude -o src/tsd.pic.o src/tsd.c
 gcc -std=gnu11 -Wall -Wextra -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -fPIC -DPIC -c -D_GNU_SOURCE -D_REENTRANT -Iinclude -Iinclude -o src/witness.pic.o src/witness.c
-gcc -shared -Wl,-soname,libjemalloc.so.2  -o lib/libjemalloc.so.2 src/jemalloc.pic.o src/arena.pic.o src/background_thread.pic.o src/base.pic.o src/bin.pic.o src/bitmap.pic.o src/ckh.pic.o src/ctl.pic.o src/div.pic.o src/extent.pic.o src/extent_dss.pic.o src/extent_mmap.pic.o src/hash.pic.o src/hook.pic.o src/large.pic.o src/log.pic.o src/malloc_io.pic.o src/mutex.pic.o src/mutex_pool.pic.o src/nstime.pic.o src/pages.pic.o src/prng.pic.o src/prof.pic.o src/rtree.pic.o src/safety_check.pic.o src/stats.pic.o src/sc.pic.o src/sz.pic.o src/tcache.pic.o src/test_hooks.pic.o src/ticker.pic.o src/tsd.pic.o src/witness.pic.o  -lm  -pthread -ldl 
+gcc -shared -Wl,-soname,libjemalloc.so.2  -o lib/libjemalloc.so.2 src/jemalloc.pic.o src/arena.pic.o src/background_thread.pic.o src/base.pic.o src/bin.pic.o src/bitmap.pic.o src/ckh.pic.o src/ctl.pic.o src/div.pic.o src/extent.pic.o src/extent_dss.pic.o src/extent_mmap.pic.o src/hash.pic.o src/hook.pic.o src/large.pic.o src/log.pic.o src/malloc_io.pic.o src/mutex.pic.o src/mutex_pool.pic.o src/nstime.pic.o src/pages.pic.o src/prng.pic.o src/prof.pic.o src/rtree.pic.o src/safety_check.pic.o src/stats.pic.o src/sc.pic.o src/sz.pic.o src/tcache.pic.o src/test_hooks.pic.o src/ticker.pic.o src/tsd.pic.o src/witness.pic.o  -lm  -pthread -ldl
 ln -sf libjemalloc.so.2 lib/libjemalloc.so
 gcc -std=gnu11 -Wall -Wextra -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -c -D_GNU_SOURCE -D_REENTRANT -Iinclude -Iinclude -o src/jemalloc.o src/jemalloc.c
 src/jemalloc.c:2986:7: warning: ‘__libc_calloc’ specifies less restrictive attributes than its target ‘calloc’: ‘alloc_size’, ‘leaf’, ‘malloc’, ‘nothrow’ [-Wmissing-attributes]
@@ -2695,14 +2696,14 @@ cc -std=c99 -pedantic -c -O3 -fPIC   -Wall -W -Wstrict-prototypes -Wwrite-string
 cc -std=c99 -pedantic -c -O3 -fPIC   -Wall -W -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -g -ggdb async.c
 cc -std=c99 -pedantic -c -O3 -fPIC   -Wall -W -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -g -ggdb read.c
 cc -std=c99 -pedantic -c -O3 -fPIC   -Wall -W -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -g -ggdb sockcompat.c
-cc -shared -Wl,-soname,libhiredis.so.1.0.0 -o libhiredis.so alloc.o net.o hiredis.o sds.o async.o read.o sockcompat.o 
+cc -shared -Wl,-soname,libhiredis.so.1.0.0 -o libhiredis.so alloc.o net.o hiredis.o sds.o async.o read.o sockcompat.o
 ar rcs libhiredis.a alloc.o net.o hiredis.o sds.o async.o read.o sockcompat.o
 cc -std=c99 -pedantic -c -O3 -fPIC   -Wall -W -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -g -ggdb test.c
-cc -o hiredis-test -O3 -fPIC   -Wall -W -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -g -ggdb -I. test.o libhiredis.a  
+cc -o hiredis-test -O3 -fPIC   -Wall -W -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -g -ggdb -I. test.o libhiredis.a
 Generating hiredis.pc for pkgconfig...
 root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/hiredis# ls libhiredis.
 ls: cannot access 'libhiredis.': No such file or directory
-root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/hiredis# ls libhiredis.a 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/hiredis# ls libhiredis.a
 libhiredis.a
 root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/hiredis# cd ..
 root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps# ls
@@ -2712,12 +2713,12 @@ root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/jemalloc# ls
 COPYING     Makefile.in  VERSION     build-aux        configure.ac  jemalloc.pc.in  run_tests.sh  test
 ChangeLog   README       autogen.sh  config.stamp.in  doc           m4              scripts
 INSTALL.md  TUNING.md    bin         configure        include       msvc            src
-root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/jemalloc# ./configure 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/jemalloc# ./configure
 checking for xsltproc... false
 checking for gcc... gcc
 checking whether the C compiler works... yes
 checking for C compiler default output file name... a.out
-checking for suffix of executables... 
+checking for suffix of executables...
 checking whether we are cross compiling... no
 checking for suffix of object files... o
 checking whether we are using the GNU C compiler... yes
@@ -2902,24 +2903,24 @@ config.status: executing include/jemalloc/jemalloc.h commands
 jemalloc version   : 5.1.0-0-g0
 library revision   : 2
 
-CONFIG             : 
+CONFIG             :
 CC                 : gcc
 CONFIGURE_CFLAGS   : -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops
-SPECIFIED_CFLAGS   : 
-EXTRA_CFLAGS       : 
+SPECIFIED_CFLAGS   :
+EXTRA_CFLAGS       :
 CPPFLAGS           : -D_GNU_SOURCE -D_REENTRANT
 CXX                : g++
-CONFIGURE_CXXFLAGS : 
-SPECIFIED_CXXFLAGS : 
-EXTRA_CXXFLAGS     : 
-LDFLAGS            : 
-EXTRA_LDFLAGS      : 
+CONFIGURE_CXXFLAGS :
+SPECIFIED_CXXFLAGS :
+EXTRA_CXXFLAGS     :
+LDFLAGS            :
+EXTRA_LDFLAGS      :
 DSO_LDFLAGS        : -shared -Wl,-soname,$(@F)
 LIBS               : -lm  -lpthread -ldl
-RPATH_EXTRA        : 
+RPATH_EXTRA        :
 
 XSLTPROC           : false
-XSLROOT            : 
+XSLROOT            :
 
 PREFIX             : /usr/local
 BINDIR             : /usr/local/bin
@@ -2928,16 +2929,16 @@ INCLUDEDIR         : /usr/local/include
 LIBDIR             : /usr/local/lib
 MANDIR             : /usr/local/share/man
 
-srcroot            : 
+srcroot            :
 abs_srcroot        : /root/redis-6.2.6/deps/jemalloc/
-objroot            : 
+objroot            :
 abs_objroot        : /root/redis-6.2.6/deps/jemalloc/
 
-JEMALLOC_PREFIX    : 
+JEMALLOC_PREFIX    :
 JEMALLOC_PRIVATE_NAMESPACE
                    : je_
-install_suffix     : 
-malloc_conf        : 
+install_suffix     :
+malloc_conf        :
 autogen            : 0
 debug              : 0
 stats              : 1
@@ -3059,7 +3060,7 @@ nm -a src/prof.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > s
 gcc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -fPIC -DPIC -c -D_GNU_SOURCE -D_REENTRANT -Iinclude -Iinclude -DJEMALLOC_NO_PRIVATE_NAMESPACE -o src/rtree.sym.o src/rtree.c
 nm -a src/rtree.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/rtree.sym
 gcc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -fPIC -DPIC -c -D_GNU_SOURCE -D_REENTRANT -Iinclude -Iinclude -DJEMALLOC_NO_PRIVATE_NAMESPACE -o src/stats.sym.o src/stats.c
- 
+
 nm -a src/stats.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/stats.sym
 gcc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -fPIC -DPIC -c -D_GNU_SOURCE -D_REENTRANT -Iinclude -Iinclude -DJEMALLOC_NO_PRIVATE_NAMESPACE -o src/sz.sym.o src/sz.c
 nm -a src/sz.sym.o | gawk -f include/jemalloc/internal/private_symbols.awk > src/sz.sym
@@ -3162,7 +3163,7 @@ gcc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -f
 gcc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -fPIC -DPIC -c -D_GNU_SOURCE -D_REENTRANT -Iinclude -Iinclude -o src/ticker.pic.o src/ticker.c
 gcc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -fPIC -DPIC -c -D_GNU_SOURCE -D_REENTRANT -Iinclude -Iinclude -o src/tsd.pic.o src/tsd.c
 gcc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -fPIC -DPIC -c -D_GNU_SOURCE -D_REENTRANT -Iinclude -Iinclude -o src/witness.pic.o src/witness.c
-gcc -shared -Wl,-soname,libjemalloc.so.2  -o lib/libjemalloc.so.2 src/jemalloc.pic.o src/arena.pic.o src/background_thread.pic.o src/base.pic.o src/bin.pic.o src/bitmap.pic.o src/ckh.pic.o src/ctl.pic.o src/div.pic.o src/extent.pic.o src/extent_dss.pic.o src/extent_mmap.pic.o src/hash.pic.o src/hooks.pic.o src/large.pic.o src/log.pic.o src/malloc_io.pic.o src/mutex.pic.o src/mutex_pool.pic.o src/nstime.pic.o src/pages.pic.o src/prng.pic.o src/prof.pic.o src/rtree.pic.o src/stats.pic.o src/sz.pic.o src/tcache.pic.o src/ticker.pic.o src/tsd.pic.o src/witness.pic.o  -lm  -lpthread -ldl 
+gcc -shared -Wl,-soname,libjemalloc.so.2  -o lib/libjemalloc.so.2 src/jemalloc.pic.o src/arena.pic.o src/background_thread.pic.o src/base.pic.o src/bin.pic.o src/bitmap.pic.o src/ckh.pic.o src/ctl.pic.o src/div.pic.o src/extent.pic.o src/extent_dss.pic.o src/extent_mmap.pic.o src/hash.pic.o src/hooks.pic.o src/large.pic.o src/log.pic.o src/malloc_io.pic.o src/mutex.pic.o src/mutex_pool.pic.o src/nstime.pic.o src/pages.pic.o src/prng.pic.o src/prof.pic.o src/rtree.pic.o src/stats.pic.o src/sz.pic.o src/tcache.pic.o src/ticker.pic.o src/tsd.pic.o src/witness.pic.o  -lm  -lpthread -ldl
 ln -sf libjemalloc.so.2 lib/libjemalloc.so
 gcc -std=gnu11 -Wall -Wsign-compare -Wundef -Wno-format-zero-length -pipe -g3 -fvisibility=hidden -O3 -funroll-loops -c -D_GNU_SOURCE -D_REENTRANT -Iinclude -Iinclude -o src/jemalloc.o src/jemalloc.c
 src/jemalloc.c:2513:7: warning: ‘__libc_calloc’ specifies less restrictive attributes than its target ‘calloc’: ‘alloc_size’, ‘leaf’, ‘malloc’, ‘nothrow’ [-Wmissing-attributes]
@@ -3254,10 +3255,10 @@ ar crus lib/libjemalloc.a src/jemalloc.o src/arena.o src/background_thread.o src
 ar: `u' modifier ignored since `D' is the default (see `U')
 ar crus lib/libjemalloc_pic.a src/jemalloc.pic.o src/arena.pic.o src/background_thread.pic.o src/base.pic.o src/bin.pic.o src/bitmap.pic.o src/ckh.pic.o src/ctl.pic.o src/div.pic.o src/extent.pic.o src/extent_dss.pic.o src/extent_mmap.pic.o src/hash.pic.o src/hooks.pic.o src/large.pic.o src/log.pic.o src/malloc_io.pic.o src/mutex.pic.o src/mutex_pool.pic.o src/nstime.pic.o src/pages.pic.o src/prng.pic.o src/prof.pic.o src/rtree.pic.o src/stats.pic.o src/sz.pic.o src/tcache.pic.o src/ticker.pic.o src/tsd.pic.o src/witness.pic.o
 ar: `u' modifier ignored since `D' is the default (see `U')
-root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/jemalloc# 
-root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/jemalloc# 
-root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/jemalloc# 
-root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/jemalloc# 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/jemalloc#
+root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/jemalloc#
+root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/jemalloc#
+root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/jemalloc#
 root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/jemalloc# make install
 /usr/bin/install -c -d /usr/local/bin
 /usr/bin/install -c -m 755 bin/jemalloc-config /usr/local/bin
@@ -3344,10 +3345,10 @@ make[2]: Leaving directory '/root/redis-6.2.6/deps/lua/src'
 make[1]: *** [Makefile:100: linux] Error 2
 make[1]: Leaving directory '/root/redis-6.2.6/deps/lua/src'
 make: *** [Makefile:56: linux] Error 2
-root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/lua# less INSTALL 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/lua# less INSTALL
 root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/lua# sudo apt-get install -y build-essential pkg-config libssl-dev
 Reading package lists... Done
-Building dependency tree       
+Building dependency tree
 Reading state information... Done
 The following additional packages will be installed:
   dpkg-dev fakeroot g++ g++-9 libalgorithm-diff-perl libalgorithm-diff-xs-perl libalgorithm-merge-perl libdpkg-perl
@@ -3374,7 +3375,7 @@ Get:11 http://mirrors.digitalocean.com/ubuntu focal/main amd64 libalgorithm-merg
 Get:12 http://mirrors.digitalocean.com/ubuntu focal/main amd64 libfile-fcntllock-perl amd64 0.22-3build4 [33.1 kB]
 Get:13 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 libssl-dev amd64 1.1.1f-1ubuntu2.8 [1584 kB]
 Get:14 http://mirrors.digitalocean.com/ubuntu focal/main amd64 pkg-config amd64 0.29.1-0ubuntu4 [45.5 kB]
-Fetched 12.9 MB in 2s (6183 kB/s) 
+Fetched 12.9 MB in 2s (6183 kB/s)
 Selecting previously unselected package libstdc++-9-dev:amd64.
 (Reading database ... 67831 files and directories currently installed.)
 Preparing to unpack .../00-libstdc++-9-dev_9.3.0-17ubuntu1~20.04_amd64.deb ...
@@ -3437,7 +3438,7 @@ Setting up build-essential (12.8ubuntu1.1) ...
 Processing triggers for man-db (2.9.1-1) ...
 Processing triggers for libc-bin (2.31-0ubuntu9.2) ...
 root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/lua# read
-read         readarray    readelf      readlink     readonly     readprofile  
+read         readarray    readelf      readlink     readonly     readprofile
 root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/lua# make linux
 cd src && make linux
 make[1]: Entering directory '/root/redis-6.2.6/deps/lua/src'
@@ -3670,7 +3671,7 @@ xmms2-client-cli/focal 0.8+dfsg-18.2ubuntu3 amd64
 
 root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6/deps/lua# apt install libreadline-dev
 Reading package lists... Done
-Building dependency tree       
+Building dependency tree
 Reading state information... Done
 The following additional packages will be installed:
   libncurses-dev
@@ -3681,10 +3682,10 @@ The following NEW packages will be installed:
 0 upgraded, 2 newly installed, 0 to remove and 18 not upgraded.
 Need to get 481 kB of archives.
 After this operation, 3165 kB of additional disk space will be used.
-Do you want to continue? [Y/n] 
+Do you want to continue? [Y/n]
 yGet:1 http://mirrors.digitalocean.com/ubuntu focal/main amd64 libncurses-dev amd64 6.2-0ubuntu2 [339 kB]
 Get:2 http://mirrors.digitalocean.com/ubuntu focal/main amd64 libreadline-dev amd64 8.0-4 [141 kB]
-Fetched 481 kB in 0s (1079 kB/s)     
+Fetched 481 kB in 0s (1079 kB/s)
 Selecting previously unselected package libncurses-dev:amd64.
 (Reading database ... 69310 files and directories currently installed.)
 Preparing to unpack .../libncurses-dev_6.2-0ubuntu2_amd64.deb ...
@@ -3774,7 +3775,7 @@ root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6# ls
 00-RELEASENOTES  CONTRIBUTING  MANIFESTO  TLS.md      runtest            runtest-sentinel  tests
 BUGS             COPYING       Makefile   deps        runtest-cluster    sentinel.conf     utils
 CONDUCT          INSTALL       README.md  redis.conf  runtest-moduleapi  src
-root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6# 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~/redis-6.2.6#
 ```
 
 https://packages.ubuntu.com/search?keywords=readline
@@ -3791,30 +3792,30 @@ Redis has built-in replication, Lua scripting, LRU eviction, transactions and di
 Press [ENTER] to continue or Ctrl-c to cancel adding it.
 
 Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
-Hit:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease                                                         
-Hit:3 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease                                                       
-Hit:4 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                                
-Get:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease [18.0 kB]                  
-Get:6 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]  
+Hit:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease
+Hit:3 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease
+Hit:4 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease
+Get:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease [18.0 kB]
+Get:6 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
 Get:7 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 Packages [1016 B]
-Get:8 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main Translation-en [584 B]                    
+Get:8 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main Translation-en [584 B]
 Fetched 133 kB in 1s (96.2 kB/s)
 Reading package lists... Done
-root@ubuntu-s-1vcpu-1gb-blr1-01:~# 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~#
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# apt update
 Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
-Hit:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease                                                         
-Hit:3 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                                
-Hit:4 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease                                                       
-Hit:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease                            
-Hit:6 http://security.ubuntu.com/ubuntu focal-security InRelease           
+Hit:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease
+Hit:3 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease
+Hit:4 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease
+Hit:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease
+Hit:6 http://security.ubuntu.com/ubuntu focal-security InRelease
 Reading package lists... Done
-Building dependency tree       
+Building dependency tree
 Reading state information... Done
 18 packages can be upgraded. Run 'apt list --upgradable' to see them.
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# apt install redis-server
 Reading package lists... Done
-Building dependency tree       
+Building dependency tree
 Reading state information... Done
 The following additional packages will be installed:
   redis-tools
@@ -3825,10 +3826,10 @@ The following NEW packages will be installed:
 0 upgraded, 2 newly installed, 0 to remove and 18 not upgraded.
 Need to get 1150 kB of archives.
 After this operation, 6794 kB of additional disk space will be used.
-Do you want to continue? [Y/n] 
+Do you want to continue? [Y/n]
 Get:1 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-tools amd64 6:6.2.6-1rl1~focal1 [1067 kB]
 Get:2 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-server amd64 6:6.2.6-1rl1~focal1 [82.4 kB]
-Fetched 1150 kB in 2s (572 kB/s)   
+Fetched 1150 kB in 2s (572 kB/s)
 Selecting previously unselected package redis-tools.
 (Reading database ... 69414 files and directories currently installed.)
 Preparing to unpack .../redis-tools_6%3a6.2.6-1rl1~focal1_amd64.deb ...
@@ -3840,7 +3841,7 @@ Setting up redis-tools (6:6.2.6-1rl1~focal1) ...
 Setting up redis-server (6:6.2.6-1rl1~focal1) ...
 Processing triggers for man-db (2.9.1-1) ...
 Processing triggers for systemd (245.4-4ubuntu3.13) ...
-root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-server 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-server
 29344:C 30 Oct 2021 05:32:18.920 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
 29344:C 30 Oct 2021 05:32:18.920 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=29344, just started
 29344:C 30 Oct 2021 05:32:18.920 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
@@ -3866,8 +3867,8 @@ root@ubuntu-s-1vcpu-1gb-blr1-01:~# systemctl status redis-server
 Oct 30 05:32:09 ubuntu-s-1vcpu-1gb-blr1-01 systemd[1]: Starting Advanced key-value store...
 Oct 30 05:32:10 ubuntu-s-1vcpu-1gb-blr1-01 systemd[1]: Started Advanced key-value store.
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-c
-redis-check-aof  redis-check-rdb  redis-cli        
-root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-cli 
+redis-check-aof  redis-check-rdb  redis-cli
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-cli
 127.0.0.1:6379> info
 # Server
 redis_version:6.2.6
@@ -4041,7 +4042,7 @@ used_cpu_user_main_thread:0.075998
 cluster_enabled:0
 
 # Keyspace
-127.0.0.1:6379> 
+127.0.0.1:6379>
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# ifconfig
 
 Command 'ifconfig' not found, but can be installed with:
@@ -4050,7 +4051,7 @@ apt install net-tools
 
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# apt install net-tools
 Reading package lists... Done
-Building dependency tree       
+Building dependency tree
 Reading state information... Done
 The following NEW packages will be installed:
   net-tools
@@ -4066,7 +4067,7 @@ Unpacking net-tools (1.60+git20180626.aebd88e-1ubuntu1) ...
 Setting up net-tools (1.60+git20180626.aebd88e-1ubuntu1) ...
 Processing triggers for man-db (2.9.1-1) ...
 
-root@ubuntu-s-1vcpu-1gb-blr1-01:~# 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~#
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# ifconfig
 eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         inet 139.59.5.149  netmask 255.255.240.0  broadcast 139.59.15.255
@@ -4096,14 +4097,14 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# curl ifconfig.me
-139.59.5.149root@ubuntu-s-1vcpu-1gb-blr1-01:~# 
+139.59.5.149root@ubuntu-s-1vcpu-1gb-blr1-01:~#
 ```
 
 ```bash
 ~ $ telnet 139.59.5.149 6379
 Trying 139.59.5.149...
 telnet: connect to address 139.59.5.149: Connection refused
-telnet: Unable to connect to remote host 
+telnet: Unable to connect to remote host
 ```
 
 https://duckduckgo.com/?t=ffab&q=find+which+malloc+is+used+in+redis&ia=web
@@ -4163,20 +4164,20 @@ root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-cli
 48) "10.750151634216309"
 49) "fragmentation.bytes"
 50) (integer) 8102376
-127.0.0.1:6379> 
+127.0.0.1:6379>
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# ls /var/lo
-local/ lock/  log/   
+local/ lock/  log/
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# ls /var/lo
-local/ lock/  log/   
+local/ lock/  log/
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# ls /var/log/
 alternatives.log          cloud-init.log            journal/                  redis/
 apt/                      dist-upgrade/             kern.log                  syslog
 auth.log                  dmesg                     landscape/                ubuntu-advantage.log
 btmp                      dpkg.log                  lastlog                   unattended-upgrades/
 cloud-init-output.log     droplet-agent.update.log  private/                  wtmp
-root@ubuntu-s-1vcpu-1gb-blr1-01:~# ls /var/log/redis/redis-server.log 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# ls /var/log/redis/redis-server.log
 /var/log/redis/redis-server.log
-root@ubuntu-s-1vcpu-1gb-blr1-01:~# cat /var/log/redis/redis-server.log 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# cat /var/log/redis/redis-server.log
 29156:C 30 Oct 2021 05:32:10.037 * Supervised by systemd. Please make sure you set appropriate values for TimeoutStartSec and TimeoutStopSec in your service unit.
 29156:C 30 Oct 2021 05:32:10.037 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
 29156:C 30 Oct 2021 05:32:10.037 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=29156, just started
@@ -4186,7 +4187,7 @@ root@ubuntu-s-1vcpu-1gb-blr1-01:~# cat /var/log/redis/redis-server.log
 29156:M 30 Oct 2021 05:32:10.041 # Server initialized
 29156:M 30 Oct 2021 05:32:10.041 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
 29156:M 30 Oct 2021 05:32:10.044 * Ready to accept connections
-root@ubuntu-s-1vcpu-1gb-blr1-01:~# 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~#
 ```
 
 https://duckduckgo.com/?q=redis+memory+allocation&t=ffab&ia=web&iax=qa
@@ -4254,7 +4255,7 @@ decaying:  time       npages       sweeps     madvises       purged
 small:                         295968       16295        3515       25036
 large:                         696320          21          12          21
 total:                         992288       16316        3527       25057
-                                     
+
 active:                       1273856
 mapped:                       7565312
 retained:                      823296
@@ -4334,7 +4335,7 @@ large:          size ind    allocated      nmalloc      ndalloc    nrequests  cu
               327680  56       327680            1            0            1            1
                      ---
 --- End jemalloc statistics ---
-127.0.0.1:6379> 
+127.0.0.1:6379>
 ```
 
 ```bash
@@ -4435,10 +4436,10 @@ root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-cli ACL HELP
 27)     Prints this help.
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-cli ACL GENPASS
 "e07298ecf7f56b7877d5f757ecc1faf6379baa6870b2511c52a33a80fad225aa"
-root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-cli 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~# redis-cli
 127.0.0.1:6379> ACL GENPASS
 "79ed52ffc63da1e60d77c41e8bc2c3fa303ad2de425b7f010bd7df1f160d2874"
-127.0.0.1:6379> 
+127.0.0.1:6379>
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# vi /etc/redis/redis.conf
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# system
 systemctl                       systemd-escape                  systemd-run
@@ -4448,10 +4449,10 @@ systemd-ask-password            systemd-inhibit                 systemd-sysusers
 systemd-cat                     systemd-machine-id-setup        systemd-tmpfiles
 systemd-cgls                    systemd-mount                   systemd-tty-ask-password-agent
 systemd-cgtop                   systemd-notify                  systemd-umount
-systemd-delta                   systemd-path                    
-systemd-detect-virt             systemd-resolve                 
+systemd-delta                   systemd-path
+systemd-detect-virt             systemd-resolve
 root@ubuntu-s-1vcpu-1gb-blr1-01:~# systemctl restart redis-server
-root@ubuntu-s-1vcpu-1gb-blr1-01:~# 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~#
 ```
 
 ```bash
@@ -4473,8 +4474,8 @@ database-stuff $ redis-cli -h 139.59.5.149 -p 56379
 OK
 139.59.5.149:56379> PING
 PONG
-139.59.5.149:56379> 
-database-stuff $ 
+139.59.5.149:56379>
+database-stuff $
 ```
 
 ```bash
@@ -4492,7 +4493,7 @@ tmpfs           491M     0  491M   0% /sys/fs/cgroup
 /dev/vda15      105M  5.2M  100M   5% /boot/efi
 /dev/sda        9.8G   37M  9.3G   1% /mnt/volume_blr1_01
 tmpfs            99M     0   99M   0% /run/user/0
-root@ubuntu-s-1vcpu-1gb-blr1-01:~# 
+root@ubuntu-s-1vcpu-1gb-blr1-01:~#
 ```
 
 Below is the external disk that I had created
@@ -4501,4 +4502,1456 @@ Below is the external disk that I had created
 /dev/sda        9.8G   37M  9.3G   1% /mnt/volume_blr1_01
 ```
 
+---
 
+```bash
+database-stuff $ doctl compute droplet
+A Droplet is a DigitalOcean virtual machine. Use the subcommands of `doctl compute droplet` to list, create, or delete Droplets.
+
+Usage:
+  doctl compute droplet [command]
+
+Aliases:
+  droplet, d
+
+Available Commands:
+  1-click     Display commands that pertain to Droplet 1-click applications
+  actions     List Droplet actions
+  backups     List Droplet backups
+  create      Create a new Droplet
+  delete      Permanently delete a Droplet
+  get         Retrieve information about a Droplet
+  kernels     List available Droplet kernels
+  list        List Droplets on your account
+  neighbors   List a Droplet's neighbors on your account
+  snapshots   List all snapshots for a Droplet
+  tag         Add a tag to a Droplet
+  untag       Remove a tag from a Droplet
+
+Flags:
+  -h, --help   help for droplet
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+Use "doctl compute droplet [command] --help" for more information about a command.
+database-stuff $ doctl compute droplet list
+Error: Unable to initialize DigitalOcean API client: access token is required. (hint: run 'doctl auth init')
+database-stuff $ doctl auth init
+Please authenticate doctl for use with your DigitalOcean account. You can generate a token in the control panel at https://cloud.digitalocean.com/account/api/tokens
+
+Enter your access token: 
+database-stuff $ doctl auth list
+default (current)
+database-stuff $ doctl auth init
+Please authenticate doctl for use with your DigitalOcean account. You can generate a token in the control panel at https://cloud.digitalocean.com/account/api/tokens
+
+Enter your access token: 
+Validating token... OK
+
+database-stuff $ doctl compute droplet list
+ID    Name    Public IPv4    Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image    VPC UUID    Status    Tags    Features    Volumes
+database-stuff $ doctl auth init
+Using token [9c492891c52ccea39cab9abc0aedd7a2a87c0b37d90947aa897d0be2cea1e8e4]
+
+Validating token... OK
+
+database-stuff $ doctl auth init -g
+Error: unknown shorthand flag: 'g' in -g
+Usage:
+  doctl auth init [flags]
+
+Flags:
+  -h, --help   help for init
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+unknown shorthand flag: 'g' in -g
+database-stuff $ doctl auth init -h
+This command allows you to initialize doctl with a token that allows it to query and manage your account details and resources.
+
+You will need an API token, which you can generate in the control panel at https://cloud.digitalocean.com/account/api/tokens.
+
+You can provide a name to this initialization via the `--context` flag, and then it will be saved as an "authentication context". Authentication contexts are accessible via `doctl auth switch`, which re-initializes doctl, or by providing the `--context` flag when using any doctl command (to specify that auth context for just one command). This enables you to use multiple DigitalOcean accounts with doctl, or tokens that have different authentication scopes.
+
+If the `--context` flag is not specified, a default authentication context will be created during initialization.
+
+If doctl is never initialized, you will need to specify an API token whenever you use a `doctl` command via the `--access-token` flag.
+
+Usage:
+  doctl auth init [flags]
+
+Flags:
+  -h, --help   help for init
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+database-stuff $ doctl auth list
+default (current)
+database-stuff $ doctl auth 
+The `doctl auth` commands allow you to authenticate doctl for use with your DigitalOcean account using tokens that you generate in the control panel at https://cloud.digitalocean.com/account/api/tokens.
+
+If you work with a just one account, you can call `doctl auth init` and supply the token when prompted. This creates an authentication context named `default`.
+
+To switch between multiple DigitalOcean accounts, including team accounts, you can create named contexts by using `doctl auth init --context <name>`, then providing a token when prompted. This saves the token under the name you provide. To switch between accounts, use `doctl auth switch --context <name>`.,
+
+To remove accounts from the configuration file, you can run `doctl auth remove --context <name>`. This removes the token under the name you provide.
+
+Usage:
+  doctl auth [command]
+
+Available Commands:
+  init        Initialize doctl to use a specific account
+  list        List available authentication contexts
+  remove      Remove authentication contexts 
+  switch      Switches between authentication contexts
+
+Flags:
+  -h, --help   help for auth
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+Use "doctl auth [command] --help" for more information about a command.
+database-stuff $ doctl auth init --context write
+Please authenticate doctl for use with your DigitalOcean account. You can generate a token in the control panel at https://cloud.digitalocean.com/account/api/tokens
+
+Enter your access token: 
+Validating token... OK
+
+database-stuff $ doctl auth list
+default (current)
+write
+database-stuff $ doctl auth switch
+Now using context [default] by default
+database-stuff $ doctl auth switch write
+Now using context [default] by default
+database-stuff $ doctl auth list
+default (current)
+write
+database-stuff $ doctl auth switch -h
+This command allows you to switch between accounts with authentication contexts you've already created.
+
+To see a list of available authentication contexts, call `doctl auth list`.
+
+For details on creating an authentication context, see the help for `doctl auth init`.
+
+Usage:
+  doctl auth switch [flags]
+
+Flags:
+  -h, --help   help for switch
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+database-stuff $ doctl auth switch --context write
+Now using context [write] by default
+database-stuff $ doctl auth list
+default
+write (current)
+database-stuff $ doctl compute droplet -h
+A Droplet is a DigitalOcean virtual machine. Use the subcommands of `doctl compute droplet` to list, create, or delete Droplets.
+
+Usage:
+  doctl compute droplet [command]
+
+Aliases:
+  droplet, d
+
+Available Commands:
+  1-click     Display commands that pertain to Droplet 1-click applications
+  actions     List Droplet actions
+  backups     List Droplet backups
+  create      Create a new Droplet
+  delete      Permanently delete a Droplet
+  get         Retrieve information about a Droplet
+  kernels     List available Droplet kernels
+  list        List Droplets on your account
+  neighbors   List a Droplet's neighbors on your account
+  snapshots   List all snapshots for a Droplet
+  tag         Add a tag to a Droplet
+  untag       Remove a tag from a Droplet
+
+Flags:
+  -h, --help   help for droplet
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+Use "doctl compute droplet [command] --help" for more information about a command.
+database-stuff $ doctl compute droplet create -h
+Use this command to create a new Droplet. Required values are name, region, size, and image. For example, to create an Ubuntu 20.04 with 1 vCPU and 1 GB of RAM in the NYC1 datacenter region, run:
+
+	doctl compute droplet create --image ubuntu-20-04-x64 --size s-1vcpu-1gb --region nyc1 example.com
+
+Usage:
+  doctl compute droplet create <droplet-name>... [flags]
+
+Aliases:
+  create, c
+
+Flags:
+      --droplet-agent true          By default, the agent is installed on new Droplets but installation errors are ignored. Set --droplet-agent=false to prevent installation. Set true to make installation errors fatal.
+      --enable-backups              Enables backups for the Droplet
+      --enable-ipv6                 Enables IPv6 support and assigns an IPv6 address
+      --enable-monitoring           Install the DigitalOcean agent for additional monitoring
+      --enable-private-networking   Enables private networking for the Droplet by provisioning it inside of your account's default VPC for the region
+      --format ID                   Columns for output in a comma-separated list. Possible values: ID, `Name`, `PublicIPv4`, `PrivateIPv4`, `PublicIPv6`, `Memory`, `VCPUs`, `Disk`, `Region`, `Image`, `VPCUUID`, `Status`, `Tags`, `Features`, `Volumes`
+  -h, --help                        help for create
+      --image ubuntu-20-04-x64      An ID or slug indicating the image the Droplet will be based-on (e.g. ubuntu-20-04-x64). Use the commands under `doctl compute image` to find additional images. (required)
+      --no-header                   Return raw data with no headers
+      --region nyc1                 A slug indicating the region where the Droplet will be created (e.g. nyc1). Run `doctl compute region list` for a list of valid regions. (required)
+      --size s-1vcpu-1gb            A slug indicating the size of the Droplet (e.g. s-1vcpu-1gb). Run `doctl compute size list` for a list of valid sizes. (required)
+      --ssh-keys strings            A list of SSH key fingerprints or IDs of the SSH keys to embed in the Droplet's root account upon creation
+      --tag-name string             A tag name to be applied to the Droplet
+      --tag-names strings           A list of tag names to be applied to the Droplet
+      --user-data string            User-data to configure the Droplet on first boot
+      --user-data-file string       The path to a file containing user-data to configure the Droplet on first boot
+      --volumes strings             A list of block storage volume IDs to attach to the Droplet
+      --vpc-uuid string             The UUID of a non-default VPC to create the Droplet in
+      --wait                        Wait for Droplet creation to complete before returning
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+database-stuff $ doctl compute region list
+Slug    Name               Available
+nyc1    New York 1         true
+sfo1    San Francisco 1    false
+nyc2    New York 2         false
+ams2    Amsterdam 2        false
+sgp1    Singapore 1        true
+lon1    London 1           true
+nyc3    New York 3         true
+ams3    Amsterdam 3        true
+fra1    Frankfurt 1        true
+tor1    Toronto 1          true
+sfo2    San Francisco 2    false
+blr1    Bangalore 1        true
+sfo3    San Francisco 3    true
+database-stuff $ doctl compute size list
+Slug                  Memory    VCPUs    Disk    Price Monthly    Price Hourly
+s-1vcpu-1gb           1024      1        25      5.00             0.007440
+s-1vcpu-1gb-amd       1024      1        25      6.00             0.008930
+s-1vcpu-1gb-intel     1024      1        25      6.00             0.008930
+s-1vcpu-2gb           2048      1        50      10.00            0.014880
+s-1vcpu-2gb-amd       2048      1        50      12.00            0.017860
+s-1vcpu-2gb-intel     2048      1        50      12.00            0.017860
+s-2vcpu-2gb           2048      2        60      15.00            0.022320
+s-2vcpu-2gb-amd       2048      2        60      18.00            0.026790
+s-2vcpu-2gb-intel     2048      2        60      18.00            0.026790
+s-2vcpu-4gb           4096      2        80      20.00            0.029760
+s-2vcpu-4gb-amd       4096      2        80      24.00            0.035710
+s-2vcpu-4gb-intel     4096      2        80      24.00            0.035710
+s-4vcpu-8gb           8192      4        160     40.00            0.059520
+c-2                   4096      2        25      40.00            0.059520
+c2-2vcpu-4gb          4096      2        50      45.00            0.066960
+s-4vcpu-8gb-amd       8192      4        160     48.00            0.071430
+s-4vcpu-8gb-intel     8192      4        160     48.00            0.071430
+g-2vcpu-8gb           8192      2        25      60.00            0.089290
+gd-2vcpu-8gb          8192      2        50      65.00            0.096730
+s-8vcpu-16gb          16384     8        320     80.00            0.119050
+m-2vcpu-16gb          16384     2        50      80.00            0.119050
+c-4                   8192      4        50      80.00            0.119050
+c2-4vcpu-8gb          8192      4        100     90.00            0.133930
+s-8vcpu-16gb-amd      16384     8        320     96.00            0.142860
+s-8vcpu-16gb-intel    16384     8        320     96.00            0.142860
+m3-2vcpu-16gb         16384     2        150     100.00           0.148810
+g-4vcpu-16gb          16384     4        50      120.00           0.178570
+so-2vcpu-16gb         16384     2        300     125.00           0.186010
+m6-2vcpu-16gb         16384     2        300     125.00           0.186010
+gd-4vcpu-16gb         16384     4        100     130.00           0.193450
+so1_5-2vcpu-16gb      16384     2        450     155.00           0.230650
+m-4vcpu-32gb          32768     4        100     160.00           0.238100
+c-8                   16384     8        100     160.00           0.238100
+c2-8vcpu-16gb         16384     8        200     180.00           0.267860
+m3-4vcpu-32gb         32768     4        300     195.00           0.290180
+g-8vcpu-32gb          32768     8        100     240.00           0.357140
+so-4vcpu-32gb         32768     4        600     250.00           0.372020
+m6-4vcpu-32gb         32768     4        600     250.00           0.372020
+gd-8vcpu-32gb         32768     8        200     260.00           0.386900
+so1_5-4vcpu-32gb      32768     4        900     310.00           0.461310
+m-8vcpu-64gb          65536     8        200     320.00           0.476190
+c-16                  32768     16       200     320.00           0.476190
+c2-16vcpu-32gb        32768     16       400     360.00           0.535710
+m3-8vcpu-64gb         65536     8        600     390.00           0.580360
+g-16vcpu-64gb         65536     16       200     480.00           0.714290
+so-8vcpu-64gb         65536     8        1200    500.00           0.744050
+m6-8vcpu-64gb         65536     8        1200    500.00           0.744050
+gd-16vcpu-64gb        65536     16       400     520.00           0.773810
+so1_5-8vcpu-64gb      65536     8        1800    620.00           0.922620
+m-16vcpu-128gb        131072    16       400     640.00           0.952380
+c-32                  65536     32       400     640.00           0.952380
+c2-32vcpu-64gb        65536     32       800     720.00           1.071430
+m3-16vcpu-128gb       131072    16       1200    785.00           1.168150
+m-24vcpu-192gb        196608    24       600     960.00           1.428570
+g-32vcpu-128gb        131072    32       400     960.00           1.428570
+so-16vcpu-128gb       131072    16       2400    1000.00          1.488100
+m6-16vcpu-128gb       131072    16       2400    1000.00          1.488100
+gd-32vcpu-128gb       131072    32       800     1040.00          1.547620
+m3-24vcpu-192gb       196608    24       1800    1175.00          1.748510
+g-40vcpu-160gb        163840    40       500     1200.00          1.785710
+so1_5-16vcpu-128gb    131072    16       3600    1240.00          1.845240
+m-32vcpu-256gb        262144    32       800     1280.00          1.904760
+gd-40vcpu-160gb       163840    40       1000    1300.00          1.934520
+so-24vcpu-192gb       196608    24       3600    1500.00          2.232140
+m6-24vcpu-192gb       196608    24       3600    1500.00          2.232140
+m3-32vcpu-256gb       262144    32       2400    1565.00          2.328870
+so1_5-24vcpu-192gb    196608    24       5400    1850.00          2.752980
+so-32vcpu-256gb       262144    32       4800    2000.00          2.976190
+m6-32vcpu-256gb       262144    32       4800    2000.00          2.976190
+so1_5-32vcpu-256gb    262144    32       7200    2480.00          3.690480
+database-stuff $ doctl compute 
+The subcommands under `doctl compute` are for managing DigitalOcean resources.
+
+Usage:
+  doctl compute [command]
+
+Available Commands:
+  action             Display commands for retrieving resource action history
+  cdn                Display commands that manage CDNs
+  certificate        Display commands that manage SSL certificates and private keys
+  domain             Display commands that manage domains
+  droplet            Manage virtual machines (Droplets)
+  droplet-action     Display Droplet action commands
+  firewall           Display commands to manage cloud firewalls
+  floating-ip        Display commands to manage floating IP addresses
+  floating-ip-action Display commands to associate floating IP addresses with Droplets
+  image              Display commands to manage images
+  image-action       Display commands to perform actions on images
+  load-balancer      Display commands to manage load balancers
+  region             Display commands to list datacenter regions
+  size               List available Droplet sizes
+  snapshot           Access and manage snapshots
+  ssh                Access a Droplet using SSH
+  ssh-key            Display commands to manage SSH keys on your account
+  tag                Display commands to manage tags
+  volume             Display commands to manage block storage volumes
+  volume-action      Display commands to perform actions on a volume
+
+Flags:
+  -h, --help   help for compute
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+Use "doctl compute [command] --help" for more information about a command.
+database-stuff $ doctl compute ssh-key
+The sub-commands of `doctl compute ssh-key` manage the SSH keys on your account.
+
+DigitalOcean allows you to add SSH public keys to the interface so that you can embed your public key into a Droplet at the time of creation. Only the public key is required to take advantage of this functionality. Note that this command does not add, delete, or otherwise modify any ssh keys that may be on existing Droplets.
+
+Usage:
+  doctl compute ssh-key [command]
+
+Aliases:
+  ssh-key, k
+
+Available Commands:
+  create      Create a new SSH key on your account
+  delete      Permanently delete an SSH key from your account
+  get         Retrieve information about an SSH key on your account
+  import      Import an SSH key from your computer to your account
+  list        List all SSH keys on your account
+  update      Update an SSH key's name
+
+Flags:
+  -h, --help   help for ssh-key
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+Use "doctl compute ssh-key [command] --help" for more information about a command.
+database-stuff $ doctl compute ssh-key list
+ID          Name                             FingerPrint
+32221856    VMware laptop - Digital Ocean    2b:7d:36:8d:fe:fe:59:90:59:10:b6:39:be:45:e9:44
+8916213     Ubuntu Desktop                   d9:ba:72:f8:47:a9:53:a7:59:8f:de:53:25:18:b7:3e
+database-stuff $ 
+```
+
+---
+
+```bash
+doctl compute droplet create --image ubuntu-20-04-x64 --size s-1vcpu-1gb --region blr1 redis-server --ssh-keys 32221856 --wait
+```
+
+```bash
+database-stuff $ doctl compute droplet create --image ubuntu-20-04-x64 --size s-1vcpu-1gb --region blr1 redis-server --ssh-keys 32221856 --wait
+ID           Name            Public IPv4       Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+271925149    redis-server    143.110.245.39    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+database-stuff $ ssh -i ~/.ssh/digital_ocean root@143.110.245.39
+The authenticity of host '143.110.245.39 (143.110.245.39)' can't be established.
+ECDSA key fingerprint is SHA256:rKfwmkzZGC99rkboFfLGBBe2+kCeaaekDcqn5fqoRzE.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '143.110.245.39' (ECDSA) to the list of known hosts.
+Enter passphrase for key '/Users/karuppiahn/.ssh/digital_ocean': 
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-88-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Tue Nov  2 15:58:06 UTC 2021
+
+  System load:  0.76              Users logged in:       0
+  Usage of /:   6.0% of 24.06GB   IPv4 address for eth0: 143.110.245.39
+  Memory usage: 19%               IPv4 address for eth0: 10.47.0.5
+  Swap usage:   0%                IPv4 address for eth1: 10.122.0.2
+  Processes:    104
+
+1 update can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+root@redis-server:~# {
+>     sudo add-apt-repository ppa:redislabs/redis;
+>     apt install redis-server;
+>     systemctl status redis-server;
+>     redis-cli PING;
+>     redis-cli MEMORY MALLOC-STATS;
+>     redis-cli ACL GENPASS;
+> }
+ Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.
+
+It supports data structures such as strings, hashes, lists, sets, sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes with radius queries and streams.
+
+Redis has built-in replication, Lua scripting, LRU eviction, transactions and different levels of on-disk persistence, and provides high availability via Redis Sentinel and automatic partitioning with Redis Cluster.
+ More info: https://launchpad.net/~redislabs/+archive/ubuntu/redis
+Press [ENTER] to continue or Ctrl-c to cancel adding it.
+
+Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
+Hit:2 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                                
+Get:3 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease [114 kB]                                                
+Get:4 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease [101 kB]                                              
+Get:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease [18.0 kB]                  
+Get:6 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]                 
+Get:7 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 Packages [1302 kB]
+Get:8 http://mirrors.digitalocean.com/ubuntu focal-updates/main Translation-en [270 kB]                                      
+Get:9 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 c-n-f Metadata [14.4 kB]                               
+Get:10 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 Packages [1016 B]                   
+Get:11 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 Packages [524 kB]              
+Get:12 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted Translation-en [75.0 kB]                              
+Get:13 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 c-n-f Metadata [504 B]
+Get:14 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main Translation-en [584 B]
+Get:15 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 Packages [867 kB]
+Get:16 http://mirrors.digitalocean.com/ubuntu focal-updates/universe Translation-en [187 kB]
+Get:17 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [949 kB]   
+Get:18 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 c-n-f Metadata [19.4 kB]
+Get:19 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse amd64 Packages [24.6 kB]
+Get:20 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse Translation-en [6856 B]
+Get:21 http://security.ubuntu.com/ubuntu focal-security/main Translation-en [178 kB]
+Get:22 http://security.ubuntu.com/ubuntu focal-security/main amd64 c-n-f Metadata [8844 B]
+Get:23 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [483 kB]
+Get:24 http://security.ubuntu.com/ubuntu focal-security/restricted Translation-en [69.2 kB]
+Get:25 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [647 kB]
+Get:26 http://security.ubuntu.com/ubuntu focal-security/universe Translation-en [106 kB]
+Get:27 http://security.ubuntu.com/ubuntu focal-security/universe amd64 c-n-f Metadata [12.8 kB]
+Fetched 6091 kB in 3s (1786 kB/s)                               
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  redis-tools
+Suggested packages:
+  ruby-redis
+The following NEW packages will be installed:
+  redis-server redis-tools
+0 upgraded, 2 newly installed, 0 to remove and 18 not upgraded.
+Need to get 1150 kB of archives.
+After this operation, 6794 kB of additional disk space will be used.
+Do you want to continue? [Y/n] 
+Get:1 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-tools amd64 6:6.2.6-1rl1~focal1 [1067 kB]
+Get:2 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-server amd64 6:6.2.6-1rl1~focal1 [82.4 kB]
+Fetched 1150 kB in 3s (458 kB/s)   
+Selecting previously unselected package redis-tools.
+(Reading database ... 63555 files and directories currently installed.)
+Preparing to unpack .../redis-tools_6%3a6.2.6-1rl1~focal1_amd64.deb ...
+Unpacking redis-tools (6:6.2.6-1rl1~focal1) ...
+Selecting previously unselected package redis-server.
+Preparing to unpack .../redis-server_6%3a6.2.6-1rl1~focal1_amd64.deb ...
+Unpacking redis-server (6:6.2.6-1rl1~focal1) ...
+Setting up redis-tools (6:6.2.6-1rl1~focal1) ...
+Setting up redis-server (6:6.2.6-1rl1~focal1) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for systemd (245.4-4ubuntu3.13) ...
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Tue 2021-11-02 15:58:40 UTC; 2s ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 2374 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.2M
+     CGroup: /system.slice/redis-server.service
+             └─2374 /usr/bin/redis-server 127.0.0.1:6379
+
+Nov 02 15:58:40 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 02 15:58:40 redis-server systemd[1]: Started Advanced key-value store.
+PONG
+___ Begin jemalloc statistics ___
+Version: "5.1.0-0-g0"
+Build-time option settings
+  config.cache_oblivious: true
+  config.debug: false
+  config.fill: true
+  config.lazy_lock: false
+  config.malloc_conf: ""
+  config.prof: false
+  config.prof_libgcc: false
+  config.prof_libunwind: false
+  config.stats: true
+  config.utrace: false
+  config.xmalloc: false
+Run-time option settings
+  opt.abort: false
+  opt.abort_conf: false
+  opt.retain: true
+  opt.dss: "secondary"
+  opt.narenas: 1
+  opt.percpu_arena: "disabled"
+  opt.metadata_thp: "disabled"
+  opt.background_thread: false (background_thread: true)
+  opt.dirty_decay_ms: 10000 (arenas.dirty_decay_ms: 10000)
+  opt.muzzy_decay_ms: 10000 (arenas.muzzy_decay_ms: 10000)
+  opt.junk: "false"
+  opt.zero: false
+  opt.tcache: true
+  opt.lg_tcache_max: 15
+  opt.thp: "default"
+  opt.stats_print: false
+  opt.stats_print_opts: ""
+Arenas: 1
+Quantum size: 8
+Page size: 4096
+Maximum thread-cached size class: 32768
+Number of bin size classes: 39
+Number of thread-cache bin size classes: 44
+Number of large size classes: 196
+Allocated: 1348088, active: 1646592, metadata: 2263320 (n_thp 0), resident: 3883008, mapped: 7938048, retained: 450560
+Background threads: 1, num_runs: 2, run_interval: 1444619500 ns
+                           n_lock_ops       n_waiting      n_spin_acq  n_owner_switch   total_wait_ns     max_wait_ns  max_n_thds
+background_thread                  63               0               0               1               0               0           0
+ctl                               119               0               0               1               0               0           0
+prof                                0               0               0               0               0               0           0
+arenas[0]:
+assigned threads: 1
+uptime: 2915651251
+dss allocation precedence: "secondary"
+decaying:  time       npages       sweeps     madvises       purged
+   dirty: 10000            0            1            1            2
+   muzzy: 10000            0            1            1            2
+                            allocated     nmalloc     ndalloc   nrequests
+small:                         655864       14987        1933       17489
+large:                         692224          13           4          13
+total:                        1348088       15000        1937       17502
+                                     
+active:                       1646592
+mapped:                       7938048
+retained:                      450560
+base:                         2230544
+internal:                       32776
+metadata_thp:                       0
+tcache_bytes:                  426928
+resident:                     3883008
+                           n_lock_ops       n_waiting      n_spin_acq  n_owner_switch   total_wait_ns     max_wait_ns  max_n_thds
+large                              31               0               0               1               0               0           0
+extent_avail                      148               0               0               3               0               0           0
+extents_dirty                     210               0               0               5               0               0           0
+extents_muzzy                     114               0               0               5               0               0           0
+extents_retained                  194               0               0               5               0               0           0
+decay_dirty                        39               0               0               5               0               0           0
+decay_muzzy                        38               0               0               5               0               0           0
+base                              187               0               0               3               0               0           0
+tcache_list                        32               0               0               1               0               0           0
+bins:           size ind    allocated      nmalloc      ndalloc    nrequests      curregs     curslabs regs pgs   util       nfills     nflushes       nslabs     nreslabs      n_lock_ops       n_waiting      n_spin_acq  n_owner_switch   total_wait_ns     max_wait_ns  max_n_thds
+                   8   0         3088          801          415         2535          386            2  512   1  0.376            8            5            2            1              47               0               0               1               0               0           0
+                  16   1       172800        10800            0        11956        10800           43  256   1  0.981          108            0           43            0             182               0               0               1               0               0           0
+                  24   2        22488         1000           63         1193          937            2  512   3  0.915           10            1            2            0              44               0               0               1               0               0           0
+                  32   3         5664          200           23          360          177            2  128   1  0.691            2            1            2            0              36               0               0               1               0               0           0
+                  40   4         3480          100           13          132           87            1  512   5  0.169            1            2            1            0              35               0               0               1               0               0           0
+                  48   5         3312          100           31           84           69            1  256   3  0.269            1            2            1            0              35               0               0               1               0               0           0
+                  56   6         3752          100           33           91           67            1  512   7  0.130            1            2            1            0              35               0               0               1               0               0           0
+                  64   7         4928          128           51           87           77            2   64   1  0.601            2            1            2            0              36               0               0               1               0               0           0
+                  80   8        10000          800          675          729          125            1  256   5  0.488            8            7            4            0              53               0               0               1               0               0           0
+                  96   9        12000          300          175          291          125            1  128   3  0.976            3            2            3            0              41               0               0               1               0               0           0
+                 112  10          784          100           93            3            7            1  256   7  0.027            1            2            1            0              35               0               0               1               0               0           0
+                 128  11          256           32           30            5            2            1   32   1  0.062            1            2            1            0              35               0               0               1               0               0           0
+                 160  12         4000          100           75            3           25            1  128   5  0.195            1            1            1            0              34               0               0               1               0               0           0
+                 192  13         3072           64           48            2           16            1   64   3  0.250            1            1            1            0              34               0               0               1               0               0           0
+                 224  14         5600          100           75            2           25            1  128   7  0.195            1            1            1            0              34               0               0               1               0               0           0
+                 256  15          256           16           15            3            1            1   16   1  0.062            1            2            1            0              35               0               0               1               0               0           0
+                 320  16         5120           64           48            1           16            1   64   5  0.250            1            1            1            0              34               0               0               1               0               0           0
+                 384  17         3072           32           24            1            8            1   32   3  0.250            1            1            1            0              34               0               0               1               0               0           0
+                 448  18            0            0            0            0            0            0   64   7      1            0            0            0            0              31               0               0               1               0               0           0
+                     ---
+                 512  19         1024           12           10            3            2            1    8   1  0.250            2            2            3            0              40               0               0               1               0               0           0
+                 640  20         5120           32           24            2            8            1   32   5  0.250            1            1            1            0              34               0               0               1               0               0           0
+                 768  21            0            0            0            0            0            0   16   3      1            0            0            0            0              31               0               0               1               0               0           0
+                 896  22            0            0            0            0            0            0   32   7      1            0            0            0            0              31               0               0               1               0               0           0
+                     ---
+                1024  23         4096           10            6            3            4            1    4   1      1            1            1            3            0              38               0               0               1               0               0           0
+                1280  24        20480           16            0            0           16            1   16   5      1            1            0            1            0              33               0               0               1               0               0           0
+                1536  25        15360           10            0            0           10            2    8   3  0.625            1            0            2            0              34               0               0               1               0               0           0
+                1792  26            0            0            0            0            0            0   16   7      1            0            0            0            0              31               0               0               1               0               0           0
+                     ---
+                2048  27         8192           10            6            3            4            2    2   1      1            1            1            5            0              41               0               0               1               0               0           0
+                2560  28        25600           10            0            0           10            2    8   5  0.625            1            0            2            0              34               0               0               1               0               0           0
+                3072  29            0            0            0            0            0            0    4   3      1            0            0            0            0              31               0               0               1               0               0           0
+                     ---
+                3584  30        35840           10            0            0           10            2    8   7  0.625            1            0            2            0              34               0               0               1               0               0           0
+                4096  31        40960           10            0            0           10           10    1   1      1            1            0           10            0              42               0               0               1               0               0           0
+                5120  32        51200           10            0            0           10            3    4   5  0.833            1            0            3            0              35               0               0               1               0               0           0
+                6144  33            0            0            0            0            0            0    2   3      1            0            0            0            0              31               0               0               1               0               0           0
+                7168  34            0            0            0            0            0            0    4   7      1            0            0            0            0              31               0               0               1               0               0           0
+                     ---
+                8192  35        81920           10            0            0           10           10    1   2      1            1            0           10            0              42               0               0               1               0               0           0
+               10240  36       102400           10            0            0           10            5    2   5      1            1            0            5            0              37               0               0               1               0               0           0
+               12288  37            0            0            0            0            0            0    1   3      1            0            0            0            0              31               0               0               1               0               0           0
+               14336  38            0            0            0            0            0            0    2   7      1            0            0            0            0              31               0               0               1               0               0           0
+                     ---
+large:          size ind    allocated      nmalloc      ndalloc    nrequests  curlextents
+               16384  39        16384            1            0            1            1
+               20480  40        61440            4            1            4            3
+                     ---
+               32768  43        32768            1            0            1            1
+               40960  44        40960            2            1            2            1
+               49152  45            0            1            1            1            0
+                     ---
+               81920  48        81920            1            0            1            1
+                     ---
+              114688  50            0            1            1            1            0
+              131072  51       131072            1            0            1            1
+                     ---
+              327680  56       327680            1            0            1            1
+                     ---
+--- End jemalloc statistics ---
+"add913f939e06dd90128d40c86c5d2522bec26a822bf73eccffd3d3182e34dea"
+root@redis-server:~# {
+>     vi /etc/redis/redis.conf;
+> }
+root@redis-server:~# redis-cli PING PING
+"PING"
+root@redis-server:~# redis-cli 
+127.0.0.1:6379> 
+root@redis-server:~# redis-cli -h
+redis-cli 6.2.6
+
+Usage: redis-cli [OPTIONS] [cmd [arg [arg ...]]]
+  -h <hostname>      Server hostname (default: 127.0.0.1).
+  -p <port>          Server port (default: 6379).
+  -s <socket>        Server socket (overrides hostname and port).
+  -a <password>      Password to use when connecting to the server.
+                     You can also use the REDISCLI_AUTH environment
+                     variable to pass this password more safely
+                     (if both are used, this argument takes precedence).
+  --user <username>  Used to send ACL style 'AUTH username pass'. Needs -a.
+  --pass <password>  Alias of -a for consistency with the new --user option.
+  --askpass          Force user to input password with mask from STDIN.
+                     If this argument is used, '-a' and REDISCLI_AUTH
+                     environment variable will be ignored.
+  -u <uri>           Server URI.
+  -r <repeat>        Execute specified command N times.
+  -i <interval>      When -r is used, waits <interval> seconds per command.
+                     It is possible to specify sub-second times like -i 0.1.
+  -n <db>            Database number.
+  -3                 Start session in RESP3 protocol mode.
+  -x                 Read last argument from STDIN.
+  -d <delimiter>     Delimiter between response bulks for raw formatting (default: \n).
+  -D <delimiter>     Delimiter between responses for raw formatting (default: \n).
+  -c                 Enable cluster mode (follow -ASK and -MOVED redirections).
+  -e                 Return exit error code when command execution fails.
+  --tls              Establish a secure TLS connection.
+  --sni <host>       Server name indication for TLS.
+  --cacert <file>    CA Certificate file to verify with.
+  --cacertdir <dir>  Directory where trusted CA certificates are stored.
+                     If neither cacert nor cacertdir are specified, the default
+                     system-wide trusted root certs configuration will apply.
+  --insecure         Allow insecure TLS connection by skipping cert validation.
+  --cert <file>      Client certificate to authenticate with.
+  --key <file>       Private key file to authenticate with.
+  --tls-ciphers <list> Sets the list of prefered ciphers (TLSv1.2 and below)
+                     in order of preference from highest to lowest separated by colon (":").
+                     See the ciphers(1ssl) manpage for more information about the syntax of this string.
+  --tls-ciphersuites <list> Sets the list of prefered ciphersuites (TLSv1.3)
+                     in order of preference from highest to lowest separated by colon (":").
+                     See the ciphers(1ssl) manpage for more information about the syntax of this string,
+                     and specifically for TLSv1.3 ciphersuites.
+  --raw              Use raw formatting for replies (default when STDOUT is
+                     not a tty).
+  --no-raw           Force formatted output even when STDOUT is not a tty.
+  --quoted-input     Force input to be handled as quoted strings.
+  --csv              Output in CSV format.
+  --show-pushes <yn> Whether to print RESP3 PUSH messages.  Enabled by default when
+                     STDOUT is a tty but can be overriden with --show-pushes no.
+  --stat             Print rolling stats about server: mem, clients, ...
+  --latency          Enter a special mode continuously sampling latency.
+                     If you use this mode in an interactive session it runs
+                     forever displaying real-time stats. Otherwise if --raw or
+                     --csv is specified, or if you redirect the output to a non
+                     TTY, it samples the latency for 1 second (you can use
+                     -i to change the interval), then produces a single output
+                     and exits.
+  --latency-history  Like --latency but tracking latency changes over time.
+                     Default time interval is 15 sec. Change it using -i.
+  --latency-dist     Shows latency as a spectrum, requires xterm 256 colors.
+                     Default time interval is 1 sec. Change it using -i.
+  --lru-test <keys>  Simulate a cache workload with an 80-20 distribution.
+  --replica          Simulate a replica showing commands received from the master.
+  --rdb <filename>   Transfer an RDB dump from remote server to local file.
+                     Use filename of "-" to write to stdout.
+  --pipe             Transfer raw Redis protocol from stdin to server.
+  --pipe-timeout <n> In --pipe mode, abort with error if after sending all data.
+                     no reply is received within <n> seconds.
+                     Default timeout: 30. Use 0 to wait forever.
+  --bigkeys          Sample Redis keys looking for keys with many elements (complexity).
+  --memkeys          Sample Redis keys looking for keys consuming a lot of memory.
+  --memkeys-samples <n> Sample Redis keys looking for keys consuming a lot of memory.
+                     And define number of key elements to sample
+  --hotkeys          Sample Redis keys looking for hot keys.
+                     only works when maxmemory-policy is *lfu.
+  --scan             List all keys using the SCAN command.
+  --pattern <pat>    Keys pattern when using the --scan, --bigkeys or --hotkeys
+                     options (default: *).
+  --quoted-pattern <pat> Same as --pattern, but the specified string can be
+                         quoted, in order to pass an otherwise non binary-safe string.
+  --intrinsic-latency <sec> Run a test to measure intrinsic system latency.
+                     The test will run for the specified amount of seconds.
+  --eval <file>      Send an EVAL command using the Lua script at <file>.
+  --ldb              Used with --eval enable the Redis Lua debugger.
+  --ldb-sync-mode    Like --ldb but uses the synchronous Lua debugger, in
+                     this mode the server is blocked and script changes are
+                     not rolled back from the server memory.
+  --cluster <command> [args...] [opts...]
+                     Cluster Manager command and arguments (see below).
+  --verbose          Verbose mode.
+  --no-auth-warning  Don't show warning message when using password on command
+                     line interface.
+  --help             Output this help and exit.
+  --version          Output version and exit.
+
+Cluster Manager Commands:
+  Use --cluster help to list all available cluster manager commands.
+
+Examples:
+  cat /etc/passwd | redis-cli -x set mypasswd
+  redis-cli get mypasswd
+  redis-cli -r 100 lpush mylist x
+  redis-cli -r 100 -i 1 info | grep used_memory_human:
+  redis-cli --quoted-input set '"null-\x00-separated"' value
+  redis-cli --eval myscript.lua key1 key2 , arg1 arg2 arg3
+  redis-cli --scan --pattern '*:12345*'
+
+  (Note: when using --eval the comma separates KEYS[] from ARGV[] items)
+
+When no command is given, redis-cli starts in interactive mode.
+Type "help" in interactive mode for information on available commands
+and settings.
+
+root@redis-server:~# redis-cli < echo "PING\nPING\n"
+-bash: echo: No such file or directory
+root@redis-server:~# echo "PING\nPING\n" | redis-cli
+(error) ERR unknown command `PING\nPING\n`, with args beginning with: 
+root@redis-server:~# echo -e "PING\nPING\n" | redis-cli
+PONG
+PONG
+root@redis-server:~# echo -e "AUTH add913f939e06dd90128d40c86c5d2522bec26a822bf73eccffd3d3182e34dea\nPING\n" | redis-cli
+(error) ERR AUTH <password> called without any password configured for the default user. Are you sure your configuration is correct?
+PONG
+root@redis-server:~# redis-cli -h
+redis-cli 6.2.6
+
+Usage: redis-cli [OPTIONS] [cmd [arg [arg ...]]]
+  -h <hostname>      Server hostname (default: 127.0.0.1).
+  -p <port>          Server port (default: 6379).
+  -s <socket>        Server socket (overrides hostname and port).
+  -a <password>      Password to use when connecting to the server.
+                     You can also use the REDISCLI_AUTH environment
+                     variable to pass this password more safely
+                     (if both are used, this argument takes precedence).
+  --user <username>  Used to send ACL style 'AUTH username pass'. Needs -a.
+  --pass <password>  Alias of -a for consistency with the new --user option.
+  --askpass          Force user to input password with mask from STDIN.
+                     If this argument is used, '-a' and REDISCLI_AUTH
+                     environment variable will be ignored.
+  -u <uri>           Server URI.
+  -r <repeat>        Execute specified command N times.
+  -i <interval>      When -r is used, waits <interval> seconds per command.
+                     It is possible to specify sub-second times like -i 0.1.
+  -n <db>            Database number.
+  -3                 Start session in RESP3 protocol mode.
+  -x                 Read last argument from STDIN.
+  -d <delimiter>     Delimiter between response bulks for raw formatting (default: \n).
+  -D <delimiter>     Delimiter between responses for raw formatting (default: \n).
+  -c                 Enable cluster mode (follow -ASK and -MOVED redirections).
+  -e                 Return exit error code when command execution fails.
+  --tls              Establish a secure TLS connection.
+  --sni <host>       Server name indication for TLS.
+  --cacert <file>    CA Certificate file to verify with.
+  --cacertdir <dir>  Directory where trusted CA certificates are stored.
+                     If neither cacert nor cacertdir are specified, the default
+                     system-wide trusted root certs configuration will apply.
+  --insecure         Allow insecure TLS connection by skipping cert validation.
+  --cert <file>      Client certificate to authenticate with.
+  --key <file>       Private key file to authenticate with.
+  --tls-ciphers <list> Sets the list of prefered ciphers (TLSv1.2 and below)
+                     in order of preference from highest to lowest separated by colon (":").
+                     See the ciphers(1ssl) manpage for more information about the syntax of this string.
+  --tls-ciphersuites <list> Sets the list of prefered ciphersuites (TLSv1.3)
+                     in order of preference from highest to lowest separated by colon (":").
+                     See the ciphers(1ssl) manpage for more information about the syntax of this string,
+                     and specifically for TLSv1.3 ciphersuites.
+  --raw              Use raw formatting for replies (default when STDOUT is
+                     not a tty).
+  --no-raw           Force formatted output even when STDOUT is not a tty.
+  --quoted-input     Force input to be handled as quoted strings.
+  --csv              Output in CSV format.
+  --show-pushes <yn> Whether to print RESP3 PUSH messages.  Enabled by default when
+                     STDOUT is a tty but can be overriden with --show-pushes no.
+  --stat             Print rolling stats about server: mem, clients, ...
+  --latency          Enter a special mode continuously sampling latency.
+                     If you use this mode in an interactive session it runs
+                     forever displaying real-time stats. Otherwise if --raw or
+                     --csv is specified, or if you redirect the output to a non
+                     TTY, it samples the latency for 1 second (you can use
+                     -i to change the interval), then produces a single output
+                     and exits.
+  --latency-history  Like --latency but tracking latency changes over time.
+                     Default time interval is 15 sec. Change it using -i.
+  --latency-dist     Shows latency as a spectrum, requires xterm 256 colors.
+                     Default time interval is 1 sec. Change it using -i.
+  --lru-test <keys>  Simulate a cache workload with an 80-20 distribution.
+  --replica          Simulate a replica showing commands received from the master.
+  --rdb <filename>   Transfer an RDB dump from remote server to local file.
+                     Use filename of "-" to write to stdout.
+  --pipe             Transfer raw Redis protocol from stdin to server.
+  --pipe-timeout <n> In --pipe mode, abort with error if after sending all data.
+                     no reply is received within <n> seconds.
+                     Default timeout: 30. Use 0 to wait forever.
+  --bigkeys          Sample Redis keys looking for keys with many elements (complexity).
+  --memkeys          Sample Redis keys looking for keys consuming a lot of memory.
+  --memkeys-samples <n> Sample Redis keys looking for keys consuming a lot of memory.
+                     And define number of key elements to sample
+  --hotkeys          Sample Redis keys looking for hot keys.
+                     only works when maxmemory-policy is *lfu.
+  --scan             List all keys using the SCAN command.
+  --pattern <pat>    Keys pattern when using the --scan, --bigkeys or --hotkeys
+                     options (default: *).
+  --quoted-pattern <pat> Same as --pattern, but the specified string can be
+                         quoted, in order to pass an otherwise non binary-safe string.
+  --intrinsic-latency <sec> Run a test to measure intrinsic system latency.
+                     The test will run for the specified amount of seconds.
+  --eval <file>      Send an EVAL command using the Lua script at <file>.
+  --ldb              Used with --eval enable the Redis Lua debugger.
+  --ldb-sync-mode    Like --ldb but uses the synchronous Lua debugger, in
+                     this mode the server is blocked and script changes are
+                     not rolled back from the server memory.
+  --cluster <command> [args...] [opts...]
+                     Cluster Manager command and arguments (see below).
+  --verbose          Verbose mode.
+  --no-auth-warning  Don't show warning message when using password on command
+                     line interface.
+  --help             Output this help and exit.
+  --version          Output version and exit.
+
+Cluster Manager Commands:
+  Use --cluster help to list all available cluster manager commands.
+
+Examples:
+  cat /etc/passwd | redis-cli -x set mypasswd
+  redis-cli get mypasswd
+  redis-cli -r 100 lpush mylist x
+  redis-cli -r 100 -i 1 info | grep used_memory_human:
+  redis-cli --quoted-input set '"null-\x00-separated"' value
+  redis-cli --eval myscript.lua key1 key2 , arg1 arg2 arg3
+  redis-cli --scan --pattern '*:12345*'
+
+  (Note: when using --eval the comma separates KEYS[] from ARGV[] items)
+
+When no command is given, redis-cli starts in interactive mode.
+Type "help" in interactive mode for information on available commands
+and settings.
+
+root@redis-server:~# {
+>     systemctl restart redis-server;
+>     systemctl status redis-server;
+>     redis-cli -p 56679 PING;
+>     echo -e "AUTH add913f939e06dd90128d40c86c5d2522bec26a822bf73eccffd3d3182e34dea\nPING\n" | redis-cli -p 56679;
+>     REDISCLI_AUTH="add913f939e06dd90128d40c86c5d2522bec26a822bf73eccffd3d3182e34dea"
+>     redis-cli -p 56679 PING;
+> }
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Tue 2021-11-02 16:05:34 UTC; 11ms ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 2597 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.1M
+     CGroup: /system.slice/redis-server.service
+             └─2597 /usr/bin/redis-server *:56679
+
+Nov 02 16:05:34 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 02 16:05:34 redis-server systemd[1]: Started Advanced key-value store.
+(error) NOAUTH Authentication required.
+OK
+PONG
+(error) NOAUTH Authentication required.
+root@redis-server:~# echo $REDISCLI_AUTH 
+add913f939e06dd90128d40c86c5d2522bec26a822bf73eccffd3d3182e34dea
+root@redis-server:~# redis-cli -h | grep AUTH
+redis-cli 6.2.6
+
+Usage: redis-cli [OPTIONS] [cmd [arg [arg ...]]]
+  -h <hostname>      Server hostname (default: 127.0.0.1).
+  -p <port>          Server port (default: 6379).
+  -s <socket>        Server socket (overrides hostname and port).
+  -a <password>      Password to use when connecting to the server.
+                     You can also use the REDISCLI_AUTH environment
+                     variable to pass this password more safely
+                     (if both are used, this argument takes precedence).
+  --user <username>  Used to send ACL style 'AUTH username pass'. Needs -a.
+  --pass <password>  Alias of -a for consistency with the new --user option.
+  --askpass          Force user to input password with mask from STDIN.
+                     If this argument is used, '-a' and REDISCLI_AUTH
+                     environment variable will be ignored.
+  -u <uri>           Server URI.
+  -r <repeat>        Execute specified command N times.
+  -i <interval>      When -r is used, waits <interval> seconds per command.
+                     It is possible to specify sub-second times like -i 0.1.
+  -n <db>            Database number.
+  -3                 Start session in RESP3 protocol mode.
+  -x                 Read last argument from STDIN.
+  -d <delimiter>     Delimiter between response bulks for raw formatting (default: \n).
+  -D <delimiter>     Delimiter between responses for raw formatting (default: \n).
+  -c                 Enable cluster mode (follow -ASK and -MOVED redirections).
+  -e                 Return exit error code when command execution fails.
+  --tls              Establish a secure TLS connection.
+  --sni <host>       Server name indication for TLS.
+  --cacert <file>    CA Certificate file to verify with.
+  --cacertdir <dir>  Directory where trusted CA certificates are stored.
+                     If neither cacert nor cacertdir are specified, the default
+                     system-wide trusted root certs configuration will apply.
+  --insecure         Allow insecure TLS connection by skipping cert validation.
+  --cert <file>      Client certificate to authenticate with.
+  --key <file>       Private key file to authenticate with.
+  --tls-ciphers <list> Sets the list of prefered ciphers (TLSv1.2 and below)
+                     in order of preference from highest to lowest separated by colon (":").
+                     See the ciphers(1ssl) manpage for more information about the syntax of this string.
+  --tls-ciphersuites <list> Sets the list of prefered ciphersuites (TLSv1.3)
+                     in order of preference from highest to lowest separated by colon (":").
+                     See the ciphers(1ssl) manpage for more information about the syntax of this string,
+                     and specifically for TLSv1.3 ciphersuites.
+  --raw              Use raw formatting for replies (default when STDOUT is
+                     not a tty).
+  --no-raw           Force formatted output even when STDOUT is not a tty.
+  --quoted-input     Force input to be handled as quoted strings.
+  --csv              Output in CSV format.
+  --show-pushes <yn> Whether to print RESP3 PUSH messages.  Enabled by default when
+                     STDOUT is a tty but can be overriden with --show-pushes no.
+  --stat             Print rolling stats about server: mem, clients, ...
+  --latency          Enter a special mode continuously sampling latency.
+                     If you use this mode in an interactive session it runs
+                     forever displaying real-time stats. Otherwise if --raw or
+                     --csv is specified, or if you redirect the output to a non
+                     TTY, it samples the latency for 1 second (you can use
+                     -i to change the interval), then produces a single output
+                     and exits.
+  --latency-history  Like --latency but tracking latency changes over time.
+                     Default time interval is 15 sec. Change it using -i.
+  --latency-dist     Shows latency as a spectrum, requires xterm 256 colors.
+                     Default time interval is 1 sec. Change it using -i.
+  --lru-test <keys>  Simulate a cache workload with an 80-20 distribution.
+  --replica          Simulate a replica showing commands received from the master.
+  --rdb <filename>   Transfer an RDB dump from remote server to local file.
+                     Use filename of "-" to write to stdout.
+  --pipe             Transfer raw Redis protocol from stdin to server.
+  --pipe-timeout <n> In --pipe mode, abort with error if after sending all data.
+                     no reply is received within <n> seconds.
+                     Default timeout: 30. Use 0 to wait forever.
+  --bigkeys          Sample Redis keys looking for keys with many elements (complexity).
+  --memkeys          Sample Redis keys looking for keys consuming a lot of memory.
+  --memkeys-samples <n> Sample Redis keys looking for keys consuming a lot of memory.
+                     And define number of key elements to sample
+  --hotkeys          Sample Redis keys looking for hot keys.
+                     only works when maxmemory-policy is *lfu.
+  --scan             List all keys using the SCAN command.
+  --pattern <pat>    Keys pattern when using the --scan, --bigkeys or --hotkeys
+                     options (default: *).
+  --quoted-pattern <pat> Same as --pattern, but the specified string can be
+                         quoted, in order to pass an otherwise non binary-safe string.
+  --intrinsic-latency <sec> Run a test to measure intrinsic system latency.
+                     The test will run for the specified amount of seconds.
+  --eval <file>      Send an EVAL command using the Lua script at <file>.
+  --ldb              Used with --eval enable the Redis Lua debugger.
+  --ldb-sync-mode    Like --ldb but uses the synchronous Lua debugger, in
+                     this mode the server is blocked and script changes are
+                     not rolled back from the server memory.
+  --cluster <command> [args...] [opts...]
+                     Cluster Manager command and arguments (see below).
+  --verbose          Verbose mode.
+  --no-auth-warning  Don't show warning message when using password on command
+                     line interface.
+  --help             Output this help and exit.
+  --version          Output version and exit.
+
+Cluster Manager Commands:
+  Use --cluster help to list all available cluster manager commands.
+
+Examples:
+  cat /etc/passwd | redis-cli -x set mypasswd
+  redis-cli get mypasswd
+  redis-cli -r 100 lpush mylist x
+  redis-cli -r 100 -i 1 info | grep used_memory_human:
+  redis-cli --quoted-input set '"null-\x00-separated"' value
+  redis-cli --eval myscript.lua key1 key2 , arg1 arg2 arg3
+  redis-cli --scan --pattern '*:12345*'
+
+  (Note: when using --eval the comma separates KEYS[] from ARGV[] items)
+
+When no command is given, redis-cli starts in interactive mode.
+Type "help" in interactive mode for information on available commands
+and settings.
+
+root@redis-server:~# redis-cli -p 55679 PING
+Could not connect to Redis at 127.0.0.1:55679: Connection refused
+root@redis-server:~# redis-cli -p 56679 PING
+(error) NOAUTH Authentication required.
+root@redis-server:~# redis-cli -a add913f939e06dd90128d40c86c5d2522bec26a822bf73eccffd3d3182e34dea -p 56679 PING
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+PONG
+root@redis-server:~# REDISCLI_AUTH="add913f939e06dd90128d40c86c5d2522bec26a822bf73eccffd3d3182e34dea" redis-cli -p 56679 PING
+PONG
+root@redis-server:~# REDISCLI_AUTH="add913f939e06dd90128d40c86c5d2522bec26a822bf73eccffd3d3182e34dea" redis-cli -p 56679 PING
+PONG
+root@redis-server:~# redis-cli -p 56679 PING
+(error) NOAUTH Authentication required.
+root@redis-server:~# export REDISCLI_AUTH="add913f939e06dd90128d40c86c5d2522bec26a822bf73eccffd3d3182e34dea" 
+root@redis-server:~# redis-cli -p 56679 PING
+PONG
+root@redis-server:~# ifconfig
+
+Command 'ifconfig' not found, but can be installed with:
+
+apt install net-tools
+
+root@redis-server:~# logout
+Connection to 143.110.245.39 closed.
+database-stuff $ doctl 
+doctl is a command line interface (CLI) for the DigitalOcean API.
+
+Usage:
+  doctl [command]
+
+Available Commands:
+  1-click         Display commands that pertain to 1-click applications
+  account         Display commands that retrieve account details
+  apps            Display commands for working with apps
+  auth            Display commands for authenticating doctl with an account
+  balance         Display commands for retrieving your account balance
+  billing-history Display commands for retrieving your billing history
+  completion      Modify your shell so doctl commands autocomplete with TAB
+  compute         Display commands that manage infrastructure
+  databases       Display commands that manage databases
+  help            Help about any command
+  invoice         Display commands for retrieving invoices for your account
+  kubernetes      Displays commands to manage Kubernetes clusters and configurations
+  monitoring      [Beta] Display commands to manage monitoring
+  projects        Manage projects and assign resources to them
+  registry        Display commands for working with container registries
+  version         Show the current version
+  vpcs            Display commands that manage VPCs
+
+Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -h, --help                  help for doctl
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+Use "doctl [command] --help" for more information about a command.
+database-stuff $ doctl compute droplte
+The subcommands under `doctl compute` are for managing DigitalOcean resources.
+
+Usage:
+  doctl compute [command]
+
+Available Commands:
+  action             Display commands for retrieving resource action history
+  cdn                Display commands that manage CDNs
+  certificate        Display commands that manage SSL certificates and private keys
+  domain             Display commands that manage domains
+  droplet            Manage virtual machines (Droplets)
+  droplet-action     Display Droplet action commands
+  firewall           Display commands to manage cloud firewalls
+  floating-ip        Display commands to manage floating IP addresses
+  floating-ip-action Display commands to associate floating IP addresses with Droplets
+  image              Display commands to manage images
+  image-action       Display commands to perform actions on images
+  load-balancer      Display commands to manage load balancers
+  region             Display commands to list datacenter regions
+  size               List available Droplet sizes
+  snapshot           Access and manage snapshots
+  ssh                Access a Droplet using SSH
+  ssh-key            Display commands to manage SSH keys on your account
+  tag                Display commands to manage tags
+  volume             Display commands to manage block storage volumes
+  volume-action      Display commands to perform actions on a volume
+
+Flags:
+  -h, --help   help for compute
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+Use "doctl compute [command] --help" for more information about a command.
+database-stuff $ doctl compute droplet
+A Droplet is a DigitalOcean virtual machine. Use the subcommands of `doctl compute droplet` to list, create, or delete Droplets.
+
+Usage:
+  doctl compute droplet [command]
+
+Aliases:
+  droplet, d
+
+Available Commands:
+  1-click     Display commands that pertain to Droplet 1-click applications
+  actions     List Droplet actions
+  backups     List Droplet backups
+  create      Create a new Droplet
+  delete      Permanently delete a Droplet
+  get         Retrieve information about a Droplet
+  kernels     List available Droplet kernels
+  list        List Droplets on your account
+  neighbors   List a Droplet's neighbors on your account
+  snapshots   List all snapshots for a Droplet
+  tag         Add a tag to a Droplet
+  untag       Remove a tag from a Droplet
+
+Flags:
+  -h, --help   help for droplet
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+Use "doctl compute droplet [command] --help" for more information about a command.
+database-stuff $ doctl compute droplet list
+ID           Name            Public IPv4       Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+271925149    redis-server    143.110.245.39    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+database-stuff $ doctl compute droplet delete -h
+Use this command to permanently delete a Droplet. This is irreversible.
+
+Usage:
+  doctl compute droplet delete <droplet-id|droplet-name>... [flags]
+
+Aliases:
+  delete, d, del, rm
+
+Flags:
+  -f, --force             Delete the Droplet without a confirmation prompt
+  -h, --help              help for delete
+      --tag-name string   Tag name
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+database-stuff $ doctl compute droplet delete redis-server
+Warning: Are you sure you want to delete this Droplet? (y/N) ? y
+database-stuff $ doctl compute droplet list
+ID           Name            Public IPv4       Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+271925149    redis-server    143.110.245.39    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+database-stuff $ doctl compute droplet list
+ID    Name    Public IPv4    Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image    VPC UUID    Status    Tags    Features    Volumes
+database-stuff $ 
+```
+
+```bash
+database-stuff $ export REDISCLI_AUTH="add913f939e06dd90128d40c86c5d2522bec26a822bf73eccffd3d3182e34dea"
+database-stuff $ redis-cli -p 56679 -h 143.110.245.39 PING
+PONG
+database-stuff $ redis-cli -p 56679 -h 143.110.245.39 PING
+database-stuff $ unset REDISCLI_AUTH
+database-stuff $ redis-cli -p 56679 -h 143.110.245.39 PING
+(error) NOAUTH Authentication required.
+database-stuff $ export REDISCLI_AUTH="add913f939e06dd90128d40c86c5d2522bec26a822bf73eccffd3d3182e34dea"
+database-stuff $ unset REDISCLI_AUTH
+REDISCLI_AUTH
+database-stuff $ export REDISCLI_AUTH="add913f939e06dd90128d40c86c5d2522bec26a822bf73eccffd3d3182e34dea"
+database-stuff $ redis-cli -p 56679 -h 143.110.245.39 PING
+PONG
+database-stuff $ redis-cli -p 56679 -h 143.110.245.39 INFO
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:2597
+process_supervised:systemd
+run_id:b0b9c5ed5ceb20b8c493ed41bfb35a767ad9517f
+tcp_port:56679
+server_time_usec:1635869344343239
+uptime_in_seconds:210
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:8479392
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
+
+# Clients
+connected_clients:1
+cluster_connections:0
+maxclients:10000
+client_recent_max_input_buffer:0
+client_recent_max_output_buffer:0
+blocked_clients:0
+tracking_clients:0
+clients_in_timeout_table:0
+
+# Memory
+used_memory:873936
+used_memory_human:853.45K
+used_memory_rss:9146368
+used_memory_rss_human:8.72M
+used_memory_peak:873936
+used_memory_peak_human:853.45K
+used_memory_peak_perc:100.19%
+used_memory_overhead:810168
+used_memory_startup:810168
+used_memory_dataset:63768
+used_memory_dataset_perc:100.00%
+allocator_allocated:1276376
+allocator_active:1605632
+allocator_resident:3842048
+total_system_memory:1028956160
+total_system_memory_human:981.29M
+used_memory_lua:37888
+used_memory_lua_human:37.00K
+used_memory_scripts:0
+used_memory_scripts_human:0B
+number_of_cached_scripts:0
+maxmemory:0
+maxmemory_human:0B
+maxmemory_policy:noeviction
+allocator_frag_ratio:1.26
+allocator_frag_bytes:329256
+allocator_rss_ratio:2.39
+allocator_rss_bytes:2236416
+rss_overhead_ratio:2.38
+rss_overhead_bytes:5304320
+mem_fragmentation_ratio:11.29
+mem_fragmentation_bytes:8336144
+mem_not_counted_for_evict:0
+mem_replication_backlog:0
+mem_clients_slaves:0
+mem_clients_normal:0
+mem_aof_buffer:0
+mem_allocator:jemalloc-5.1.0
+active_defrag_running:0
+lazyfree_pending_objects:0
+lazyfreed_objects:0
+
+# Persistence
+loading:0
+current_cow_size:0
+current_cow_size_age:0
+current_fork_perc:0.00
+current_save_keys_processed:0
+current_save_keys_total:0
+rdb_changes_since_last_save:0
+rdb_bgsave_in_progress:0
+rdb_last_save_time:1635869134
+rdb_last_bgsave_status:ok
+rdb_last_bgsave_time_sec:-1
+rdb_current_bgsave_time_sec:-1
+rdb_last_cow_size:0
+aof_enabled:0
+aof_rewrite_in_progress:0
+aof_rewrite_scheduled:0
+aof_last_rewrite_time_sec:-1
+aof_current_rewrite_time_sec:-1
+aof_last_bgrewrite_status:ok
+aof_last_write_status:ok
+aof_last_cow_size:0
+module_fork_in_progress:0
+module_fork_last_cow_size:0
+
+# Stats
+total_connections_received:13
+total_commands_processed:15
+instantaneous_ops_per_sec:0
+total_net_input_bytes:879
+total_net_output_bytes:293
+instantaneous_input_kbps:0.00
+instantaneous_output_kbps:0.00
+rejected_connections:0
+sync_full:0
+sync_partial_ok:0
+sync_partial_err:0
+expired_keys:0
+expired_stale_perc:0.00
+expired_time_cap_reached_count:0
+expire_cycle_cpu_milliseconds:4
+evicted_keys:0
+keyspace_hits:0
+keyspace_misses:0
+pubsub_channels:0
+pubsub_patterns:0
+latest_fork_usec:0
+total_forks:0
+migrate_cached_sockets:0
+slave_expires_tracked_keys:0
+active_defrag_hits:0
+active_defrag_misses:0
+active_defrag_key_hits:0
+active_defrag_key_misses:0
+tracking_total_keys:0
+tracking_total_items:0
+tracking_total_prefixes:0
+unexpected_error_replies:0
+total_error_replies:6
+dump_payload_sanitizations:0
+total_reads_processed:34
+total_writes_processed:21
+io_threaded_reads_processed:0
+io_threaded_writes_processed:0
+
+# Replication
+role:master
+connected_slaves:0
+master_failover_state:no-failover
+master_replid:30f6b56baf846b2a55a3456ca471f421fb83b89a
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+
+# CPU
+used_cpu_sys:0.226734
+used_cpu_user:0.226734
+used_cpu_sys_children:0.000000
+used_cpu_user_children:0.000000
+used_cpu_sys_main_thread:0.226330
+used_cpu_user_main_thread:0.226330
+
+# Modules
+
+# Errorstats
+errorstat_NOAUTH:count=6
+
+# Cluster
+cluster_enabled:0
+
+# Keyspace
+database-stuff $ 
+```
+
+---
+
+[TODO]
+
+- Have a script and process to deploy Redis to digital ocean
+  - create a digital ocean droplet using doctl
+  - manually SSH into the digital ocean droplet
+  - have a list of commands to run to install and configure and run redis
+
+
+- Can we do all the configuration using `CONFIG` commands? Hmm. Check and configure with `CONFIG` commands!
+
+- Implement TLS/SSL support for the Redis deployment
+
+- Deploy 2 droplets - one droplet runs the Redis server and any monitoring agents required to monitor it. Another droplet instance to run redis benchmark tool and benchmark the redis server. Maybe monitoring agents can also run on other droplets. All droplets will be of size 1 GB RAM and 1 vCPU
