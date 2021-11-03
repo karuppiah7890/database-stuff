@@ -5951,6 +5951,9 @@ database-stuff $
 
 
 - Can we do all the configuration using `CONFIG` commands? Hmm. Check and configure with `CONFIG` commands!
+  - Yup! From Redis 6.2.1 onwards we can I guess!
+    - https://github.com/redis/redis/releases/tag/6.2.1 see improvements section
+    - https://github.com/redis/redis/pull/8510
 
 - Implement TLS/SSL support for the Redis deployment
 
@@ -5959,3 +5962,9 @@ database-stuff $
 --
 
 https://redis.io/topics/lru-cache
+
+---
+
+https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04
+
+https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04
