@@ -6,9 +6,13 @@ doctl compute droplet list
 ```
 
 ```bash
+ssh -i ~/.ssh/digital_ocean root@142.93.221.126
+```
+
+```bash
 {
-    sudo add-apt-repository ppa:redislabs/redis;
-    apt install redis-server;
+    sudo add-apt-repository ppa:redislabs/redis --yes;
+    apt install redis-server --yes;
     systemctl status redis-server;
     redis-cli PING;
     redis-cli MEMORY MALLOC-STATS;
@@ -43,5 +47,5 @@ bind 127.0.0.1 -::1
 ```
 
 ```bash
-doctl compute droplet delete redis-server
+doctl compute droplet delete redis-server --force
 ```

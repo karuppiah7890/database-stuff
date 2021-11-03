@@ -5968,3 +5968,1358 @@ https://redis.io/topics/lru-cache
 https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04
 
 https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04
+
+---
+
+https://redis.io/commands/config-get
+
+https://redis.io/commands/config-set
+
+https://duckduckgo.com/?t=ffab&q=redis%3A+use+config+set+to+reset+a+config+to+default+value+or+remove+it&ia=web
+
+---
+
+```bash
+database-stuff $ doctl compute droplet create --image ubuntu-20-04-x64 --size s-1vcpu-1gb --region blr1 redis-server --ssh-keys 32221856 --wait
+ID           Name            Public IPv4       Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+272085344    redis-server    142.93.221.126    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+database-stuff $ doctl compute droplet create --image ubuntu-20-04-x64 --size s-1vcpu-1gb --region blr1 redis-server --ssh-keys 32221856 --wait
+database-stuff $ doctl compute droplet list
+ID           Name            Public IPv4       Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+272085344    redis-server    142.93.221.126    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+database-stuff $ ssh -i ~/.ssh/digital_ocean root@142.93.221.126
+The authenticity of host '142.93.221.126 (142.93.221.126)' can't be established.
+ECDSA key fingerprint is SHA256:8NkbIlAnvK5C9QmD4hgPwySB5zD+p4sFfk6LMcWOTg4.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '142.93.221.126' (ECDSA) to the list of known hosts.
+Enter passphrase for key '/Users/karuppiahn/.ssh/digital_ocean': 
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-88-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Nov  3 17:47:02 UTC 2021
+
+  System load:  0.0               Users logged in:       0
+  Usage of /:   6.0% of 24.06GB   IPv4 address for eth0: 142.93.221.126
+  Memory usage: 19%               IPv4 address for eth0: 10.47.0.5
+  Swap usage:   0%                IPv4 address for eth1: 10.122.0.2
+  Processes:    101
+
+1 update can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+root@redis-server:~# 
+root@redis-server:~# {
+>     sudo add-apt-repository ppa:redislabs/redis;
+>     apt install redis-server;
+>     systemctl status redis-server;
+>     redis-cli PING;
+>     redis-cli MEMORY MALLOC-STATS;
+>     redis-cli ACL GENPASS;
+> }
+ Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker.
+
+It supports data structures such as strings, hashes, lists, sets, sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes with radius queries and streams.
+
+Redis has built-in replication, Lua scripting, LRU eviction, transactions and different levels of on-disk persistence, and provides high availability via Redis Sentinel and automatic partitioning with Redis Cluster.
+ More info: https://launchpad.net/~redislabs/+archive/ubuntu/redis
+Press [ENTER] to continue or Ctrl-c to cancel adding it.
+
+Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
+Get:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease [114 kB]                                                
+Hit:3 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                                
+Get:4 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease [101 kB]                                              
+Get:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease [18.0 kB]
+Get:6 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Get:7 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 Packages [1302 kB]
+Get:8 http://mirrors.digitalocean.com/ubuntu focal-updates/main Translation-en [270 kB]                                      
+Get:9 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 c-n-f Metadata [14.4 kB]                               
+Get:10 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 Packages [1016 B]                              
+Get:11 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 Packages [524 kB]                               
+Get:12 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted Translation-en [75.0 kB]                              
+Get:13 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 c-n-f Metadata [504 B]                     
+Get:14 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main Translation-en [584 B]
+Get:15 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 Packages [867 kB]
+Get:16 http://mirrors.digitalocean.com/ubuntu focal-updates/universe Translation-en [187 kB]
+Get:17 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 c-n-f Metadata [19.4 kB]
+Get:18 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse amd64 Packages [24.6 kB]
+Get:19 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse Translation-en [6856 B]
+Get:20 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [949 kB]
+Get:21 http://security.ubuntu.com/ubuntu focal-security/main Translation-en [178 kB]
+Get:22 http://security.ubuntu.com/ubuntu focal-security/main amd64 c-n-f Metadata [8844 B]
+Get:23 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [483 kB]
+Get:24 http://security.ubuntu.com/ubuntu focal-security/restricted Translation-en [69.2 kB]
+Get:25 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [647 kB]
+Get:26 http://security.ubuntu.com/ubuntu focal-security/universe Translation-en [106 kB]
+Get:27 http://security.ubuntu.com/ubuntu focal-security/universe amd64 c-n-f Metadata [12.8 kB]
+Fetched 6091 kB in 3s (1855 kB/s)                                 
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  redis-tools
+Suggested packages:
+  ruby-redis
+The following NEW packages will be installed:
+  redis-server redis-tools
+0 upgraded, 2 newly installed, 0 to remove and 19 not upgraded.
+Need to get 1150 kB of archives.
+After this operation, 6794 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-tools amd64 6:6.2.6-1rl1~focal1 [1067 kB]
+Get:2 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-server amd64 6:6.2.6-1rl1~focal1 [82.4 kB]
+Fetched 1150 kB in 2s (586 kB/s)   
+Selecting previously unselected package redis-tools.
+(Reading database ... 63555 files and directories currently installed.)
+Preparing to unpack .../redis-tools_6%3a6.2.6-1rl1~focal1_amd64.deb ...
+Unpacking redis-tools (6:6.2.6-1rl1~focal1) ...
+Selecting previously unselected package redis-server.
+Preparing to unpack .../redis-server_6%3a6.2.6-1rl1~focal1_amd64.deb ...
+Unpacking redis-server (6:6.2.6-1rl1~focal1) ...
+Setting up redis-tools (6:6.2.6-1rl1~focal1) ...
+Setting up redis-server (6:6.2.6-1rl1~focal1) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for systemd (245.4-4ubuntu3.13) ...
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Wed 2021-11-03 17:47:56 UTC; 3s ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 2419 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.2M
+     CGroup: /system.slice/redis-server.service
+             └─2419 /usr/bin/redis-server 127.0.0.1:6379
+
+Nov 03 17:47:56 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 03 17:47:56 redis-server systemd[1]: Started Advanced key-value store.
+PONG
+___ Begin jemalloc statistics ___
+Version: "5.1.0-0-g0"
+Build-time option settings
+  config.cache_oblivious: true
+  config.debug: false
+  config.fill: true
+  config.lazy_lock: false
+  config.malloc_conf: ""
+  config.prof: false
+  config.prof_libgcc: false
+  config.prof_libunwind: false
+  config.stats: true
+  config.utrace: false
+  config.xmalloc: false
+Run-time option settings
+  opt.abort: false
+  opt.abort_conf: false
+  opt.retain: true
+  opt.dss: "secondary"
+  opt.narenas: 1
+  opt.percpu_arena: "disabled"
+  opt.metadata_thp: "disabled"
+  opt.background_thread: false (background_thread: true)
+  opt.dirty_decay_ms: 10000 (arenas.dirty_decay_ms: 10000)
+  opt.muzzy_decay_ms: 10000 (arenas.muzzy_decay_ms: 10000)
+  opt.junk: "false"
+  opt.zero: false
+  opt.tcache: true
+  opt.lg_tcache_max: 15
+  opt.thp: "default"
+  opt.stats_print: false
+  opt.stats_print_opts: ""
+Arenas: 1
+Quantum size: 8
+Page size: 4096
+Maximum thread-cached size class: 32768
+Number of bin size classes: 39
+Number of thread-cache bin size classes: 44
+Number of large size classes: 196
+Allocated: 1348088, active: 1646592, metadata: 2263320 (n_thp 0), resident: 3883008, mapped: 7938048, retained: 450560
+Background threads: 1, num_runs: 2, run_interval: 1573038000 ns
+                           n_lock_ops       n_waiting      n_spin_acq  n_owner_switch   total_wait_ns     max_wait_ns  max_n_thds
+background_thread                  69               0               0               1               0               0           0
+ctl                               131               0               0               1               0               0           0
+prof                                0               0               0               0               0               0           0
+arenas[0]:
+assigned threads: 1
+uptime: 3175998953
+dss allocation precedence: "secondary"
+decaying:  time       npages       sweeps     madvises       purged
+   dirty: 10000            0            1            1            2
+   muzzy: 10000            0            1            1            2
+                            allocated     nmalloc     ndalloc   nrequests
+small:                         655864       14987        1933       17489
+large:                         692224          13           4          13
+total:                        1348088       15000        1937       17502
+                                     
+active:                       1646592
+mapped:                       7938048
+retained:                      450560
+base:                         2230544
+internal:                       32776
+metadata_thp:                       0
+tcache_bytes:                  426928
+resident:                     3883008
+                           n_lock_ops       n_waiting      n_spin_acq  n_owner_switch   total_wait_ns     max_wait_ns  max_n_thds
+large                              34               0               0               1               0               0           0
+extent_avail                      151               0               0               3               0               0           0
+extents_dirty                     213               0               0               5               0               0           0
+extents_muzzy                     117               0               0               5               0               0           0
+extents_retained                  197               0               0               5               0               0           0
+decay_dirty                        42               0               0               5               0               0           0
+decay_muzzy                        41               0               0               5               0               0           0
+base                              193               0               0               3               0               0           0
+tcache_list                        35               0               0               1               0               0           0
+bins:           size ind    allocated      nmalloc      ndalloc    nrequests      curregs     curslabs regs pgs   util       nfills     nflushes       nslabs     nreslabs      n_lock_ops       n_waiting      n_spin_acq  n_owner_switch   total_wait_ns     max_wait_ns  max_n_thds
+                   8   0         3088          801          415         2535          386            2  512   1  0.376            8            5            2            1              50               0               0               1               0               0           0
+                  16   1       172800        10800            0        11956        10800           43  256   1  0.981          108            0           43            0             185               0               0               1               0               0           0
+                  24   2        22488         1000           63         1193          937            2  512   3  0.915           10            1            2            0              47               0               0               1               0               0           0
+                  32   3         5664          200           23          360          177            2  128   1  0.691            2            1            2            0              39               0               0               1               0               0           0
+                  40   4         3480          100           13          132           87            1  512   5  0.169            1            2            1            0              38               0               0               1               0               0           0
+                  48   5         3312          100           31           84           69            1  256   3  0.269            1            2            1            0              38               0               0               1               0               0           0
+                  56   6         3752          100           33           91           67            1  512   7  0.130            1            2            1            0              38               0               0               1               0               0           0
+                  64   7         4928          128           51           87           77            2   64   1  0.601            2            1            2            0              39               0               0               1               0               0           0
+                  80   8        10000          800          675          729          125            1  256   5  0.488            8            7            4            0              56               0               0               1               0               0           0
+                  96   9        12000          300          175          291          125            1  128   3  0.976            3            2            3            0              44               0               0               1               0               0           0
+                 112  10          784          100           93            3            7            1  256   7  0.027            1            2            1            0              38               0               0               1               0               0           0
+                 128  11          256           32           30            5            2            1   32   1  0.062            1            2            1            0              38               0               0               1               0               0           0
+                 160  12         4000          100           75            3           25            1  128   5  0.195            1            1            1            0              37               0               0               1               0               0           0
+                 192  13         3072           64           48            2           16            1   64   3  0.250            1            1            1            0              37               0               0               1               0               0           0
+                 224  14         5600          100           75            2           25            1  128   7  0.195            1            1            1            0              37               0               0               1               0               0           0
+                 256  15          256           16           15            3            1            1   16   1  0.062            1            2            1            0              38               0               0               1               0               0           0
+                 320  16         5120           64           48            1           16            1   64   5  0.250            1            1            1            0              37               0               0               1               0               0           0
+                 384  17         3072           32           24            1            8            1   32   3  0.250            1            1            1            0              37               0               0               1               0               0           0
+                 448  18            0            0            0            0            0            0   64   7      1            0            0            0            0              34               0               0               1               0               0           0
+                     ---
+                 512  19         1024           12           10            3            2            1    8   1  0.250            2            2            3            0              43               0               0               1               0               0           0
+                 640  20         5120           32           24            2            8            1   32   5  0.250            1            1            1            0              37               0               0               1               0               0           0
+                 768  21            0            0            0            0            0            0   16   3      1            0            0            0            0              34               0               0               1               0               0           0
+                 896  22            0            0            0            0            0            0   32   7      1            0            0            0            0              34               0               0               1               0               0           0
+                     ---
+                1024  23         4096           10            6            3            4            1    4   1      1            1            1            3            0              41               0               0               1               0               0           0
+                1280  24        20480           16            0            0           16            1   16   5      1            1            0            1            0              36               0               0               1               0               0           0
+                1536  25        15360           10            0            0           10            2    8   3  0.625            1            0            2            0              37               0               0               1               0               0           0
+                1792  26            0            0            0            0            0            0   16   7      1            0            0            0            0              34               0               0               1               0               0           0
+                     ---
+                2048  27         8192           10            6            3            4            2    2   1      1            1            1            5            0              44               0               0               1               0               0           0
+                2560  28        25600           10            0            0           10            2    8   5  0.625            1            0            2            0              37               0               0               1               0               0           0
+                3072  29            0            0            0            0            0            0    4   3      1            0            0            0            0              34               0               0               1               0               0           0
+                     ---
+                3584  30        35840           10            0            0           10            2    8   7  0.625            1            0            2            0              37               0               0               1               0               0           0
+                4096  31        40960           10            0            0           10           10    1   1      1            1            0           10            0              45               0               0               1               0               0           0
+                5120  32        51200           10            0            0           10            3    4   5  0.833            1            0            3            0              38               0               0               1               0               0           0
+                6144  33            0            0            0            0            0            0    2   3      1            0            0            0            0              34               0               0               1               0               0           0
+                7168  34            0            0            0            0            0            0    4   7      1            0            0            0            0              34               0               0               1               0               0           0
+                     ---
+                8192  35        81920           10            0            0           10           10    1   2      1            1            0           10            0              45               0               0               1               0               0           0
+               10240  36       102400           10            0            0           10            5    2   5      1            1            0            5            0              40               0               0               1               0               0           0
+               12288  37            0            0            0            0            0            0    1   3      1            0            0            0            0              34               0               0               1               0               0           0
+               14336  38            0            0            0            0            0            0    2   7      1            0            0            0            0              34               0               0               1               0               0           0
+                     ---
+large:          size ind    allocated      nmalloc      ndalloc    nrequests  curlextents
+               16384  39        16384            1            0            1            1
+               20480  40        61440            4            1            4            3
+                     ---
+               32768  43        32768            1            0            1            1
+               40960  44        40960            2            1            2            1
+               49152  45            0            1            1            1            0
+                     ---
+               81920  48        81920            1            0            1            1
+                     ---
+              114688  50            0            1            1            1            0
+              131072  51       131072            1            0            1            1
+                     ---
+              327680  56       327680            1            0            1            1
+                     ---
+--- End jemalloc statistics ---
+"cc74479075ce7d4717300ea6a31998fb8e66f47a0d666f6f1ee5b48139cafb2c"
+root@redis-server:~# man add-apt-repository 
+root@redis-server:~# man add-apt-repository 
+root@redis-server:~# man add-apt-repository 
+root@redis-server:~# man apt
+root@redis-server:~# man apt install
+--Man-- next: install(1) [ view (return) | skip (Ctrl-D) | quit (Ctrl-C) ]
+
+root@redis-server:~# man apt 
+root@redis-server:~# man apt-get
+root@redis-server:~# 
+root@redis-server:~# redis-cli
+127.0.0.1:6379> CONFIG GET port
+1) "port"
+2) "6379"
+127.0.0.1:6379> CONFIG SET port 56679
+OK
+127.0.0.1:6379> 
+root@redis-server:~# redis-cli
+Could not connect to Redis at 127.0.0.1:6379: Connection refused
+not connected> 
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> 
+root@redis-server:~# cat /etc/redis/redis.conf | grep port
+# are already in use will always fail, and unsupported protocols will always BE
+# Accept connections on the specified port, default is 6379 (IANA #815344).
+# If port 0 is specified Redis will not listen on a TCP socket.
+port 6379
+# By default, TLS/SSL is disabled. To enable it, the "tls-port" configuration
+# directive can be used to define TLS-listening ports. To enable TLS on the
+# default port, use:
+# port 0
+# tls-port 6379
+# By default, clients (including replica servers) on a TLS port are required
+# You can explicitly specify TLS versions to support.
+# reconnections by clients that support it. Use the following directive to disable
+# warning (only very important / critical messages are logged)
+# supported:
+# {listen-addr}     Bind address or '*' followed by TCP or TLS port listening on, or
+# {port}            TCP port listening on, or 0.
+# {tls-port}        TLS port listening on, or 0.
+# replicaof <masterip> <masterport>
+# Still a read only replica exports by default all the administrative commands
+# This is important since once the transfer starts, it is not possible to serve
+# It is important to make sure that this value is greater than the value
+# partial resync is enough, just passing the portion of data the replica
+# By default, Redis Sentinel includes all replicas in its reports. A replica
+# A Redis master is able to list the address and port of the attached
+# The listed IP address and port normally reported by a replica is
+#   Port: The port is communicated by the replica during the replication
+#   handshake, and is normally the port that the replica is using to
+# However when port forwarding or Network Address Translation (NAT) is
+# used, the replica may actually be reachable via different IP and port
+# report to its master a specific set of IP and port, so that both INFO
+# and ROLE will report those values.
+# the port or the IP address.
+# replica-announce-port 1234
+# Redis implements server assisted support for client side caching of values.
+# connections, one incoming and another outgoing. It is important to size the
+# FLUSHDB, FLUSHALL, and SCRIPT FLUSH support both asynchronous and synchronous
+# Redis supports three options:
+# Redis supports three different modes:
+# cluster node enable the cluster support uncommenting the following:
+#    of the failover a delay proportional to their rank.
+# (However they'll always try to apply a delay proportional to their
+########################## CLUSTER DOCKER/NAT support  ########################
+# addresses are NAT-ted or because ports are forwarded (the typical case is
+# * cluster-announce-port
+# * cluster-announce-tls-port
+# * cluster-announce-bus-port
+# Each instructs the node about its address, client ports (for connections
+# without and with TLS) and cluster message bus port. The information is then
+# If cluster-tls is set to yes and cluster-announce-tls-port is omitted or set
+# to zero, then cluster-announce-port refers to the TLS port. Note also that
+# cluster-announce-tls-port has no effect if cluster-tls is set to no.
+# Note that when remapped, the bus port may not be at the fixed offset of
+# clients port + 10000, so you can specify any port and bus-port depending
+# on how they get remapped. If the bus-port is not set, a fixed offset of
+# cluster-announce-tls-port 6379
+# cluster-announce-port 0
+# cluster-announce-bus-port 6380
+# print graphs and obtain reports.
+# support.
+# The Redis Gopher support uses the inline protocol of Redis, and specifically
+# Note that Gopher is not currently supported when 'io-threads-do-reads'
+# To enable Gopher support, uncomment the following line and set the option
+# Normally it is useful to have an HZ value which is proportional to the
+# counter logarithm factor and the counter decay time. It is important to
+# Important things to understand:
+root@redis-server:~# cat /etc/redis/redis.conf | grep port 63
+grep: 63: No such file or directory
+root@redis-server:~# cat /etc/redis/redis.conf | grep "port 63"
+port 6379
+# tls-port 6379
+# cluster-announce-tls-port 6379
+# cluster-announce-bus-port 6380
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> CONFIG
+(error) ERR wrong number of arguments for 'config' command
+127.0.0.1:56679> CONFIG help
+ 1) CONFIG <subcommand> [<arg> [value] [opt] ...]. Subcommands are:
+ 2) GET <pattern>
+ 3)     Return parameters matching the glob-like <pattern> and their values.
+ 4) SET <directive> <value>
+ 5)     Set the configuration <directive> to <value>.
+ 6) RESETSTAT
+ 7)     Reset statistics reported by the INFO command.
+ 8) REWRITE
+ 9)     Rewrite the configuration file.
+10) HELP
+11)     Prints this help.
+127.0.0.1:56679> CONFIG REWRITE
+OK
+127.0.0.1:56679> 
+root@redis-server:~# cat /etc/redis/redis.conf | grep "port 63"
+# tls-port 6379
+# cluster-announce-tls-port 6379
+# cluster-announce-bus-port 6380
+root@redis-server:~# cat /etc/redis/redis.conf | grep "port 566"
+port 56679
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> CONFIG GET bind
+1) "bind"
+2) "127.0.0.1 -::1"
+127.0.0.1:56679> CONFIG GET requirepass
+1) "requirepass"
+2) ""
+127.0.0.1:56679> ACL GENPASS;
+(error) ERR Unknown subcommand or wrong number of arguments for 'GENPASS;'. Try ACL HELP.
+127.0.0.1:56679> ACL GENPASS
+"db376693cf0a9d38d571fb1d1d3be9f847f6ea0a736eadd8ceaa1de3fbdc9d44"
+127.0.0.1:56679> CONFIG SET requirepass db376693cf0a9d38d571fb1d1d3be9f847f6ea0a736eadd8ceaa1de3fbdc9d44
+OK
+127.0.0.1:56679> 
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> ping
+(error) NOAUTH Authentication required.
+127.0.0.1:56679> 
+root@redis-server:~# export REDISCLI_AUTH="db376693cf0a9d38d571fb1d1d3be9f847f6ea0a736eadd8ceaa1de3fbdc9d44"
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> ping
+PONG
+127.0.0.1:56679> 
+root@redis-server:~# cat /etc/redis/redis.conf | grep "requirepass"
+# If the master is password protected (using the "requirepass" configuration
+# IMPORTANT NOTE: starting with Redis 6 "requirepass" is just a compatibility
+# The requirepass is not compatable with aclfile option and the ACL LOAD
+# command, these will cause requirepass to be ignored.
+# requirepass foobared
+# So use the 'requirepass' option to protect your instance.
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> CONFIG REWRITE
+OK
+127.0.0.1:56679> 
+root@redis-server:~# cat /etc/redis/redis.conf | grep "requirepass"
+# If the master is password protected (using the "requirepass" configuration
+# IMPORTANT NOTE: starting with Redis 6 "requirepass" is just a compatibility
+# The requirepass is not compatable with aclfile option and the ACL LOAD
+# command, these will cause requirepass to be ignored.
+# requirepass foobared
+# So use the 'requirepass' option to protect your instance.
+requirepass "db376693cf0a9d38d571fb1d1d3be9f847f6ea0a736eadd8ceaa1de3fbdc9d44"
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> ping
+PONG
+127.0.0.1:56679> CONFIG GET bind
+1) "bind"
+2) "127.0.0.1 -::1"
+127.0.0.1:56679> CONFIG SET bind 
+(error) ERR Unknown subcommand or wrong number of arguments for 'SET'. Try CONFIG HELP.
+127.0.0.1:56679> CONFIG SET bind ""
+(error) ERR Too many bind addresses specified.
+127.0.0.1:56679> CONFIG 
+(error) ERR wrong number of arguments for 'config' command
+127.0.0.1:56679> CONFIG HELP
+ 1) CONFIG <subcommand> [<arg> [value] [opt] ...]. Subcommands are:
+ 2) GET <pattern>
+ 3)     Return parameters matching the glob-like <pattern> and their values.
+ 4) SET <directive> <value>
+ 5)     Set the configuration <directive> to <value>.
+ 6) RESETSTAT
+ 7)     Reset statistics reported by the INFO command.
+ 8) REWRITE
+ 9)     Rewrite the configuration file.
+10) HELP
+11)     Prints this help.
+127.0.0.1:56679> CONFIG SET bind " "
+(error) ERR Failed to bind to specified addresses.
+127.0.0.1:56679> CONFIG SET bind ""
+(error) ERR Too many bind addresses specified.
+127.0.0.1:56679> 
+root@redis-server:~#     vi /etc/redis/redis.conf;
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> CONFIG GET bind
+1) "bind"
+2) "127.0.0.1 -::1"
+127.0.0.1:56679> CONFIG SET bind "* -::*"
+OK
+127.0.0.1:56679> CONFIG GET bind
+1) "bind"
+2) "* -::*"
+127.0.0.1:56679> 
+root@redis-server:~# ifconfig
+
+Command 'ifconfig' not found, but can be installed with:
+
+apt install net-tools
+
+root@redis-server:~# apt install net-tools
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  net-tools
+0 upgraded, 1 newly installed, 0 to remove and 19 not upgraded.
+Need to get 196 kB of archives.
+After this operation, 864 kB of additional disk space will be used.
+Get:1 http://mirrors.digitalocean.com/ubuntu focal/main amd64 net-tools amd64 1.60+git20180626.aebd88e-1ubuntu1 [196 kB]
+Fetched 196 kB in 0s (1044 kB/s)
+Selecting previously unselected package net-tools.
+(Reading database ... 63592 files and directories currently installed.)
+Preparing to unpack .../net-tools_1.60+git20180626.aebd88e-1ubuntu1_amd64.deb ...
+Unpacking net-tools (1.60+git20180626.aebd88e-1ubuntu1) ...
+Setting up net-tools (1.60+git20180626.aebd88e-1ubuntu1) ...
+Processing triggers for man-db (2.9.1-1) ...
+root@redis-server:~# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 142.93.221.126  netmask 255.255.240.0  broadcast 142.93.223.255
+        inet6 fe80::a05b:abff:fe28:22e0  prefixlen 64  scopeid 0x20<link>
+        ether a2:5b:ab:28:22:e0  txqueuelen 1000  (Ethernet)
+        RX packets 5425  bytes 10167395 (10.1 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 4051  bytes 516592 (516.5 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.122.0.2  netmask 255.255.240.0  broadcast 10.122.15.255
+        inet6 fe80::3ccd:42ff:feb8:66d0  prefixlen 64  scopeid 0x20<link>
+        ether 3e:cd:42:b8:66:d0  txqueuelen 1000  (Ethernet)
+        RX packets 13  bytes 986 (986.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 14  bytes 1076 (1.0 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 1131  bytes 248378 (248.3 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1131  bytes 248378 (248.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@redis-server:~# redis-cli -h 142.93.221.126 -p 56679
+142.93.221.126:56679> ping
+PONG
+142.93.221.126:56679> 
+root@redis-server:~# 
+```
+
+```bash
+redis-stuff $ redis-cli -h 142.93.221.126 -p 56679 PING
+(error) NOAUTH Authentication required.
+redis-stuff $ redis-cli -h 142.93.221.126 -p 56679 
+redis-stuff $ export REDISCLI_AUTH="db376693cf0a9d38d571fb1d1d3be9f847f6ea0a736eadd8ceaa1de3fbdc9d44"
+redis-stuff $ redis-cli -h 142.93.221.126 -p 56679 PING
+PONG
+redis-stuff $ redis-cli -h 142.93.221.126 -p 56679 
+142.93.221.126:56679> 
+```
+
+---
+
+https://duckduckgo.com/?t=ffab&q=letsencrypt&ia=web
+
+https://letsencrypt.org/getting-started/
+
+https://certbot.eff.org/
+
+https://certbot.eff.org/lets-encrypt/ubuntufocal-other
+
+---
+
+[TODO]
+- Check how to clients can authenticate with the server using client certificates instead of using password, or does a client need both or may not need one even if it has the other?
+
+---
+
+https://duckduckgo.com/?t=ffab&q=let%27s+encrypt+CA+certificate&ia=web
+
+https://letsencrypt.org/certificates/
+
+https://duckduckgo.com/?t=ffab&q=redis+tls-cert-file&ia=web
+
+https://duckduckgo.com/?t=ffab&q=redis%3A+error%3A0200100D%3Asystem+library%3Afopen%3APermission+denied&ia=web
+
+https://duckduckgo.com/?q=redis+error%3A0200100D%3Asystem+library%3Afopen%3APermission+denied&t=ffab&ia=web
+
+https://redis.io/topics/encryption
+
+---
+
+Lol, I mistook a config and thought it was a cert authority certificate that provided the SSL certificate, but it was actually more of a thing to authenticate clients, clients that are using SSL/TLS certificates to authenticate
+
+---
+
+```bash
+root@redis-server:~# snap
+The snap command lets you install, configure, refresh and remove snaps.
+Snaps are packages that work across many different Linux distributions,
+enabling secure delivery and operation of the latest apps and utilities.
+
+Usage: snap <command> [<options>...]
+
+Commonly used commands can be classified as follows:
+
+         Basics: find, info, install, remove, list
+        ...more: refresh, revert, switch, disable, enable, create-cohort
+        History: changes, tasks, abort, watch
+        Daemons: services, start, stop, restart, logs
+    Permissions: connections, interface, connect, disconnect
+  Configuration: get, set, unset, wait
+    App Aliases: alias, aliases, unalias, prefer
+        Account: login, logout, whoami
+      Snapshots: saved, save, check-snapshot, restore, forget
+         Device: model, reboot, recovery
+      ... Other: warnings, okay, known, ack, version
+    Development: download, pack, run, try
+
+For more information about a command, run 'snap help <command>'.
+For a short summary of all commands, run 'snap help --all'.
+root@redis-server:~# sudo snap install core; sudo snap refresh core
+core 16-2.52.1 from Canonical✓ installed
+snap "core" has no updates available
+root@redis-server:~# certbot
+
+Command 'certbot' not found, but can be installed with:
+
+apt install certbot
+
+root@redis-server:~# sudo snap install --classic certbot
+certbot 1.20.0 from Certbot Project (certbot-eff✓) installed
+root@redis-server:~# sudo ln -s /snap/bin/certbot /usr/bin/certbot
+root@redis-server:~# certbot 
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Certbot doesn't know how to automatically configure the web server on this system. However, it can still get a certificate for you. Please run "certbot certonly" to do so. You'll need to manually configure your web server to use the resulting certificate.
+root@redis-server:~# sudo certbot certonly --standalone
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Enter email address (used for urgent renewal and security notices)
+ (Enter 'c' to cancel): karuppiah7890@gmail.com
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Please read the Terms of Service at
+https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf. You must
+agree in order to register with the ACME server. Do you agree?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(Y)es/(N)o: Y 
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Would you be willing, once your first certificate is successfully issued, to
+share your email address with the Electronic Frontier Foundation, a founding
+partner of the Let's Encrypt project and the non-profit organization that
+develops Certbot? We'd like to send you email about our work encrypting the web,
+EFF news, campaigns, and ways to support digital freedom.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(Y)es/(N)o: Y
+Account registered.
+Please enter the domain name(s) you would like on your certificate (comma and/or
+space separated) (Enter 'c' to cancel): localhost,142.93.221.126
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+One or more of the entered domain names was not valid:
+
+142.93.221.126: Requested name 142.93.221.126 is an IP address. The Let's
+Encrypt certificate authority will not issue certificates for a bare IP address.
+
+Would you like to re-enter the names?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(Y)es/(N)o: Y
+Please enter the domain name(s) you would like on your certificate (comma and/or
+space separated) (Enter 'c' to cancel): redis-server-1.hosteddatabase.in
+Requesting a certificate for redis-server-1.hosteddatabase.in
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
+This certificate expires on 2022-02-01.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+root@redis-server:~# 
+root@redis-server:~# 
+root@redis-server:~# sudo certbot renew --dry-run
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Processing /etc/letsencrypt/renewal/redis-server-1.hosteddatabase.in.conf
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Account registered.
+Simulating renewal of an existing certificate for redis-server-1.hosteddatabase.in
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Congratulations, all simulated renewals succeeded: 
+  /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem (success)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+root@redis-server:~# ls /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/
+README  cert.pem  chain.pem  fullchain.pem  privkey.pem
+root@redis-server:~# ls /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/cert.pem 
+/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/cert.pem
+root@redis-server:~# less /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/cert.pem 
+root@redis-server:~# less /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem 
+root@redis-server:~# less /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem 
+root@redis-server:~# less /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/cert.pem 
+root@redis-server:~# less /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem 
+root@redis-server:~# less /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/cert.pem 
+root@redis-server:~# less /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem 
+root@redis-server:~# less /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem 
+root@redis-server:~# less /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/cert.pem 
+root@redis-server:~# less /etc/redis/redis.conf 
+root@redis-server:~# cat /etc/redis/redis.conf | grep tls
+# By default, TLS/SSL is disabled. To enable it, the "tls-port" configuration
+# tls-port 6379
+# tls-cert-file redis.crt
+# tls-key-file redis.key
+# tls-key-file-pass secret
+# tls-client-cert-file client.crt
+# tls-client-key-file client.key
+# tls-client-key-file-pass secret
+# tls-dh-params-file redis.dh
+# tls-ca-cert-file ca.crt
+# tls-ca-cert-dir /etc/ssl/certs
+# tls-auth-clients no
+# tls-auth-clients optional
+# tls-replication yes
+# tls-cluster yes
+# tls-protocols "TLSv1.2 TLSv1.3"
+# tls-ciphers DEFAULT:!MEDIUM
+# tls-ciphersuites TLS_CHACHA20_POLY1305_SHA256
+# tls-prefer-server-ciphers yes
+# tls-session-caching no
+# tls-session-cache-size 5000
+# tls-session-cache-timeout 60
+# {tls-port}        TLS port listening on, or 0.
+# * cluster-announce-tls-port
+# If cluster-tls is set to yes and cluster-announce-tls-port is omitted or set
+# cluster-announce-tls-port has no effect if cluster-tls is set to no.
+# cluster-announce-tls-port 6379
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> ping
+PONG
+127.0.0.1:56679> CONFIG GET tls-ca-cert-dir
+1) "tls-ca-cert-dir"
+2) ""
+127.0.0.1:56679> CONFIG SET tls-ca-cert-dir /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/
+OK
+127.0.0.1:56679> CONFIG GET tls-ca-cert-dir
+1) "tls-ca-cert-dir"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/"
+127.0.0.1:56679> CONFIG GET tls-ca-cert-file
+1) "tls-ca-cert-file"
+2) ""
+127.0.0.1:56679> CONFIG SET tls-ca-cert-file cert.pem
+OK
+127.0.0.1:56679> CONFIG SET tls-ca-cert-file ""
+OK
+127.0.0.1:56679> CONFIG GET tls-ca-cert-file
+1) "tls-ca-cert-file"
+2) ""
+127.0.0.1:56679> CONFIG GET tls-ca-cert-dir
+1) "tls-ca-cert-dir"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/"
+127.0.0.1:56679> CONFIG SET tls-ca-cert-dir ""
+OK
+127.0.0.1:56679> 
+root@redis-server:~# wget https://letsencrypt.org/certs/lets-encrypt-r3.pem
+--2021-11-03 18:26:58--  https://letsencrypt.org/certs/lets-encrypt-r3.pem
+Resolving letsencrypt.org (letsencrypt.org)... 52.220.244.242, 104.248.158.121, 2406:da18:880:3802:371c:4bf1:923b:fc30, ...
+Connecting to letsencrypt.org (letsencrypt.org)|52.220.244.242|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1826 (1.8K) [application/x-pem-file]
+Saving to: ‘lets-encrypt-r3.pem’
+
+lets-encrypt-r3.pem             100%[=====================================================>]   1.78K  --.-KB/s    in 0s      
+
+2021-11-03 18:26:58 (16.9 MB/s) - ‘lets-encrypt-r3.pem’ saved [1826/1826]
+
+root@redis-server:~# less lets-encrypt-r3.pem 
+root@redis-server:~# mv lets-encrypt-r3.pem /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/^C
+root@redis-server:~# ls /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/
+README  cert.pem  chain.pem  fullchain.pem  privkey.pem
+root@redis-server:~# ls /etc/letsencrypt/live/
+README  redis-server-1.hosteddatabase.in
+root@redis-server:~# ls /etc/letsencrypt
+accounts  archive  csr  keys  live  renewal  renewal-hooks
+root@redis-server:~# ls /etc/letsencrypt/accounts/
+acme-staging-v02.api.letsencrypt.org  acme-v02.api.letsencrypt.org
+root@redis-server:~# ls /etc/letsencrypt/accounts/acme-staging-v02.api.letsencrypt.org/directory/5e1e7ba73e62f84ab8e272d70b510618/
+meta.json         private_key.json  regr.json         
+root@redis-server:~# ls /etc/letsencrypt/accounts/acme-staging-v02.api.letsencrypt.org/directory/5e1e7ba73e62f84ab8e272d70b510618/
+meta.json  private_key.json  regr.json
+root@redis-server:~# ls /etc/letsencrypt/keys/
+0000_key-certbot.pem
+root@redis-server:~# ls /etc/letsencrypt/keys/0000_key-certbot.pem 
+/etc/letsencrypt/keys/0000_key-certbot.pem
+root@redis-server:~# less /etc/letsencrypt/keys/0000_key-certbot.pem 
+root@redis-server:~# diff  /etc/letsencrypt/keys/0000_key-certbot.pem 
+.bashrc                  .lesshst                 .ssh/                    lets-encrypt-r3.pem      
+.cache/                  .profile                 .viminfo                 snap/                    
+.cloud-locale-test.skip  .rediscli_history        .wget-hsts               
+root@redis-server:~# diff lets-encrypt-r3.pem /etc/letsencrypt/keys/0000_key-certbot.pem 
+1,30c1,28
+< -----BEGIN CERTIFICATE-----
+< dummy-values
+< -----END CERTIFICATE-----
+---
+> -----BEGIN PRIVATE KEY-----
+> dummy-values
+> -----END PRIVATE KEY-----
+root@redis-server:~# 
+(failed reverse-i-search)`mv': diff lets-encrypt-r3.pem /etc/letsencrypt/keys/0000_key-certbot.pe^C
+root@redis-server:~# ls /etc/letsencrypt/keys/
+0000_key-certbot.pem
+root@redis-server:~# ls /etc/letsencrypt/live/
+README                            redis-server-1.hosteddatabase.in/ 
+root@redis-server:~# ls /etc/letsencrypt/live/
+README                            redis-server-1.hosteddatabase.in/ 
+root@redis-server:~# ls /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/
+README  cert.pem  chain.pem  fullchain.pem  privkey.pem
+root@redis-server:~# cp lets-encrypt-r3.pem /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> CONFIG GET tls-ca-cert-dir
+1) "tls-ca-cert-dir"
+2) ""
+127.0.0.1:56679> CONFIG SET tls-ca-cert-file ""
+OK
+127.0.0.1:56679> CONFIG SET tls-ca-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/lets-encrypt-r3.pem"
+OK
+127.0.0.1:56679> CONFIG GET tls-ca-cert-file
+1) "tls-ca-cert-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/lets-encrypt-r3.pem"
+127.0.0.1:56679> CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) ""
+127.0.0.1:56679> CONFIG GET tls-key-file
+1) "tls-key-file"
+2) ""
+127.0.0.1:56679> CONFIG GET tls-key-file-1
+(empty array)
+127.0.0.1:56679> CONFIG GET tls-key-file
+1) "tls-key-file"
+2) ""
+127.0.0.1:56679> CONFIG SET tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
+OK
+127.0.0.1:56679> CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
+127.0.0.1:56679> CONFIG SET tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem-wron"
+OK
+127.0.0.1:56679> CONFIG SET tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
+OK
+127.0.0.1:56679> CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
+127.0.0.1:56679> CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) ""
+127.0.0.1:56679> CONFIG SET tls-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
+OK
+127.0.0.1:56679> CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
+127.0.0.1:56679> CONFIG GET tls-port
+1) "tls-port"
+2) "0"
+127.0.0.1:56679> CONFIG SET tls-port 56680
+(error) ERR Invalid argument '56680' for CONFIG SET 'tls-port' - Unable to update TLS configuration. Check server logs.
+127.0.0.1:56679> CONFIG SET tls-port "56680"
+(error) ERR Invalid argument '56680' for CONFIG SET 'tls-port' - Unable to update TLS configuration. Check server logs.
+127.0.0.1:56679> 
+root@redis-server:~# ls /var/log
+apt       cloud-init-output.log  dmesg                     journal    lastlog      redis                 unattended-upgrades
+auth.log  cloud-init.log         dpkg.log                  kern.log   letsencrypt  syslog                wtmp
+btmp      dist-upgrade           droplet-agent.update.log  landscape  private      ubuntu-advantage.log
+root@redis-server:~# ls /var/log/redis/redis-server.log 
+/var/log/redis/redis-server.log
+root@redis-server:~# less /var/log/redis/redis-server.log 
+root@redis-server:~# cat /var/log/redis/redis-server.log 
+2419:C 03 Nov 2021 17:47:56.535 * Supervised by systemd. Please make sure you set appropriate values for TimeoutStartSec and TimeoutStopSec in your service unit.
+2419:C 03 Nov 2021 17:47:56.535 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+2419:C 03 Nov 2021 17:47:56.535 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=2419, just started
+2419:C 03 Nov 2021 17:47:56.535 # Configuration loaded
+2419:M 03 Nov 2021 17:47:56.536 * monotonic clock: POSIX clock_gettime
+2419:M 03 Nov 2021 17:47:56.540 * Running mode=standalone, port=6379.
+2419:M 03 Nov 2021 17:47:56.540 # Server initialized
+2419:M 03 Nov 2021 17:47:56.540 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+2419:M 03 Nov 2021 17:47:56.543 * Ready to accept connections
+2419:M 03 Nov 2021 17:50:57.539 # CONFIG REWRITE executed with success.
+2419:M 03 Nov 2021 17:53:18.928 # CONFIG REWRITE executed with success.
+2419:M 03 Nov 2021 17:55:59.620 # Warning: Could not create server TCP listening socket :56679: Name or service not known
+2419:M 03 Nov 2021 17:55:59.620 # Failed to bind, trying to restore old listening sockets.
+2419:M 03 Nov 2021 18:32:14.244 # Failed to load certificate: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem: error:0200100D:system library:fopen:Permission denied
+2419:M 03 Nov 2021 18:32:26.558 # Failed to load certificate: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem: error:0200100D:system library:fopen:Permission denied
+root@redis-server:~# ls /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+root@redis-server:~# ls -al /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+lrwxrwxrwx 1 root root 61 Nov  3 18:13 /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem -> ../../archive/redis-server-1.hosteddatabase.in/fullchain1.pem
+root@redis-server:~# ls /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+root@redis-server:~# redis-cli
+Could not connect to Redis at 127.0.0.1:6379: Connection refused
+not connected> 
+root@redis-server:~# redis-cli
+Could not connect to Redis at 127.0.0.1:6379: Connection refused
+not connected> 
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> CONFIG GET tls-port 
+1) "tls-port"
+2) "0"
+127.0.0.1:56679> CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
+127.0.0.1:56679> CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
+127.0.0.1:56679> CONFIG GET tls-ca-cert-file
+1) "tls-ca-cert-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/lets-encrypt-r3.pem"
+127.0.0.1:56679> CONFIG SET tls-ca-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/cert.pem"
+OK
+127.0.0.1:56679> CONFIG SET tls-port 56680
+(error) ERR Invalid argument '56680' for CONFIG SET 'tls-port' - Unable to update TLS configuration. Check server logs.
+127.0.0.1:56679> 
+root@redis-server:~# cat /var/log/redis/redis-server.log 
+2419:C 03 Nov 2021 17:47:56.535 * Supervised by systemd. Please make sure you set appropriate values for TimeoutStartSec and TimeoutStopSec in your service unit.
+2419:C 03 Nov 2021 17:47:56.535 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+2419:C 03 Nov 2021 17:47:56.535 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=2419, just started
+2419:C 03 Nov 2021 17:47:56.535 # Configuration loaded
+2419:M 03 Nov 2021 17:47:56.536 * monotonic clock: POSIX clock_gettime
+2419:M 03 Nov 2021 17:47:56.540 * Running mode=standalone, port=6379.
+2419:M 03 Nov 2021 17:47:56.540 # Server initialized
+2419:M 03 Nov 2021 17:47:56.540 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+2419:M 03 Nov 2021 17:47:56.543 * Ready to accept connections
+2419:M 03 Nov 2021 17:50:57.539 # CONFIG REWRITE executed with success.
+2419:M 03 Nov 2021 17:53:18.928 # CONFIG REWRITE executed with success.
+2419:M 03 Nov 2021 17:55:59.620 # Warning: Could not create server TCP listening socket :56679: Name or service not known
+2419:M 03 Nov 2021 17:55:59.620 # Failed to bind, trying to restore old listening sockets.
+2419:M 03 Nov 2021 18:32:14.244 # Failed to load certificate: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem: error:0200100D:system library:fopen:Permission denied
+2419:M 03 Nov 2021 18:32:26.558 # Failed to load certificate: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem: error:0200100D:system library:fopen:Permission denied
+2419:M 03 Nov 2021 18:38:27.890 # Failed to load certificate: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem: error:0200100D:system library:fopen:Permission denied
+root@redis-server:~# ls /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+root@redis-server:~# ls -al /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+lrwxrwxrwx 1 root root 61 Nov  3 18:13 /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem -> ../../archive/redis-server-1.hosteddatabase.in/fullchain1.pem
+root@redis-server:~# ls -al /etc/letsencrypt/live/redis-server-1.hosteddatabase.in
+total 20
+drwxr-xr-x 2 root root 4096 Nov  3 18:28 .
+drwx------ 3 root root 4096 Nov  3 18:13 ..
+-rw-r--r-- 1 root root  692 Nov  3 18:13 README
+lrwxrwxrwx 1 root root   56 Nov  3 18:13 cert.pem -> ../../archive/redis-server-1.hosteddatabase.in/cert1.pem
+lrwxrwxrwx 1 root root   57 Nov  3 18:13 chain.pem -> ../../archive/redis-server-1.hosteddatabase.in/chain1.pem
+lrwxrwxrwx 1 root root   61 Nov  3 18:13 fullchain.pem -> ../../archive/redis-server-1.hosteddatabase.in/fullchain1.pem
+-rw-r--r-- 1 root root 1826 Nov  3 18:28 lets-encrypt-r3.pem
+lrwxrwxrwx 1 root root   59 Nov  3 18:13 privkey.pem -> ../../archive/redis-server-1.hosteddatabase.in/privkey1.pem
+root@redis-server:~# systemctl status redis
+Unit redis.service could not be found.
+root@redis-server:~# systemctl status redis-server
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Wed 2021-11-03 17:47:56 UTC; 51min ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 2419 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.5M
+     CGroup: /system.slice/redis-server.service
+             └─2419 /usr/bin/redis-server *:56679
+
+Nov 03 17:47:56 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 03 17:47:56 redis-server systemd[1]: Started Advanced key-value store.
+root@redis-server:~# less /lib/systemd/system/redis-server.service
+root@redis-server:~# ls /etc/letsencrypt/
+accounts  archive  csr  keys  live  renewal  renewal-hooks
+root@redis-server:~# ls /etc/letsencrypt/archive/
+redis-server-1.hosteddatabase.in
+root@redis-server:~# ls /etc/letsencrypt/archive/redis-server-1.hosteddatabase.in/
+cert1.pem  chain1.pem  fullchain1.pem  privkey1.pem
+root@redis-server:~# ls -al /etc/letsencrypt/archive/redis-server-1.hosteddatabase.in/
+total 28
+drwxr-xr-x 2 root root 4096 Nov  3 18:13 .
+drwx------ 3 root root 4096 Nov  3 18:13 ..
+-rw-r--r-- 1 root root 1891 Nov  3 18:13 cert1.pem
+-rw-r--r-- 1 root root 3749 Nov  3 18:13 chain1.pem
+-rw-r--r-- 1 root root 5640 Nov  3 18:13 fullchain1.pem
+-rw------- 1 root root 1704 Nov  3 18:13 privkey1.pem
+root@redis-server:~# chown -R redis:redis /etc/letsencrypt/
+root@redis-server:~# ls -al /etc/letsencrypt/archive/redis-server-1.hosteddatabase.in/
+total 28
+drwxr-xr-x 2 redis redis 4096 Nov  3 18:13 .
+drwx------ 3 redis redis 4096 Nov  3 18:13 ..
+-rw-r--r-- 1 redis redis 1891 Nov  3 18:13 cert1.pem
+-rw-r--r-- 1 redis redis 3749 Nov  3 18:13 chain1.pem
+-rw-r--r-- 1 redis redis 5640 Nov  3 18:13 fullchain1.pem
+-rw------- 1 redis redis 1704 Nov  3 18:13 privkey1.pem
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> CONFIG SET tls-port 56680
+OK
+127.0.0.1:56679> CONFIG GET tls-port 
+1) "tls-port"
+2) "56680"
+127.0.0.1:56679> 
+root@redis-server:~# cat /var/log/redis/redis-server.log 
+2419:C 03 Nov 2021 17:47:56.535 * Supervised by systemd. Please make sure you set appropriate values for TimeoutStartSec and TimeoutStopSec in your service unit.
+2419:C 03 Nov 2021 17:47:56.535 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+2419:C 03 Nov 2021 17:47:56.535 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=2419, just started
+2419:C 03 Nov 2021 17:47:56.535 # Configuration loaded
+2419:M 03 Nov 2021 17:47:56.536 * monotonic clock: POSIX clock_gettime
+2419:M 03 Nov 2021 17:47:56.540 * Running mode=standalone, port=6379.
+2419:M 03 Nov 2021 17:47:56.540 # Server initialized
+2419:M 03 Nov 2021 17:47:56.540 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+2419:M 03 Nov 2021 17:47:56.543 * Ready to accept connections
+2419:M 03 Nov 2021 17:50:57.539 # CONFIG REWRITE executed with success.
+2419:M 03 Nov 2021 17:53:18.928 # CONFIG REWRITE executed with success.
+2419:M 03 Nov 2021 17:55:59.620 # Warning: Could not create server TCP listening socket :56679: Name or service not known
+2419:M 03 Nov 2021 17:55:59.620 # Failed to bind, trying to restore old listening sockets.
+2419:M 03 Nov 2021 18:32:14.244 # Failed to load certificate: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem: error:0200100D:system library:fopen:Permission denied
+2419:M 03 Nov 2021 18:32:26.558 # Failed to load certificate: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem: error:0200100D:system library:fopen:Permission denied
+2419:M 03 Nov 2021 18:38:27.890 # Failed to load certificate: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem: error:0200100D:system library:fopen:Permission denied
+2419:M 03 Nov 2021 18:42:41.975 # Error accepting a client connection: error:1417C0C7:SSL routines:tls_process_client_certificate:peer did not return a certificate
+2419:M 03 Nov 2021 18:42:44.907 # Error accepting a client connection: error:1417C0C7:SSL routines:tls_process_client_certificate:peer did not return a certificate
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "yes"
+127.0.0.1:56679> 
+root@redis-server:~# cat /etc/redis/redis.conf | grep tls-auth
+# tls-auth-clients no
+# tls-auth-clients optional
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> 
+root@redis-server:~# cat /etc/redis/redis.conf | grep -C 5 tls-auth
+#
+# If "no" is specified, client certificates are not required and not accepted.
+# If "optional" is specified, client certificates are accepted and must be
+# valid if provided, but are not required.
+#
+# tls-auth-clients no
+# tls-auth-clients optional
+
+# By default, a Redis replica does not attempt to establish a TLS connection
+# with its master.
+#
+# Use the following directive to enable TLS on replication links.
+root@redis-server:~# cat /etc/redis/redis.conf | grep -B 15 tls-auth
+
+# Configure a CA certificate(s) bundle or directory to authenticate TLS/SSL
+# clients and peers.  Redis requires an explicit configuration of at least one
+# of these, and will not implicitly use the system wide configuration.
+#
+# tls-ca-cert-file ca.crt
+# tls-ca-cert-dir /etc/ssl/certs
+
+# By default, clients (including replica servers) on a TLS port are required
+# to authenticate using valid client side certificates.
+#
+# If "no" is specified, client certificates are not required and not accepted.
+# If "optional" is specified, client certificates are accepted and must be
+# valid if provided, but are not required.
+#
+# tls-auth-clients no
+# tls-auth-clients optional
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> CONFG GET tls-ca-cert-file
+(error) ERR unknown command `CONFG`, with args beginning with: `GET`, `tls-ca-cert-file`, 
+127.0.0.1:56679> CONFIG GET tls-ca-cert-file
+1) "tls-ca-cert-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/cert.pem"
+127.0.0.1:56679> CONFIG SET tls-ca-cert-file ""
+(error) ERR Invalid argument '' for CONFIG SET 'tls-ca-cert-file' - Unable to update TLS configuration. Check server logs.
+127.0.0.1:56679> 
+root@redis-server:~# cat /var/log/redis/redis-server.log 
+2419:C 03 Nov 2021 17:47:56.535 * Supervised by systemd. Please make sure you set appropriate values for TimeoutStartSec and TimeoutStopSec in your service unit.
+2419:C 03 Nov 2021 17:47:56.535 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+2419:C 03 Nov 2021 17:47:56.535 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=2419, just started
+2419:C 03 Nov 2021 17:47:56.535 # Configuration loaded
+2419:M 03 Nov 2021 17:47:56.536 * monotonic clock: POSIX clock_gettime
+2419:M 03 Nov 2021 17:47:56.540 * Running mode=standalone, port=6379.
+2419:M 03 Nov 2021 17:47:56.540 # Server initialized
+2419:M 03 Nov 2021 17:47:56.540 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+2419:M 03 Nov 2021 17:47:56.543 * Ready to accept connections
+2419:M 03 Nov 2021 17:50:57.539 # CONFIG REWRITE executed with success.
+2419:M 03 Nov 2021 17:53:18.928 # CONFIG REWRITE executed with success.
+2419:M 03 Nov 2021 17:55:59.620 # Warning: Could not create server TCP listening socket :56679: Name or service not known
+2419:M 03 Nov 2021 17:55:59.620 # Failed to bind, trying to restore old listening sockets.
+2419:M 03 Nov 2021 18:32:14.244 # Failed to load certificate: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem: error:0200100D:system library:fopen:Permission denied
+2419:M 03 Nov 2021 18:32:26.558 # Failed to load certificate: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem: error:0200100D:system library:fopen:Permission denied
+2419:M 03 Nov 2021 18:38:27.890 # Failed to load certificate: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem: error:0200100D:system library:fopen:Permission denied
+2419:M 03 Nov 2021 18:42:41.975 # Error accepting a client connection: error:1417C0C7:SSL routines:tls_process_client_certificate:peer did not return a certificate
+2419:M 03 Nov 2021 18:42:44.907 # Error accepting a client connection: error:1417C0C7:SSL routines:tls_process_client_certificate:peer did not return a certificate
+2419:M 03 Nov 2021 18:46:23.230 # Either tls-ca-cert-file or tls-ca-cert-dir must be specified when tls-cluster, tls-replication or tls-auth-clients are enabled!
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> CONFIG SET tls-auth-clients no
+OK
+127.0.0.1:56679> CONFIG REWRITE
+OK
+127.0.0.1:56679> 
+root@redis-server:~# redis-cli -p 56679
+127.0.0.1:56679> CONFIG SET tls-ca-cert-file ""
+OK
+127.0.0.1:56679> CONFIG GET tls-ca-cert-file
+1) "tls-ca-cert-file"
+2) ""
+127.0.0.1:56679> CONFIG GET tls-ca-cert-dir
+1) "tls-ca-cert-dir"
+2) ""
+127.0.0.1:56679> CONFIG GET tls-cluster
+1) "tls-cluster"
+2) "no"
+127.0.0.1:56679> CONFIG GET tls-replication
+1) "tls-replication"
+2) "no"
+127.0.0.1:56679> CONFIG GET tls-auth
+(empty array)
+127.0.0.1:56679> CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "no"
+127.0.0.1:56679> 
+root@redis-server:~# logout
+Connection to 142.93.221.126 closed.
+database-stuff $ doctl compute droplet delete redis-server
+Warning: Are you sure you want to delete this Droplet? (y/N) ? y
+database-stuff $ doctl compute droplet delete --help
+Use this command to permanently delete a Droplet. This is irreversible.
+
+Usage:
+  doctl compute droplet delete <droplet-id|droplet-name>... [flags]
+
+Aliases:
+  delete, d, del, rm
+
+Flags:
+  -f, --force             Delete the Droplet without a confirmation prompt
+  -h, --help              help for delete
+      --tag-name string   Tag name
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+database-stuff $ 
+```
+
+```bash
+142.93.221.126:56679> 
+redis-stuff $ dig redis-server-1.hosteddatabase.in
+
+; <<>> DiG 9.10.6 <<>> redis-server-1.hosteddatabase.in
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 3818
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 13, ADDITIONAL: 2
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;redis-server-1.hosteddatabase.in. IN	A
+
+;; ANSWER SECTION:
+redis-server-1.hosteddatabase.in. 600 IN A	142.93.221.126
+
+;; AUTHORITY SECTION:
+.			59258	IN	NS	e.root-servers.net.
+.			59258	IN	NS	c.root-servers.net.
+.			59258	IN	NS	i.root-servers.net.
+.			59258	IN	NS	f.root-servers.net.
+.			59258	IN	NS	b.root-servers.net.
+.			59258	IN	NS	m.root-servers.net.
+.			59258	IN	NS	g.root-servers.net.
+.			59258	IN	NS	l.root-servers.net.
+.			59258	IN	NS	k.root-servers.net.
+.			59258	IN	NS	a.root-servers.net.
+.			59258	IN	NS	j.root-servers.net.
+.			59258	IN	NS	h.root-servers.net.
+.			59258	IN	NS	d.root-servers.net.
+
+;; ADDITIONAL SECTION:
+G.root-servers.net.	19349	IN	A	192.112.36.4
+
+;; Query time: 82 msec
+;; SERVER: 10.112.16.144#53(10.112.16.144)
+;; WHEN: Wed Nov 03 23:42:47 IST 2021
+;; MSG SIZE  rcvd: 306
+
+redis-stuff $ redis-cli -h 142.93.221.126 -p 56679 
+142.93.221.126:56679> 
+redis-stuff $ redis-cli --tls -h 142.93.221.126 -p 56679 
+^C
+redis-stuff $ redis-cli --tls -h 142.93.221.126 -p 56679 -v
+redis-cli 6.2.6
+redis-stuff $ redis-cli --tls -h 142.93.221.126 -p 56679 --help
+redis-cli 6.2.6
+
+Usage: redis-cli [OPTIONS] [cmd [arg [arg ...]]]
+  -h <hostname>      Server hostname (default: 127.0.0.1).
+  -p <port>          Server port (default: 6379).
+  -s <socket>        Server socket (overrides hostname and port).
+  -a <password>      Password to use when connecting to the server.
+                     You can also use the REDISCLI_AUTH environment
+                     variable to pass this password more safely
+                     (if both are used, this argument takes precedence).
+  --user <username>  Used to send ACL style 'AUTH username pass'. Needs -a.
+  --pass <password>  Alias of -a for consistency with the new --user option.
+  --askpass          Force user to input password with mask from STDIN.
+                     If this argument is used, '-a' and REDISCLI_AUTH
+                     environment variable will be ignored.
+  -u <uri>           Server URI.
+  -r <repeat>        Execute specified command N times.
+  -i <interval>      When -r is used, waits <interval> seconds per command.
+                     It is possible to specify sub-second times like -i 0.1.
+  -n <db>            Database number.
+  -3                 Start session in RESP3 protocol mode.
+  -x                 Read last argument from STDIN.
+  -d <delimiter>     Delimiter between response bulks for raw formatting (default: \n).
+  -D <delimiter>     Delimiter between responses for raw formatting (default: \n).
+  -c                 Enable cluster mode (follow -ASK and -MOVED redirections).
+  -e                 Return exit error code when command execution fails.
+  --tls              Establish a secure TLS connection.
+  --sni <host>       Server name indication for TLS.
+  --cacert <file>    CA Certificate file to verify with.
+  --cacertdir <dir>  Directory where trusted CA certificates are stored.
+                     If neither cacert nor cacertdir are specified, the default
+                     system-wide trusted root certs configuration will apply.
+  --insecure         Allow insecure TLS connection by skipping cert validation.
+  --cert <file>      Client certificate to authenticate with.
+  --key <file>       Private key file to authenticate with.
+  --tls-ciphers <list> Sets the list of prefered ciphers (TLSv1.2 and below)
+                     in order of preference from highest to lowest separated by colon (":").
+                     See the ciphers(1ssl) manpage for more information about the syntax of this string.
+  --tls-ciphersuites <list> Sets the list of prefered ciphersuites (TLSv1.3)
+                     in order of preference from highest to lowest separated by colon (":").
+                     See the ciphers(1ssl) manpage for more information about the syntax of this string,
+                     and specifically for TLSv1.3 ciphersuites.
+  --raw              Use raw formatting for replies (default when STDOUT is
+                     not a tty).
+  --no-raw           Force formatted output even when STDOUT is not a tty.
+  --quoted-input     Force input to be handled as quoted strings.
+  --csv              Output in CSV format.
+  --show-pushes <yn> Whether to print RESP3 PUSH messages.  Enabled by default when
+                     STDOUT is a tty but can be overriden with --show-pushes no.
+  --stat             Print rolling stats about server: mem, clients, ...
+  --latency          Enter a special mode continuously sampling latency.
+                     If you use this mode in an interactive session it runs
+                     forever displaying real-time stats. Otherwise if --raw or
+                     --csv is specified, or if you redirect the output to a non
+                     TTY, it samples the latency for 1 second (you can use
+                     -i to change the interval), then produces a single output
+                     and exits.
+  --latency-history  Like --latency but tracking latency changes over time.
+                     Default time interval is 15 sec. Change it using -i.
+  --latency-dist     Shows latency as a spectrum, requires xterm 256 colors.
+                     Default time interval is 1 sec. Change it using -i.
+  --lru-test <keys>  Simulate a cache workload with an 80-20 distribution.
+  --replica          Simulate a replica showing commands received from the master.
+  --rdb <filename>   Transfer an RDB dump from remote server to local file.
+                     Use filename of "-" to write to stdout.
+  --pipe             Transfer raw Redis protocol from stdin to server.
+  --pipe-timeout <n> In --pipe mode, abort with error if after sending all data.
+                     no reply is received within <n> seconds.
+                     Default timeout: 30. Use 0 to wait forever.
+  --bigkeys          Sample Redis keys looking for keys with many elements (complexity).
+  --memkeys          Sample Redis keys looking for keys consuming a lot of memory.
+  --memkeys-samples <n> Sample Redis keys looking for keys consuming a lot of memory.
+                     And define number of key elements to sample
+  --hotkeys          Sample Redis keys looking for hot keys.
+                     only works when maxmemory-policy is *lfu.
+  --scan             List all keys using the SCAN command.
+  --pattern <pat>    Keys pattern when using the --scan, --bigkeys or --hotkeys
+                     options (default: *).
+  --quoted-pattern <pat> Same as --pattern, but the specified string can be
+                         quoted, in order to pass an otherwise non binary-safe string.
+  --intrinsic-latency <sec> Run a test to measure intrinsic system latency.
+                     The test will run for the specified amount of seconds.
+  --eval <file>      Send an EVAL command using the Lua script at <file>.
+  --ldb              Used with --eval enable the Redis Lua debugger.
+  --ldb-sync-mode    Like --ldb but uses the synchronous Lua debugger, in
+                     this mode the server is blocked and script changes are
+                     not rolled back from the server memory.
+  --cluster <command> [args...] [opts...]
+                     Cluster Manager command and arguments (see below).
+  --verbose          Verbose mode.
+  --no-auth-warning  Don't show warning message when using password on command
+                     line interface.
+  --help             Output this help and exit.
+  --version          Output version and exit.
+
+Cluster Manager Commands:
+  Use --cluster help to list all available cluster manager commands.
+
+Examples:
+  cat /etc/passwd | redis-cli -x set mypasswd
+  redis-cli get mypasswd
+  redis-cli -r 100 lpush mylist x
+  redis-cli -r 100 -i 1 info | grep used_memory_human:
+  redis-cli --quoted-input set '"null-\x00-separated"' value
+  redis-cli --eval myscript.lua key1 key2 , arg1 arg2 arg3
+  redis-cli --scan --pattern '*:12345*'
+
+  (Note: when using --eval the comma separates KEYS[] from ARGV[] items)
+
+When no command is given, redis-cli starts in interactive mode.
+Type "help" in interactive mode for information on available commands
+and settings.
+
+redis-stuff $ redis-cli --tls -h 142.93.221.126 -p 56679 
+^C
+redis-stuff $ redis-cli --tls -h redis-server-1.hosteddatabase.in -p 56679 
+^C
+redis-stuff $ redis-cli --tls -h redis-server-1.hosteddatabase.in -p 56680
+
+I/O error
+redis-server-1.hosteddatabase.in:56680> ping
+
+I/O error
+Error: Server closed the connection
+redis-server-1.hosteddatabase.in:56680> ping
+PONG
+redis-server-1.hosteddatabase.in:56680> 
+redis-stuff $ redis-cli --tls -h redis-server-1.hosteddatabase.in -p 56680
+redis-server-1.hosteddatabase.in:56680> PING
+PONG
+redis-server-1.hosteddatabase.in:56680> 
+redis-stuff $ redli
+2021/11/04 00:24:40 Dial dial tcp 127.0.0.1:6379: connect: connection refused
+redis-stuff $ redli --tls -h redis-server-1.hosteddatabase.in -a db376693cf0a9d38d571fb1d1d3be9f847f6ea0a736eadd8ceaa1de3fbdc9d44 -p 56679
+^C
+redis-stuff $ redli --tls -h redis-server-1.hosteddatabase.in -a db376693cf0a9d38d571fb1d1d3be9f847f6ea0a736eadd8ceaa1de3fbdc9d44 -p 56680
+Connected to 6.2.6
+> ping
+PONG
+> redis-stuff $ 
+redis-stuff $ 
+redis-stuff $ 
+redis-stuff $ redli --help
+usage: redli [<flags>] [<commands>...]
+
+Flags:
+      --help               Show context-sensitive help (also try --help-long and --help-man).
+      --debug              Enable debug mode.
+      --long               Enable long prompt with host/port
+  -u, --uri=URI            URI to connect to
+  -h, --host="127.0.0.1"   Host to connect to
+  -p, --port=6379          Port to connect to
+  -r, --redisuser=""       Username to use when connecting. Supported since Redis 6.
+  -a, --auth=AUTH          Password to use when connecting
+  -n, --ndb=0              Redis database to access
+      --tls                Enable TLS/SSL
+      --skipverify         Don't validate certificates
+      --certfile=CERTFILE  Self-signed certificate file for validation
+      --certb64=CERTB64    Self-signed certificate string as base64 for validation
+      --raw                Produce raw output
+      --eval=EVAL          Evaluate a Lua script file, follow with keys a , and args
+      --version            Show application version.
+
+Args:
+  [<commands>]  Redis commands and values
+
+redis-stuff $ 
+```
