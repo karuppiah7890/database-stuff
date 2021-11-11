@@ -133,3 +133,159 @@ Now that the password is set, let's move on to using a port other than 6379 for 
 - Allow only port 56379, a random port
 - Allow only my computer's public IP to be able to access the Redis server
 - Allow only TCP protocol communication on this port. If possible maybe even restrict it to Redis Server's RESP protocol which is based on top of TCP. RESP has different versions though, v3 being the latest I believe
+
+Now let's follow the simple way and not do firewall stuff for now
+
+Let's set the port number to 56379. Before we do configuration using `redis-cli`, we have to authenticate with the Redis Server. For this we will set the `REDISCLI_AUTH` environment variable so that we don't have to pass the password in the command line or pass it every time we use the `redis-cli` tool
+
+```bash
+export REDISCLI_AUTH="<password>"
+```
+
+Now let's set the port number to 56379
+
+```bash
+{
+    redis-cli CONFIG GET port;
+    redis-cli CONFIG SET port 56379;
+    redis-cli -p 56379 CONFIG GET port 56379;
+    redis-cli -p 56379 CONFIG REWRITE;
+    cat /etc/redis/redis.conf | grep "port 56379";
+}
+```
+
+Now we see that the port number of the Redis Server is 56379 already
+
+With port number and password set, let's see if we can connect to the Redis Server from my local machine using the virtual machine public IP
+
+I'm going to use `doctl` to check the public IP of the virtual machine. You can also use `curl ifconfig.me` or use `ifconfig` command line tool. Beware that `curl ifconfig.me` could be collecting the public IP of your virtual machine to know that it's an online virtual machine on the public Internet and could attack you or share the public IP with someone you don't want to share it to. But yeah, if you have safety measures in place like password configured and firewall to allow only trusted clients to access the Redis Server, I think you are good to go and don't have to worry about DDoS or breach attempts by cracking the Redis Server password. I'll probably try to cover firewalls in this video or another video!
+
+Now, let's check the connectivity to the Redis Server from my local machine
+
+```bash
+export REDISCLI_AUTH="<password>"
+redis-cli -p 56379 PING
+```
+
+Hmm, it doesn't seem to work. Let me check if there's any connectivity using `telnet`
+
+```bash
+telnet <ip> 56379
+```
+
+Okay, looks like there's no connectivity
+
+Well, the reason for this is, by default Redis Server binds to only the loop back network interfaces and listens for connections from local clients only, that is, clients from the virtual machine where the Redis Server is deployed. We need to fix this by binding the Redis Server to the public IP or by binding it to all network interfaces of the virtual machine - which could include different kinds of networks. So beware of what you are doing, and if you don't know what you are doing, just stick to binding to the public IP address alone maybe, or public IP address and the loop back addresses
+
+```bash
+{
+    redis-cli -p 56379 CONFIG GET bind;
+    redis-cli -p 56379 CONFIG SET bind "<ip> 127.0.0.1 -::1";
+    redis-cli -p 56379 CONFIG GET bind;
+    redis-cli -p 56379 CONFIG REWRITE;
+    cat /etc/redis/redis.conf | grep "bind";
+}
+```
+
+I'm binding the Redis Server explicitly to the public IP and the loopback interfaces. An alternative would be use
+
+```bash
+# redis-cli -p 56379 CONFIG SET bind "* -::*"
+```
+
+Which I don't recommend
+
+Now that we have bound to the network interface associated with the public IP, we can now connect to the Redis Server from my local machine
+
+Now, let's setup TLS support for the Redis Server. For TLS support, I'm going to use Let's Encrypt Certificate Authority Free Certificates and use a demo sub domain of a domain name that I own through Google Domains
+
+First, let me show how I point the DNS of the sub domain to the Redis Server's public IP so that I can prove to Let's Encrypt that I'm actually the owner of the domain name and it's records and hence I'm eligible to get the SSL certificates for the domain name and use it in my Redis Server
+
+I'm going to switch to Google Domains website in a minute. Okay, here we go
+
+Now let's add a DNS A record, with sub domain as redis-server-2 and use the Redis Server's public IP
+
+Now let's obtain the SSL Certificate using a free and open source tool called certbot
+
+Let's first install the certbot tool
+
+```bash
+{
+    sudo snap install --classic certbot;
+    sudo ln -s /snap/bin/certbot /usr/bin/certbot;
+}
+```
+
+Now let's get the SSL certificate
+
+```bash
+sudo certbot certonly --standalone
+```
+
+```bash
+ls /etc/letsencrypt/live/redis-server-2.hosteddatabase.in/
+```
+
+Now that we have the SSL certificate and the private key, let's use it to configure the Redis Server
+
+Before configuring it in the Redis Server, we need to ensure that the Redis Server can access the SSL certificate, for which we will do this to give the `redis` user running the Redis Server access to the SSL certificate. We see that it's the `redis` user that runs the Redis Server by seeing the systemd service file
+
+```bash
+cat /lib/systemd/system/redis-server.service
+```
+
+Let's give the access now!
+
+```bash
+chown -R redis:redis /etc/letsencrypt/
+```
+
+```bash
+{
+    redis-cli -p 56379 CONFIG GET tls-key-file;
+    redis-cli -p 56379 CONFIG SET tls-key-file "/etc/letsencrypt/live/redis-server-2.hosteddatabase.in/privkey.pem";
+    redis-cli -p 56379 CONFIG GET tls-key-file;
+    redis-cli -p 56379 CONFIG REWRITE;
+    cat /etc/redis/redis.conf | grep "tls-key-file";
+}
+```
+
+```bash
+{
+    redis-cli -p 56379 CONFIG GET tls-cert-file;
+    redis-cli -p 56379 CONFIG SET tls-cert-file "/etc/letsencrypt/live/redis-server-2.hosteddatabase.in/fullchain.pem";
+    redis-cli -p 56379 CONFIG GET tls-cert-file;
+    redis-cli -p 56379 CONFIG REWRITE;
+    cat /etc/redis/redis.conf | grep "tls-cert-file";
+}
+```
+
+Now we have configured the Redis Server with SSL certificate and private key. Let's also set the TLS port and disable the non-TLS port
+
+```bash
+{
+    redis-cli -p 56379 CONFIG GET tls-port;
+    redis-cli -p 56379 CONFIG SET tls-port 56380;
+    redis-cli -p 56379 CONFIG GET tls-port;
+    redis-cli -p 56379 CONFIG REWRITE;
+    cat /etc/redis/redis.conf | grep "tls-port 56380";
+}
+```
+
+```bash
+{
+    redis-cli -p 56379 CONFIG GET port;
+    redis-cli -p 56379 CONFIG SET port 0;
+    redis-cli -p 56379 CONFIG GET port;
+    redis-cli -p 56379 CONFIG REWRITE;
+    cat /etc/redis/redis.conf | grep "port 0";
+}
+```
+
+Now we can connect to this Redis Server from my local using `redli` tool from IBM like this
+
+```bash
+redli --tls -h redis-server-2.hosteddatabase.in -a <password> -p 56380
+```
+
+That's all I had for this video, I'll see you in the next one! Bye!
