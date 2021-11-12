@@ -370,7 +370,17 @@ redis-cli -p 56380 CONFIG GET port;
 Now we can connect to this Redis Server from my local using `redis-cli` or using `redli`, which is another Redis Client CLI tool from IBM. We can use `redli` like this
 
 ```bash
-redli --tls -h redis-server-1.hosteddatabase.in -a <password> -p 56380
+redli --tls -h redis-server-2.hosteddatabase.in -a <password> -p 56380
 ```
+
+With that, you can actually delete the Digital Ocean droplet in case this was only a test setup or a proof of concept or a dummy setup. I'm going to delete it like this
+
+```bash
+doctl compute droplet delete redis-server --force;
+
+doctl compute droplet list;
+```
+
+And it's deleted!
 
 That's all I had for this video! I hope you learned something! Let me know your comments in the comments section! Thanks for watching! I'll see you in the next one! Bubye!
