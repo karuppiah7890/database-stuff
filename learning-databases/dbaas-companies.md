@@ -245,3 +245,47 @@ ClusterControl - https://severalnines.com/product/clustercontrol
 CCX - https://ccx.severalnines.com/
 
 Backup Ninja - https://backup.ninja/
+
+# Cloud Clusters / DBaaS Clusters
+
+DBaaS - https://www.db-clusters.com/
+
+Redis - https://www.rclusters.com/
+
+MySQL - https://www.sqlclusters.com/
+
+MariaDB - https://www.maclusters.com/
+
+PostgreSQL - https://www.pgsclusters.com/
+
+CockroachDB - https://www.cclusters.com/
+
+Microsoft SQL (MSSQL) Server - https://www.msclusters.com/
+
+Oracle Server - https://www.oclusters.com/
+
+ElasticSearch - https://www.esclusters.com/
+
+Kafka - https://www.kaclusters.com/ (not exactly DBaaS, more of Message Broker as a Service)
+
+Prometheus (time series DB) - https://www.pclusters.com/
+
+Cassandra - https://www.caclusters.com/
+
+Misc non-DBaaS stuff -
+
+https://www.cloudclusters.io/
+
+Magneto - https://www.mgtclusters.com/
+
+OpenCart - https://www.occlusters.com/
+
+WordPress - https://www.wp-clusters.com/
+
+K8s hosting - https://www.kubeclusters.com/
+
+Drupal - https://www.dp-clusters.com/
+
+Moodle - https://www.moclusters.com/
+
+Odoo - https://www.odclusters.com/
