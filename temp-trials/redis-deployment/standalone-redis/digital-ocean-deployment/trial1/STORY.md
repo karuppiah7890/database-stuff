@@ -7323,3 +7323,1243 @@ Args:
 
 redis-stuff $ 
 ```
+
+---
+
+```bash
+root@redis-server:~# sudo certbot certonly --standalone --hekp
+usage: 
+  certbot [SUBCOMMAND] [options] [-d DOMAIN] [-d DOMAIN] ...
+
+Certbot can obtain and install HTTPS/TLS/SSL certificates.  By default,
+it will attempt to use a webserver both for obtaining and installing the
+certificate. 
+certbot: error: unrecognized arguments: --hekp
+root@redis-server:~# sudo certbot certonly --standalone --help
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  certbot [SUBCOMMAND] [options] [-d DOMAIN] [-d DOMAIN] ...
+
+Certbot can obtain and install HTTPS/TLS/SSL certificates.  By default,
+it will attempt to use a webserver both for obtaining and installing the
+certificate. The most common SUBCOMMANDS and flags are:
+
+obtain, install, and renew certificates:
+    (default) run   Obtain & install a certificate in your current webserver
+    certonly        Obtain or renew a certificate, but do not install it
+    renew           Renew all previously obtained certificates that are near
+expiry
+    enhance         Add security enhancements to your existing configuration
+   -d DOMAINS       Comma-separated list of domains to obtain a certificate for
+
+  --apache          Use the Apache plugin for authentication & installation
+  --standalone      Run a standalone webserver for authentication
+  --nginx           Use the Nginx plugin for authentication & installation
+  --webroot         Place files in a server's webroot folder for authentication
+  --manual          Obtain certificates interactively, or using shell script
+hooks
+
+   -n               Run non-interactively
+  --test-cert       Obtain a test certificate from a staging server
+  --dry-run         Test "renew" or "certonly" without saving any certificates
+to disk
+
+manage certificates:
+    certificates    Display information about certificates you have from Certbot
+    revoke          Revoke a certificate (supply --cert-name or --cert-path)
+    delete          Delete a certificate (supply --cert-name)
+
+manage your account:
+    register        Create an ACME account
+    unregister      Deactivate an ACME account
+    update_account  Update an ACME account
+  --agree-tos       Agree to the ACME server's Subscriber Agreement
+   -m EMAIL         Email address for important account notifications
+
+More detailed help:
+
+  -h, --help [TOPIC]    print this message, or detailed help on a topic;
+                        the available TOPICS are:
+
+   all, automation, commands, paths, security, testing, or any of the
+   subcommands or plugins (certonly, renew, install, register, nginx,
+   apache, standalone, webroot, etc.)
+  -h all                print a detailed help page including all topics
+  --version             print the version number
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+root@redis-server:~# sudo certbot certonly --standalone --help automation
+usage: 
+  certbot [SUBCOMMAND] [options] [-d DOMAIN] [-d DOMAIN] ...
+
+Certbot can obtain and install HTTPS/TLS/SSL certificates.  By default,
+it will attempt to use a webserver both for obtaining and installing the
+certificate. 
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c CONFIG_FILE, --config CONFIG_FILE
+                        path to config file (default: /etc/letsencrypt/cli.ini and ~/.config/letsencrypt/cli.ini)
+
+automation:
+  Flags for automating execution & other tweaks
+
+  -n, --non-interactive, --noninteractive
+                        Run without ever asking for user input. This may require additional command line flags; the client
+                        will try to explain which ones are required if it finds one missing (default: False)
+  --register-unsafely-without-email
+                        Specifying this flag enables registering an account with no email address. This is strongly
+                        discouraged, because you will be unable to receive notice about impending expiration or revocation
+                        of your certificates or problems with your Certbot installation that will lead to failure to renew.
+                        (default: False)
+  -m EMAIL, --email EMAIL
+                        Email used for registration and recovery contact. Use comma to register multiple emails, ex:
+                        u1@example.com,u2@example.com. (default: Ask).
+  --eff-email           Share your e-mail address with EFF (default: None)
+  --no-eff-email        Don't share your e-mail address with EFF (default: None)
+  --keep-until-expiring, --keep, --reinstall
+                        If the requested certificate matches an existing certificate, always keep the existing one until it
+                        is due for renewal (for the 'run' subcommand this means reinstall the existing certificate).
+                        (default: Ask)
+  --expand              If an existing certificate is a strict subset of the requested names, always expand and replace it
+                        with the additional names. (default: Ask)
+  --version             show program's version number and exit
+  --force-renewal, --renew-by-default
+                        If a certificate already exists for the requested domains, renew it now, regardless of whether it is
+                        near expiry. (Often --keep-until-expiring is more appropriate). Also implies --expand. (default:
+                        False)
+  --renew-with-new-domains
+                        If a certificate already exists for the requested certificate name but does not match the requested
+                        domains, renew it now, regardless of whether it is near expiry. (default: False)
+  --reuse-key           When renewing, use the same private key as the existing certificate. (default: False)
+  --no-reuse-key        When renewing, do not use the same private key as the existing certificate. Not reusing private keys
+                        is the default behavior of Certbot. This option may be used to unset --reuse-key on an existing
+                        certificate. (default: False)
+  --allow-subset-of-names
+                        When performing domain validation, do not consider it a failure if authorizations can not be
+                        obtained for a strict subset of the requested domains. This may be useful for allowing renewals for
+                        multiple domains to succeed even if some domains no longer point at this system. This option cannot
+                        be used with --csr. (default: False)
+  --agree-tos           Agree to the ACME Subscriber Agreement (default: Ask)
+  --account ACCOUNT_ID  Account ID to use (default: None)
+  --duplicate           Allow making a certificate lineage that duplicates an existing one (both can be renewed in parallel)
+                        (default: False)
+  -q, --quiet           Silence all output except errors. Useful for automation via cron. Implies --non-interactive.
+                        (default: False)
+root@redis-server:~# sudo certbot certonly --standalone --non-interactive
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+You should register before running non-interactively, or provide --agree-tos and --email <email_address> flags.
+Ask for help or search for solutions at https://community.letsencrypt.org. See the logfile /var/log/letsencrypt/letsencrypt.log or re-run Certbot with -v for more details.
+root@redis-server:~# sudo certbot certonly --standalone --non-interactive --agree-tos --email karuppiah7890@gmail.com
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Account registered.
+Missing command line flag or config entry for this setting:
+Please enter the domain name(s) you would like on your certificate (comma and/or space separated)
+
+(You can set this with the --domains flag)
+Ask for help or search for solutions at https://community.letsencrypt.org. See the logfile /var/log/letsencrypt/letsencrypt.log or re-run Certbot with -v for more details.
+root@redis-server:~# sudo certbot certonly --standalone --non-interactive --agree-tos --email karuppiah7890@gmail.com --domains redis-server-1.hosteddatabase.in
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Requesting a certificate for redis-server-1.hosteddatabase.in
+
+Certbot failed to authenticate some domains (authenticator: standalone). The Certificate Authority reported these problems:
+  Domain: redis-server-1.hosteddatabase.in
+  Type:   dns
+  Detail: DNS problem: NXDOMAIN looking up A for redis-server-1.hosteddatabase.in - check that a DNS record exists for this domain
+
+Hint: The Certificate Authority failed to download the challenge files from the temporary standalone webserver started by Certbot on port 80. Ensure that the listed domains point to this machine and that it can accept inbound connections from the internet.
+
+Some challenges have failed.
+Ask for help or search for solutions at https://community.letsencrypt.org. See the logfile /var/log/letsencrypt/letsencrypt.log or re-run Certbot with -v for more details.
+root@redis-server:~# sudo certbot certonly --standalone --non-interactive --agree-tos --email karuppiah7890@gmail.com --domains redis-server-1.hosteddatabase.in
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Requesting a certificate for redis-server-1.hosteddatabase.in
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
+This certificate expires on 2022-02-12.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+root@redis-server:~# 
+```
+
+---
+
+[TODO]
+- Learn how certificate rotation works and force a certificate rotation and see if Redis Server picks up the new certificate - this can happen when certificate is going to expire or when IP address of the Redis Server changes. IP address change is big - we might just get a new SSL certificate I guess, it doesn't make sense to call it a certificate rotation!
+
+---
+
+```bash
+root@redis-server:~# ./run-redis.sh 
+./run-redis.sh: line 7: $1: unbound variable
+root@redis-server:~# ./run-redis.sh karuppiah7890@gmail.com
+./run-redis.sh: line 8: $2: unbound variable
+root@redis-server:~# ./run-redis.sh karuppiah7890@gmail.com redis-server-1.hosteddatabase.in 139.59.20.169 56380
+Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
+Get:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease [114 kB]                                        
+Hit:3 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                        
+Get:4 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease [101 kB]                                      
+Get:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease [18.0 kB]
+Get:6 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]                  
+Get:7 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 Packages [1344 kB]
+Get:8 http://mirrors.digitalocean.com/ubuntu focal-updates/main Translation-en [276 kB]
+Get:9 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 c-n-f Metadata [14.5 kB]  
+Get:10 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 Packages [569 kB]
+Get:11 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted Translation-en [81.6 kB]                      
+Get:12 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 c-n-f Metadata [528 B]   
+Get:13 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 Packages [1016 B]
+Get:14 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 Packages [875 kB]
+Get:15 http://mirrors.digitalocean.com/ubuntu focal-updates/universe Translation-en [189 kB]               
+Get:16 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 c-n-f Metadata [19.5 kB]              
+Get:17 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main Translation-en [584 B]                       
+Get:18 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse amd64 Packages [24.5 kB]                
+Get:19 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse Translation-en [6856 B]
+Get:20 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [987 kB]
+Get:21 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse amd64 c-n-f Metadata [616 B]
+Get:22 http://mirrors.digitalocean.com/ubuntu focal-backports/universe amd64 Packages [6592 B]
+Get:23 http://mirrors.digitalocean.com/ubuntu focal-backports/universe Translation-en [3292 B]
+Get:24 http://mirrors.digitalocean.com/ubuntu focal-backports/universe amd64 c-n-f Metadata [580 B]
+Get:25 http://security.ubuntu.com/ubuntu focal-security/main Translation-en [183 kB]
+Get:26 http://security.ubuntu.com/ubuntu focal-security/main amd64 c-n-f Metadata [8880 B]
+Get:27 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [526 kB]
+Get:28 http://security.ubuntu.com/ubuntu focal-security/restricted Translation-en [75.4 kB]
+Get:29 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 c-n-f Metadata [528 B]
+Get:30 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [651 kB]
+Get:31 http://security.ubuntu.com/ubuntu focal-security/universe Translation-en [107 kB]
+Get:32 http://security.ubuntu.com/ubuntu focal-security/universe amd64 c-n-f Metadata [12.9 kB]
+Get:33 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [21.9 kB]
+Get:34 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 c-n-f Metadata [540 B]
+Fetched 6333 kB in 3s (1872 kB/s)                
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  redis-tools
+Suggested packages:
+  ruby-redis
+The following NEW packages will be installed:
+  redis-server redis-tools
+0 upgraded, 2 newly installed, 0 to remove and 29 not upgraded.
+Need to get 1150 kB of archives.
+After this operation, 6794 kB of additional disk space will be used.
+Get:1 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-tools amd64 6:6.2.6-1rl1~focal1 [1067 kB]
+Get:2 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-server amd64 6:6.2.6-1rl1~focal1 [82.4 kB]
+Fetched 1150 kB in 2s (570 kB/s)   
+Selecting previously unselected package redis-tools.
+(Reading database ... 63555 files and directories currently installed.)
+Preparing to unpack .../redis-tools_6%3a6.2.6-1rl1~focal1_amd64.deb ...
+Unpacking redis-tools (6:6.2.6-1rl1~focal1) ...
+Selecting previously unselected package redis-server.
+Preparing to unpack .../redis-server_6%3a6.2.6-1rl1~focal1_amd64.deb ...
+Unpacking redis-server (6:6.2.6-1rl1~focal1) ...
+Setting up redis-tools (6:6.2.6-1rl1~focal1) ...
+Setting up redis-server (6:6.2.6-1rl1~focal1) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for systemd (245.4-4ubuntu3.13) ...
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Sun 2021-11-14 06:59:16 UTC; 57s ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 3799 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.3M
+     CGroup: /system.slice/redis-server.service
+             └─3799 /usr/bin/redis-server 127.0.0.1:6379
+
+Nov 14 06:59:16 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 14 06:59:16 redis-server systemd[1]: Started Advanced key-value store.
+PONG
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:3799
+process_supervised:systemd
+run_id:9c42dc48ea4c192020d9c5f197671d21d21d1b3e
+tcp_port:6379
+server_time_usec:1636873214404646
+uptime_in_seconds:58
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9483262
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
+___ Begin jemalloc statistics ___
+--- End jemalloc statistics ---
+1) "requirepass"
+2) ""
+OK
+1) "requirepass"
+2) "88a323691f8122dbe5173c65db0f6223e1dab8e8132d843afad55be5449f3a8f"
+OK
+root@redis-server:~# 
+root@redis-server:~# sudo snap install --classic certbot;
+snap "certbot" is already installed, see 'snap help refresh'
+root@redis-server:~# echo $?
+0
+root@redis-server:~# sudo ln -s /snap/bin/certbot /usr/bin/certbot;
+ln: failed to create symbolic link '/usr/bin/certbot': File exists
+root@redis-server:~# echo $?
+1
+root@redis-server:~# sudo ln -f -s /snap/bin/certbot /usr/bin/certbot;
+root@redis-server:~# man ln
+root@redis-server:~# sudo ln --force --symbolic /snap/bin/certbot /usr/bin/certbot;
+root@redis-server:~# add-apt-repository ppa:redislabs/redis --yes;
+Hit:1 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease
+Hit:2 http://mirrors.digitalocean.com/ubuntu focal InRelease                                                         
+Hit:3 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease                                                 
+Hit:4 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease                                
+Hit:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease                            
+Hit:6 http://security.ubuntu.com/ubuntu focal-security InRelease
+Reading package lists... Done
+root@redis-server:~# echo $?
+0
+root@redis-server:~# apt install redis-server --yes;
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+redis-server is already the newest version (6:6.2.6-1rl1~focal1).
+0 upgraded, 0 newly installed, 0 to remove and 29 not upgraded.
+root@redis-server:~# echo $?
+0
+root@redis-server:~# 
+```
+
+```bash
+root@redis-server:~# ./run-redis.sh karuppiah7890@gmail.com redis-server-1.hosteddatabase.in 139.59.20.169 56380
++ email=karuppiah7890@gmail.com
++ domain_name=redis-server-1.hosteddatabase.in
++ ip=139.59.20.169
++ port=56380
++ [[ -z karuppiah7890@gmail.com ]]
++ [[ -z redis-server-1.hosteddatabase.in ]]
++ [[ -z 139.59.20.169 ]]
++ [[ -z 56380 ]]
++ install_redis
++ add-apt-repository ppa:redislabs/redis --yes
+Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
+Hit:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease                                                 
+Hit:3 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease                                               
+Hit:4 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                        
+Hit:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease                            
+Hit:6 http://security.ubuntu.com/ubuntu focal-security InRelease           
+Reading package lists... Done
++ apt install redis-server --yes
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+redis-server is already the newest version (6:6.2.6-1rl1~focal1).
+0 upgraded, 0 newly installed, 0 to remove and 29 not upgraded.
++ systemctl status redis-server
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Sun 2021-11-14 06:59:16 UTC; 7min ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 3799 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.5M
+     CGroup: /system.slice/redis-server.service
+             └─3799 /usr/bin/redis-server 127.0.0.1:6379
+
+Nov 14 06:59:16 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 14 06:59:16 redis-server systemd[1]: Started Advanced key-value store.
++ redis-cli -e PING
+PONG
++ redis-cli -e INFO server
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:3799
+process_supervised:systemd
+run_id:9c42dc48ea4c192020d9c5f197671d21d21d1b3e
+tcp_port:6379
+server_time_usec:1636873613395539
+uptime_in_seconds:457
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9483661
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
++ check_malloc_is_jemalloc
++ grep jemalloc
++ redis-cli -e MEMORY MALLOC-STATS
+___ Begin jemalloc statistics ___
+--- End jemalloc statistics ---
++ configure_password
+++ redis-cli -e ACL GENPASS
++ password=192e55ddf80afb981ba6bfd615cddbebf52d3acafc4693f6446ece449fe19594
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "88a323691f8122dbe5173c65db0f6223e1dab8e8132d843afad55be5449f3a8f"
++ redis-cli -e CONFIG SET requirepass 192e55ddf80afb981ba6bfd615cddbebf52d3acafc4693f6446ece449fe19594
+OK
++ export REDISCLI_AUTH=192e55ddf80afb981ba6bfd615cddbebf52d3acafc4693f6446ece449fe19594
++ REDISCLI_AUTH=192e55ddf80afb981ba6bfd615cddbebf52d3acafc4693f6446ece449fe19594
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "192e55ddf80afb981ba6bfd615cddbebf52d3acafc4693f6446ece449fe19594"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'requirepass 192e55ddf80afb981ba6bfd615cddbebf52d3acafc4693f6446ece449fe19594'
++ cat /etc/redis/redis.conf
+root@redis-server:~# cat /etc/redis/redis.conf | grep 'requirepass 192e55ddf80afb981ba6bfd615cddbebf52d3acafc4693f6446ece449fe19594'
+root@redis-server:~# echo $?
+1
+root@redis-server:~# cat /etc/redis/redis.conf | grep 'requirepass "192e55ddf80afb981ba6bfd615cddbebf52d3acafc4693f6446ece449fe19594"'
+requirepass "192e55ddf80afb981ba6bfd615cddbebf52d3acafc4693f6446ece449fe19594"
+root@redis-server:~# cat /etc/redis/redis.conf | grep 'bind'
+# By default, if no "bind" configuration directive is specified, Redis listens
+# the "bind" configuration directive, followed by one or more IP addresses.
+# bind 192.168.1.100 10.0.0.1     # listens on two specific IPv4 addresses
+# bind 127.0.0.1 ::1              # listens on loopback IPv4 and IPv6
+# bind * -::*                     # like the default, all available interfaces
+# internet, binding to all the interfaces is dangerous and will expose the
+# following bind directive, that will force Redis to listen only on the
+bind 127.0.0.1 -::1
+# 1) The server is not binding explicitly to a set of addresses using the
+#    "bind" directive.
+# are explicitly listed using the "bind" directive.
+root@redis-server:~# 
+```
+
+```bash
+root@redis-server:~# ./run-redis.sh karuppiah7890@gmail.com redis-server-1.hosteddatabase.in 139.59.20.169 56380
++ email=karuppiah7890@gmail.com
++ domain_name=redis-server-1.hosteddatabase.in
++ ip=139.59.20.169
++ port=56380
++ [[ -z karuppiah7890@gmail.com ]]
++ [[ -z redis-server-1.hosteddatabase.in ]]
++ [[ -z 139.59.20.169 ]]
++ [[ -z 56380 ]]
++ install_redis
++ add-apt-repository ppa:redislabs/redis --yes
+Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
+Hit:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease                                                 
+Hit:3 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease                                               
+Hit:4 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                        
+Hit:5 http://security.ubuntu.com/ubuntu focal-security InRelease    
+Hit:6 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease
+Reading package lists... Done
++ apt install redis-server --yes
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+redis-server is already the newest version (6:6.2.6-1rl1~focal1).
+0 upgraded, 0 newly installed, 0 to remove and 29 not upgraded.
++ systemctl status redis-server
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Sun 2021-11-14 06:59:16 UTC; 9min ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 3799 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.8M
+     CGroup: /system.slice/redis-server.service
+             └─3799 /usr/bin/redis-server 127.0.0.1:6379
+
+Nov 14 06:59:16 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 14 06:59:16 redis-server systemd[1]: Started Advanced key-value store.
++ redis-cli -e PING
+PONG
++ redis-cli -e INFO server
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:3799
+process_supervised:systemd
+run_id:9c42dc48ea4c192020d9c5f197671d21d21d1b3e
+tcp_port:6379
+server_time_usec:1636873747287020
+uptime_in_seconds:591
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9483795
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
++ check_malloc_is_jemalloc
++ grep jemalloc
++ redis-cli -e MEMORY MALLOC-STATS
+___ Begin jemalloc statistics ___
+--- End jemalloc statistics ---
++ configure_password
+++ redis-cli -e ACL GENPASS
++ password=c87af88879be95c425eeecc24517c30f47a37fea558b9117cd5fe791ac873669
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "192e55ddf80afb981ba6bfd615cddbebf52d3acafc4693f6446ece449fe19594"
++ redis-cli -e CONFIG SET requirepass c87af88879be95c425eeecc24517c30f47a37fea558b9117cd5fe791ac873669
+OK
++ export REDISCLI_AUTH=c87af88879be95c425eeecc24517c30f47a37fea558b9117cd5fe791ac873669
++ REDISCLI_AUTH=c87af88879be95c425eeecc24517c30f47a37fea558b9117cd5fe791ac873669
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "c87af88879be95c425eeecc24517c30f47a37fea558b9117cd5fe791ac873669"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'requirepass "c87af88879be95c425eeecc24517c30f47a37fea558b9117cd5fe791ac873669"'
++ cat /etc/redis/redis.conf
+requirepass "c87af88879be95c425eeecc24517c30f47a37fea558b9117cd5fe791ac873669"
++ install_certbot
++ sudo snap install --classic certbot
+snap "certbot" is already installed, see 'snap help refresh'
++ sudo ln --force --symbolic /snap/bin/certbot /usr/bin/certbot
++ obtain_ssl_certificate
++ sudo certbot certonly --standalone --non-interactive --agree-tos --email karuppiah7890@gmail.com --domains redis-server-1.hosteddatabase.in
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Certificate not yet due for renewal
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Certificate not yet due for renewal; no action taken.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
++ give_redis_user_access_to_ssl_certificate
++ chown -R redis:redis /etc/letsencrypt/
++ configure_tls
++ configure_private_key
++ private_key_path=/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) ""
++ redis-cli -e CONFIG SET tls-key-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
+OK
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-key-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem'
++ cat /etc/redis/redis.conf
+root@redis-server:~# cat /etc/redis/redis.conf | grep 'tls-key-file'
+# tls-key-file redis.key
+# tls-key-file-pass secret
+tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
+root@redis-server:~# 
+```
+
+```bash
+root@redis-server:~# export REDISCLI_AUTH=c87af88879be95c425eeecc24517c30f47a37fea558b9117cd5fe791ac873669
+root@redis-server:~# ./run-redis.sh karuppiah7890@gmail.com redis-server-1.hosteddatabase.in 139.59.20.169 56380
++ email=karuppiah7890@gmail.com
++ domain_name=redis-server-1.hosteddatabase.in
++ ip=139.59.20.169
++ port=56380
++ [[ -z karuppiah7890@gmail.com ]]
++ [[ -z redis-server-1.hosteddatabase.in ]]
++ [[ -z 139.59.20.169 ]]
++ [[ -z 56380 ]]
++ install_redis
++ add-apt-repository ppa:redislabs/redis --yes
+Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
+Hit:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease                                                 
+Hit:3 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                        
+Hit:4 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease                                               
+Hit:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease                            
+Hit:6 http://security.ubuntu.com/ubuntu focal-security InRelease
+Reading package lists... Done
++ apt install redis-server --yes
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+redis-server is already the newest version (6:6.2.6-1rl1~focal1).
+0 upgraded, 0 newly installed, 0 to remove and 29 not upgraded.
++ systemctl status redis-server
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Sun 2021-11-14 06:59:16 UTC; 11min ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 3799 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.8M
+     CGroup: /system.slice/redis-server.service
+             └─3799 /usr/bin/redis-server 127.0.0.1:6379
+
+Nov 14 06:59:16 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 14 06:59:16 redis-server systemd[1]: Started Advanced key-value store.
++ redis-cli -e PING
+PONG
++ redis-cli -e INFO server
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:3799
+process_supervised:systemd
+run_id:9c42dc48ea4c192020d9c5f197671d21d21d1b3e
+tcp_port:6379
+server_time_usec:1636873871520907
+uptime_in_seconds:715
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9483919
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
++ check_malloc_is_jemalloc
++ grep jemalloc
++ redis-cli -e MEMORY MALLOC-STATS
+___ Begin jemalloc statistics ___
+--- End jemalloc statistics ---
++ configure_password
+++ redis-cli -e ACL GENPASS
++ password=77dad123bec77ebc1c21aa684c57481994543eff4d5f9ef6fab317247ac23487
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "c87af88879be95c425eeecc24517c30f47a37fea558b9117cd5fe791ac873669"
++ redis-cli -e CONFIG SET requirepass 77dad123bec77ebc1c21aa684c57481994543eff4d5f9ef6fab317247ac23487
+OK
++ export REDISCLI_AUTH=77dad123bec77ebc1c21aa684c57481994543eff4d5f9ef6fab317247ac23487
++ REDISCLI_AUTH=77dad123bec77ebc1c21aa684c57481994543eff4d5f9ef6fab317247ac23487
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "77dad123bec77ebc1c21aa684c57481994543eff4d5f9ef6fab317247ac23487"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'requirepass "77dad123bec77ebc1c21aa684c57481994543eff4d5f9ef6fab317247ac23487"'
++ cat /etc/redis/redis.conf
+requirepass "77dad123bec77ebc1c21aa684c57481994543eff4d5f9ef6fab317247ac23487"
++ install_certbot
++ sudo snap install --classic certbot
+snap "certbot" is already installed, see 'snap help refresh'
++ sudo ln --force --symbolic /snap/bin/certbot /usr/bin/certbot
++ obtain_ssl_certificate
++ sudo certbot certonly --standalone --non-interactive --agree-tos --email karuppiah7890@gmail.com --domains redis-server-1.hosteddatabase.in
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Certificate not yet due for renewal
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Certificate not yet due for renewal; no action taken.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
++ give_redis_user_access_to_ssl_certificate
++ chown -R redis:redis /etc/letsencrypt/
++ configure_tls
++ configure_private_key
++ private_key_path=/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ redis-cli -e CONFIG SET tls-key-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
+OK
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"'
++ cat /etc/redis/redis.conf
+tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ configure_ssl_certificate
++ ssl_certificate_path=/etc/letsencrypt/live/redis-server-2.hosteddatabase.in/fullchain.pem
++ redis-cli -e CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) ""
++ redis-cli -e CONFIG SET tls-cert-file /etc/letsencrypt/live/redis-server-2.hosteddatabase.in/fullchain.pem
+OK
++ redis-cli -e CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) "/etc/letsencrypt/live/redis-server-2.hosteddatabase.in/fullchain.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-cert-file "/etc/letsencrypt/live/redis-server-2.hosteddatabase.in/fullchain.pem"'
++ cat /etc/redis/redis.conf
+tls-cert-file "/etc/letsencrypt/live/redis-server-2.hosteddatabase.in/fullchain.pem"
++ disable_tls_auth
++ redis-cli -e CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "yes"
++ redis-cli -e CONFIG SET tls-auth-clients no
+OK
++ redis-cli -e CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "no"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-auth-clients no'
++ cat /etc/redis/redis.conf
+# tls-auth-clients no
+tls-auth-clients no
++ configure_tls_port
++ redis-cli -e CONFIG GET tls-port
+1) "tls-port"
+2) "0"
++ redis-cli -e CONFIG SET tls-port 56380
+ERR Invalid argument '56380' for CONFIG SET 'tls-port' - Unable to update TLS configuration. Check server logs.
+root@redis-server:~# cat /var/log/redis/redis-server.log 
+3799:C 14 Nov 2021 06:59:16.931 * Supervised by systemd. Please make sure you set appropriate values for TimeoutStartSec and TimeoutStopSec in your service unit.
+3799:C 14 Nov 2021 06:59:16.931 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+3799:C 14 Nov 2021 06:59:16.931 # Redis version=6.2.6, bits=64, commit=00000000, modified=0, pid=3799, just started
+3799:C 14 Nov 2021 06:59:16.931 # Configuration loaded
+3799:M 14 Nov 2021 06:59:16.932 * monotonic clock: POSIX clock_gettime
+3799:M 14 Nov 2021 06:59:16.939 * Running mode=standalone, port=6379.
+3799:M 14 Nov 2021 06:59:16.939 # Server initialized
+3799:M 14 Nov 2021 06:59:16.939 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+3799:M 14 Nov 2021 06:59:16.942 * Ready to accept connections
+3799:M 14 Nov 2021 07:00:14.437 # CONFIG REWRITE executed with success.
+3799:M 14 Nov 2021 07:06:53.437 # CONFIG REWRITE executed with success.
+3799:M 14 Nov 2021 07:09:07.319 # CONFIG REWRITE executed with success.
+3799:M 14 Nov 2021 07:09:10.056 # CONFIG REWRITE executed with success.
+3799:M 14 Nov 2021 07:11:11.551 # CONFIG REWRITE executed with success.
+3799:M 14 Nov 2021 07:11:13.813 # CONFIG REWRITE executed with success.
+3799:M 14 Nov 2021 07:11:13.849 # CONFIG REWRITE executed with success.
+3799:M 14 Nov 2021 07:11:13.879 # CONFIG REWRITE executed with success.
+3799:M 14 Nov 2021 07:11:13.890 # Failed to load certificate: /etc/letsencrypt/live/redis-server-2.hosteddatabase.in/fullchain.pem: error:02001002:system library:fopen:No such file or directory
+root@redis-server:~# 
+```
+
+```bash
+root@redis-server:~# ./run-redis.sh karuppiah7890@gmail.com redis-server-1.hosteddatabase.in 139.59.20.169 56380
++ email=karuppiah7890@gmail.com
++ domain_name=redis-server-1.hosteddatabase.in
++ ip=139.59.20.169
++ port=56380
++ [[ -z karuppiah7890@gmail.com ]]
++ [[ -z redis-server-1.hosteddatabase.in ]]
++ [[ -z 139.59.20.169 ]]
++ [[ -z 56380 ]]
++ install_redis
++ add-apt-repository ppa:redislabs/redis --yes
+Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
+Hit:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease                                                 
+Hit:3 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease                                               
+Hit:4 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                        
+Hit:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease
+Hit:6 http://security.ubuntu.com/ubuntu focal-security InRelease
+Reading package lists... Done
++ apt install redis-server --yes
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+redis-server is already the newest version (6:6.2.6-1rl1~focal1).
+0 upgraded, 0 newly installed, 0 to remove and 29 not upgraded.
++ systemctl status redis-server
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Sun 2021-11-14 06:59:16 UTC; 14min ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 3799 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.7M
+     CGroup: /system.slice/redis-server.service
+             └─3799 /usr/bin/redis-server 127.0.0.1:6379
+
+Nov 14 06:59:16 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 14 06:59:16 redis-server systemd[1]: Started Advanced key-value store.
++ redis-cli -e PING
+PONG
++ redis-cli -e INFO server
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:3799
+process_supervised:systemd
+run_id:9c42dc48ea4c192020d9c5f197671d21d21d1b3e
+tcp_port:6379
+server_time_usec:1636874054478261
+uptime_in_seconds:898
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9484102
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
++ check_malloc_is_jemalloc
++ grep jemalloc
++ redis-cli -e MEMORY MALLOC-STATS
+___ Begin jemalloc statistics ___
+--- End jemalloc statistics ---
++ configure_password
+++ redis-cli -e ACL GENPASS
++ password=23c88af01d40347e5c7f25358837ed0dc89eb24d049c81f59648576fb73232d4
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "77dad123bec77ebc1c21aa684c57481994543eff4d5f9ef6fab317247ac23487"
++ redis-cli -e CONFIG SET requirepass 23c88af01d40347e5c7f25358837ed0dc89eb24d049c81f59648576fb73232d4
+OK
++ export REDISCLI_AUTH=23c88af01d40347e5c7f25358837ed0dc89eb24d049c81f59648576fb73232d4
++ REDISCLI_AUTH=23c88af01d40347e5c7f25358837ed0dc89eb24d049c81f59648576fb73232d4
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "23c88af01d40347e5c7f25358837ed0dc89eb24d049c81f59648576fb73232d4"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'requirepass "23c88af01d40347e5c7f25358837ed0dc89eb24d049c81f59648576fb73232d4"'
++ cat /etc/redis/redis.conf
+requirepass "23c88af01d40347e5c7f25358837ed0dc89eb24d049c81f59648576fb73232d4"
++ install_certbot
++ sudo snap install --classic certbot
+snap "certbot" is already installed, see 'snap help refresh'
++ sudo ln --force --symbolic /snap/bin/certbot /usr/bin/certbot
++ obtain_ssl_certificate
++ sudo certbot certonly --standalone --non-interactive --agree-tos --email karuppiah7890@gmail.com --domains redis-server-1.hosteddatabase.in
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Certificate not yet due for renewal
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Certificate not yet due for renewal; no action taken.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
++ give_redis_user_access_to_ssl_certificate
++ chown -R redis:redis /etc/letsencrypt/
++ configure_tls
++ configure_private_key
++ private_key_path=/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ redis-cli -e CONFIG SET tls-key-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
+OK
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"'
++ cat /etc/redis/redis.conf
+tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ configure_ssl_certificate
++ ssl_certificate_path=/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
++ redis-cli -e CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) "/etc/letsencrypt/live/redis-server-2.hosteddatabase.in/fullchain.pem"
++ redis-cli -e CONFIG SET tls-cert-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+OK
++ redis-cli -e CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"'
++ cat /etc/redis/redis.conf
+tls-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
++ disable_tls_auth
++ redis-cli -e CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "no"
++ redis-cli -e CONFIG SET tls-auth-clients no
+OK
++ redis-cli -e CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "no"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-auth-clients no'
++ cat /etc/redis/redis.conf
+# tls-auth-clients no
+tls-auth-clients no
++ configure_tls_port
++ redis-cli -e CONFIG GET tls-port
+1) "tls-port"
+2) "0"
++ redis-cli -e CONFIG SET tls-port 56380
+OK
++ redis-cli -e CONFIG GET tls-port
+1) "tls-port"
+2) "56380"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-port 56380'
++ cat /etc/redis/redis.conf
+tls-port 56380
++ disable_non_tls_port
++ redis-cli -e -p 56380 CONFIG GET port
+
+I/O error
+root@redis-server:~# 
+```
+
+```bash
+root@redis-server:~# ./run-redis.sh karuppiah7890@gmail.com redis-server-1.hosteddatabase.in 139.59.20.169 56380
++ email=karuppiah7890@gmail.com
++ domain_name=redis-server-1.hosteddatabase.in
++ ip=139.59.20.169
++ tls_port=56380
++ [[ -z karuppiah7890@gmail.com ]]
++ [[ -z redis-server-1.hosteddatabase.in ]]
++ [[ -z 139.59.20.169 ]]
++ [[ -z 56380 ]]
++ install_redis
++ add-apt-repository ppa:redislabs/redis --yes
+Hit:1 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease
+Hit:2 http://mirrors.digitalocean.com/ubuntu focal InRelease                                                         
+Hit:3 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease                                                 
+Hit:4 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease                           
+Hit:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease                            
+Hit:6 http://security.ubuntu.com/ubuntu focal-security InRelease
+Reading package lists... Done
++ apt install redis-server --yes
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+redis-server is already the newest version (6:6.2.6-1rl1~focal1).
+0 upgraded, 0 newly installed, 0 to remove and 29 not upgraded.
++ systemctl status redis-server
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Sun 2021-11-14 06:59:16 UTC; 18min ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 3799 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 3.0M
+     CGroup: /system.slice/redis-server.service
+             └─3799 /usr/bin/redis-server 127.0.0.1:6379
+
+Nov 14 06:59:16 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 14 06:59:16 redis-server systemd[1]: Started Advanced key-value store.
++ redis-cli -e PING
+PONG
++ redis-cli -e INFO server
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:3799
+process_supervised:systemd
+run_id:9c42dc48ea4c192020d9c5f197671d21d21d1b3e
+tcp_port:6379
+server_time_usec:1636874261683203
+uptime_in_seconds:1105
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9484309
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
++ check_malloc_is_jemalloc
++ grep jemalloc
++ redis-cli -e MEMORY MALLOC-STATS
+___ Begin jemalloc statistics ___
+--- End jemalloc statistics ---
++ configure_password
+++ redis-cli -e ACL GENPASS
++ password=e83b917b94b91cfce235737a669a4e47ab62cbb84bcd072d84529fb3d3a702f6
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "23c88af01d40347e5c7f25358837ed0dc89eb24d049c81f59648576fb73232d4"
++ redis-cli -e CONFIG SET requirepass e83b917b94b91cfce235737a669a4e47ab62cbb84bcd072d84529fb3d3a702f6
+OK
++ export REDISCLI_AUTH=e83b917b94b91cfce235737a669a4e47ab62cbb84bcd072d84529fb3d3a702f6
++ REDISCLI_AUTH=e83b917b94b91cfce235737a669a4e47ab62cbb84bcd072d84529fb3d3a702f6
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "e83b917b94b91cfce235737a669a4e47ab62cbb84bcd072d84529fb3d3a702f6"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'requirepass "e83b917b94b91cfce235737a669a4e47ab62cbb84bcd072d84529fb3d3a702f6"'
++ cat /etc/redis/redis.conf
+requirepass "e83b917b94b91cfce235737a669a4e47ab62cbb84bcd072d84529fb3d3a702f6"
++ install_certbot
++ sudo snap install --classic certbot
+snap "certbot" is already installed, see 'snap help refresh'
++ sudo ln --force --symbolic /snap/bin/certbot /usr/bin/certbot
++ obtain_ssl_certificate
++ sudo certbot certonly --standalone --non-interactive --agree-tos --email karuppiah7890@gmail.com --domains redis-server-1.hosteddatabase.in
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Certificate not yet due for renewal
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Certificate not yet due for renewal; no action taken.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
++ give_redis_user_access_to_ssl_certificate
++ chown -R redis:redis /etc/letsencrypt/
++ configure_tls
++ configure_private_key
++ private_key_path=/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ redis-cli -e CONFIG SET tls-key-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
+OK
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"'
++ cat /etc/redis/redis.conf
+tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ configure_ssl_certificate
++ ssl_certificate_path=/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
++ redis-cli -e CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
++ redis-cli -e CONFIG SET tls-cert-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+OK
++ redis-cli -e CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"'
++ cat /etc/redis/redis.conf
+tls-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
++ disable_tls_auth
++ redis-cli -e CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "no"
++ redis-cli -e CONFIG SET tls-auth-clients no
+OK
++ redis-cli -e CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "no"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-auth-clients no'
++ cat /etc/redis/redis.conf
+# tls-auth-clients no
+tls-auth-clients no
++ configure_tls_port
++ redis-cli -e CONFIG GET tls-port
+1) "tls-port"
+2) "56380"
++ redis-cli -e CONFIG SET tls-port 56380
+OK
++ redis-cli -e CONFIG GET tls-port
+1) "tls-port"
+2) "56380"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-port 56380'
++ cat /etc/redis/redis.conf
+tls-port 56380
++ disable_non_tls_port
++ redis-cli -e --tls -p 56380 CONFIG GET port
+1) "port"
+2) "6379"
++ redis-cli -e --tls -p 56380 CONFIG SET port 0
+OK
++ redis-cli -e --tls -p 56380 CONFIG GET port
+1) "port"
+2) "0"
++ redis-cli -e --tls -p 56380 CONFIG REWRITE
+OK
++ grep 'port 0'
++ cat /etc/redis/redis.conf
+# If port 0 is specified Redis will not listen on a TCP socket.
+port 0
+# port 0
+# cluster-announce-port 0
++ configure_bind
++ redis-cli -e --tls -p 56380 CONFIG GET bind
+1) "bind"
+2) "127.0.0.1 -::1"
++ redis-cli -e --tls -p 56380 CONFIG SET bind '139.59.20.169 127.0.0.1 -::1'
+OK
++ redis-cli -e --tls -p 56380 CONFIG GET bind
+1) "bind"
+2) "139.59.20.169 127.0.0.1 -::1"
++ redis-cli -e --tls -p 56380 CONFIG REWRITE
+OK
++ grep 'bind 139.59.20.169 127.0.0.1 -::1'
++ cat /etc/redis/redis.conf
+bind 139.59.20.169 127.0.0.1 -::1
+root@redis-server:~# echo $?
+0
+root@redis-server:~# 
+```
+
+```bash
+database-stuff $ redis-cli --tls -h redis-server-1.hosteddatabase.in -p 56380
+redis-server-1.hosteddatabase.in:56380> ping
+(error) NOAUTH Authentication required.
+redis-server-1.hosteddatabase.in:56380> 
+database-stuff $ export REDISCLI_AUTH=e83b917b94b91cfce235737a669a4e47ab62cbb84bcd072d84529fb3d3a702f6
+database-stuff $ redis-cli --tls -h redis-server-1.hosteddatabase.in -p 56380
+redis-server-1.hosteddatabase.in:56380> ping
+PONG
+redis-server-1.hosteddatabase.in:56380> info server
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:3799
+process_supervised:systemd
+run_id:9c42dc48ea4c192020d9c5f197671d21d21d1b3e
+tcp_port:56380
+server_time_usec:1636874346711666
+uptime_in_seconds:1190
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9484394
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
+redis-server-1.hosteddatabase.in:56380> 
+database-stuff $ redli --tls -h redis-server-1.hosteddatabase.in -p 56380
+2021/11/14 12:49:13 NOAUTH Authentication required.
+database-stuff $ redli --tls -h redis-server-1.hosteddatabase.in -p 56380 -a ${REDISCLI_AUTH}
+Connected to 6.2.6
+> info server
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:3799
+process_supervised:systemd
+run_id:9c42dc48ea4c192020d9c5f197671d21d21d1b3e
+tcp_port:56380
+server_time_usec:1636874371206830
+uptime_in_seconds:1215
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9484419
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
+
+> database-stuff $ redl-h redis-server-1.hosteddatabase.in -p 56380 -a ${REDISCLI_AUTH}
+database-stuff $ redli -h redis-server-1.hosteddatabase.in -p 56380 -a ${REDISCLI_AUTH}
+2021/11/14 12:49:42 Dial read tcp 192.168.1.6:50349->139.59.20.169:56380: read: connection reset by peer
+database-stuff $ 
+```
+
+```bash
+database-stuff $ redli -h 139.59.20.169 -p 56380 -a ${REDISCLI_AUTH}
+2021/11/14 12:50:07 Dial read tcp 192.168.1.6:50354->139.59.20.169:56380: read: connection reset by peer
+database-stuff $ 
+database-stuff $ redli --tls -h 139.59.20.169 -p 56380 -a ${REDISCLI_AUTH}
+2021/11/14 12:50:10 Dial x509: cannot validate certificate for 139.59.20.169 because it doesn't contain any IP SANs
+database-stuff $ redli -h
+redli: error: expected argument for flag '-h', try --help
+database-stuff $ redli --help
+usage: redli [<flags>] [<commands>...]
+
+Flags:
+      --help               Show context-sensitive help (also try --help-long and --help-man).
+      --debug              Enable debug mode.
+      --long               Enable long prompt with host/port
+  -u, --uri=URI            URI to connect to
+  -h, --host="127.0.0.1"   Host to connect to
+  -p, --port=6379          Port to connect to
+  -r, --redisuser=""       Username to use when connecting. Supported since Redis 6.
+  -a, --auth=AUTH          Password to use when connecting
+  -n, --ndb=0              Redis database to access
+      --tls                Enable TLS/SSL
+      --skipverify         Don't validate certificates
+      --certfile=CERTFILE  Self-signed certificate file for validation
+      --certb64=CERTB64    Self-signed certificate string as base64 for validation
+      --raw                Produce raw output
+      --eval=EVAL          Evaluate a Lua script file, follow with keys a , and args
+      --version            Show application version.
+
+Args:
+  [<commands>]  Redis commands and values
+
+database-stuff $ redli --skipverify --tls -h 139.59.20.169 -p 56380 -a ${REDISCLI_AUTH}
+Connected to 6.2.6
+> info server
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:3799
+process_supervised:systemd
+run_id:9c42dc48ea4c192020d9c5f197671d21d21d1b3e
+tcp_port:56380
+server_time_usec:1636874427867919
+uptime_in_seconds:1271
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9484475
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
+
+> database-stuff $ 
+```
