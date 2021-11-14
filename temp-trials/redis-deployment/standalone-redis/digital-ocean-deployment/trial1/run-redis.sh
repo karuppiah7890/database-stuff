@@ -144,3 +144,19 @@ configure_tls
 disable_non_tls_port
 
 configure_bind
+
+echo "Redis has been installed and configured and is running with TLS support and password protection!!"
+
+echo -e "\nConnection details - "
+
+echo "Username - No user name"
+
+echo "Password - ${REDISCLI_AUTH}"
+
+echo "Host - ${domain_name}"
+
+echo "Port - ${tls_port}"
+
+echo -e "\nRedis CLI (redis-cli) command - "
+
+echo "redis-cli --tls -h ${domain_name} -a ${REDISCLI_AUTH} -p ${tls_port}"
