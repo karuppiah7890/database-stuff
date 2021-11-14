@@ -5,30 +5,10 @@ set -o errexit
 set -o nounset
 set -o xtrace
 
-email=$1
-domain_name=$2
-ip=$3
-tls_port=$4
-
-if [[ -z "${email}" ]]; then
-    echo "Email has not been passed to the script. Usage example: ./run-redis.sh abc@example.com redis-server.example.com 156.165.10.5 6379"
-    exit 1
-fi
-
-if [[ -z "${domain_name}" ]]; then
-    echo "Domain name has not been passed to the script. Usage example: ./run-redis.sh abc@example.com redis-server.example.com 156.165.10.5 6379"
-    exit 1
-fi
-
-if [[ -z "${ip}" ]]; then
-    echo "IP address has not been passed to the script. Usage example: ./run-redis.sh abc@example.com redis-server.example.com 156.165.10.5 6379"
-    exit 1
-fi
-
-if [[ -z "${tls_port}" ]]; then
-    echo "TLS port number has not been passed to the script. Usage example: ./run-redis.sh abc@example.com redis-server.example.com 156.165.10.5 6379"
-    exit 1
-fi
+email=${1:?Email has not been passed to the script. Usage example: ./run-redis.sh abc@example.com redis-server.example.com 156.165.10.5 6379}
+domain_name=${2:?Domain name has not been passed to the script. Usage example: ./run-redis.sh abc@example.com redis-server.example.com 156.165.10.5 6379}
+ip=${3:?IP address has not been passed to the script. Usage example: ./run-redis.sh abc@example.com redis-server.example.com 156.165.10.5 6379}
+tls_port=${4:?TLS port number has not been passed to the script. Usage example: ./run-redis.sh abc@example.com redis-server.example.com 156.165.10.5 6379}
 
 function install_redis {
     add-apt-repository ppa:redislabs/redis --yes;

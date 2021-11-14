@@ -8563,3 +8563,476 @@ io_threads_active:0
 
 > database-stuff $ 
 ```
+
+```bash
+~ $ doctl compute droplet create --image ubuntu-20-04-x64 --size s-1vcpu-1gb --region blr1 redis-server --ssh-keys 32221856 --wait
+
+ID           Name            Public IPv4       Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+273627780    redis-server    159.65.146.158    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+~ $ 
+~ $ ssh -i ~/.ssh/digital_ocean root@159.65.146.158
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+~ $ ssh -i ~/.ssh/digital_ocean root@159.65.146.158
+The authenticity of host '159.65.146.158 (159.65.146.158)' can't be established.
+ECDSA key fingerprint is SHA256:E76ymyZB7cwS9ATciTknf9wLnvcWo5w7VTmJ6FWSaCk.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '159.65.146.158' (ECDSA) to the list of known hosts.
+Enter passphrase for key '/Users/karuppiahn/.ssh/digital_ocean': 
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-88-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun Nov 14 10:19:50 UTC 2021
+
+  System load:  0.2               Users logged in:       0
+  Usage of /:   6.0% of 24.06GB   IPv4 address for eth0: 159.65.146.158
+  Memory usage: 19%               IPv4 address for eth0: 10.47.0.5
+  Swap usage:   0%                IPv4 address for eth1: 10.122.0.2
+  Processes:    106
+
+1 update can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+root@redis-server:~# 
+
+
+root@redis-server:~# wget https://gist.githubusercontent.com/karuppiah7890/fc8fca5e3bdeafbf8072ee656141de7c/raw/e8d4533d8f9eff8b5136332644dcb81e64727ff7/run-redis.sh
+--2021-11-14 10:20:17--  https://gist.githubusercontent.com/karuppiah7890/fc8fca5e3bdeafbf8072ee656141de7c/raw/e8d4533d8f9eff8b5136332644dcb81e64727ff7/run-redis.sh
+Resolving gist.githubusercontent.com (gist.githubusercontent.com)... 185.199.110.133, 185.199.108.133, 185.199.109.133, ...
+Connecting to gist.githubusercontent.com (gist.githubusercontent.com)|185.199.110.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 4376 (4.3K) [text/plain]
+Saving to: ‘run-redis.sh’
+
+run-redis.sh                  100%[==============================================>]   4.27K  --.-KB/s    in 0s      
+
+2021-11-14 10:20:18 (37.2 MB/s) - ‘run-redis.sh’ saved [4376/4376]
+
+root@redis-server:~# 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+root@redis-server:~# ls
+run-redis.sh  snap
+root@redis-server:~# 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+root@redis-server:~# chmod +x run-redis.sh
+root@redis-server:~# ls -l
+total 12
+-rwxr-xr-x 1 root root 4376 Nov 14 10:20 run-redis.sh
+drwxr-xr-x 3 root root 4096 Nov 14 10:18 snap
+root@redis-server:~# 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+root@redis-server:~# ./run-redis.sh karuppiah7890@gmail.com redis-server-1.hosteddatabase.in 159.65.146.158 56380
++ email=karuppiah7890@gmail.com
++ domain_name=redis-server-1.hosteddatabase.in
++ ip=159.65.146.158
++ tls_port=56380
++ install_redis
++ add-apt-repository ppa:redislabs/redis --yes
+Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
+Get:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease [114 kB]                                       
+Hit:3 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                       
+Get:4 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease [101 kB]                                     
+Get:5 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]    
+Get:6 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease [18.0 kB]           
+Get:7 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 Packages [1344 kB]             
+Get:8 http://mirrors.digitalocean.com/ubuntu focal-updates/main Translation-en [276 kB]                             
+Get:9 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 Packages [1016 B]                       
+Get:10 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 c-n-f Metadata [14.5 kB]
+Get:11 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 Packages [569 kB]                    
+Get:12 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main Translation-en [584 B]                      
+Get:13 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [987 kB]   
+Get:14 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted Translation-en [81.6 kB]
+Get:15 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 c-n-f Metadata [528 B]
+Get:16 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 Packages [875 kB]
+Get:17 http://mirrors.digitalocean.com/ubuntu focal-updates/universe Translation-en [189 kB]
+Get:18 http://security.ubuntu.com/ubuntu focal-security/main Translation-en [183 kB]   
+Get:19 http://security.ubuntu.com/ubuntu focal-security/main amd64 c-n-f Metadata [8880 B]
+Get:20 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [526 kB]
+Get:21 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 c-n-f Metadata [19.5 kB]
+Get:22 http://security.ubuntu.com/ubuntu focal-security/restricted Translation-en [75.4 kB]        
+Get:23 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 c-n-f Metadata [528 B]            
+Get:24 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [651 kB] 
+Get:25 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse amd64 Packages [24.5 kB]
+Get:26 http://security.ubuntu.com/ubuntu focal-security/universe Translation-en [107 kB]     
+Get:27 http://security.ubuntu.com/ubuntu focal-security/universe amd64 c-n-f Metadata [12.9 kB]
+Get:28 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [21.9 kB]
+Get:29 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 c-n-f Metadata [540 B]
+Get:30 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse Translation-en [6856 B]
+Get:31 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse amd64 c-n-f Metadata [616 B]
+Get:32 http://mirrors.digitalocean.com/ubuntu focal-backports/universe amd64 Packages [6592 B]
+Get:33 http://mirrors.digitalocean.com/ubuntu focal-backports/universe Translation-en [3292 B]
+Get:34 http://mirrors.digitalocean.com/ubuntu focal-backports/universe amd64 c-n-f Metadata [580 B]
+Fetched 6333 kB in 3s (2311 kB/s)                
+Reading package lists... Done
++ apt install redis-server --yes
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  redis-tools
+Suggested packages:
+  ruby-redis
+The following NEW packages will be installed:
+  redis-server redis-tools
+0 upgraded, 2 newly installed, 0 to remove and 29 not upgraded.
+Need to get 1150 kB of archives.
+After this operation, 6794 kB of additional disk space will be used.
+Get:1 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-tools amd64 6:6.2.6-1rl1~focal1 [1067 kB]
+Get:2 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-server amd64 6:6.2.6-1rl1~focal1 [82.4 kB]
+Fetched 1150 kB in 2s (578 kB/s)   
+Selecting previously unselected package redis-tools.
+(Reading database ... 63555 files and directories currently installed.)
+Preparing to unpack .../redis-tools_6%3a6.2.6-1rl1~focal1_amd64.deb ...
+Unpacking redis-tools (6:6.2.6-1rl1~focal1) ...
+Selecting previously unselected package redis-server.
+Preparing to unpack .../redis-server_6%3a6.2.6-1rl1~focal1_amd64.deb ...
+Unpacking redis-server (6:6.2.6-1rl1~focal1) ...
+Setting up redis-tools (6:6.2.6-1rl1~focal1) ...
+Setting up redis-server (6:6.2.6-1rl1~focal1) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for systemd (245.4-4ubuntu3.13) ...
++ systemctl status redis-server
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Sun 2021-11-14 10:21:01 UTC; 3s ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 2410 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.2M
+     CGroup: /system.slice/redis-server.service
+             └─2410 /usr/bin/redis-server 127.0.0.1:6379
+
+Nov 14 10:21:01 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 14 10:21:01 redis-server systemd[1]: Started Advanced key-value store.
++ redis-cli -e PING
+PONG
++ redis-cli -e INFO server
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:2410
+process_supervised:systemd
+run_id:a75f3813405ec448c7759c7c567f1ad866f93675
+tcp_port:6379
+server_time_usec:1636885265344041
+uptime_in_seconds:4
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9495313
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
++ check_malloc_is_jemalloc
++ grep jemalloc
++ redis-cli -e MEMORY MALLOC-STATS
+___ Begin jemalloc statistics ___
+--- End jemalloc statistics ---
++ configure_password
+++ redis-cli -e ACL GENPASS
++ password=20314d71ea7868294cf096928b8b685fda40409ea9bd6e379453503a0502aef4
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) ""
++ redis-cli -e CONFIG SET requirepass 20314d71ea7868294cf096928b8b685fda40409ea9bd6e379453503a0502aef4
+OK
++ export REDISCLI_AUTH=20314d71ea7868294cf096928b8b685fda40409ea9bd6e379453503a0502aef4
++ REDISCLI_AUTH=20314d71ea7868294cf096928b8b685fda40409ea9bd6e379453503a0502aef4
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "20314d71ea7868294cf096928b8b685fda40409ea9bd6e379453503a0502aef4"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'requirepass "20314d71ea7868294cf096928b8b685fda40409ea9bd6e379453503a0502aef4"'
++ cat /etc/redis/redis.conf
+requirepass "20314d71ea7868294cf096928b8b685fda40409ea9bd6e379453503a0502aef4"
++ install_certbot
++ sudo snap install --classic certbot
+certbot 1.21.0 from Certbot Project (certbot-eff✓) installed
++ sudo ln --force --symbolic /snap/bin/certbot /usr/bin/certbot
++ obtain_ssl_certificate
++ sudo certbot certonly --standalone --non-interactive --agree-tos --email karuppiah7890@gmail.com --domains redis-server-1.hosteddatabase.in
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Account registered.
+Requesting a certificate for redis-server-1.hosteddatabase.in
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
+This certificate expires on 2022-02-12.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
++ give_redis_user_access_to_ssl_certificate
++ chown -R redis:redis /etc/letsencrypt/
++ configure_tls
++ configure_private_key
++ private_key_path=/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) ""
++ redis-cli -e CONFIG SET tls-key-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
+OK
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"'
++ cat /etc/redis/redis.conf
+tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ configure_ssl_certificate
++ ssl_certificate_path=/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
++ redis-cli -e CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) ""
++ redis-cli -e CONFIG SET tls-cert-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+OK
++ redis-cli -e CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"'
++ cat /etc/redis/redis.conf
+tls-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
++ disable_tls_auth
++ redis-cli -e CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "yes"
++ redis-cli -e CONFIG SET tls-auth-clients no
+OK
++ redis-cli -e CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "no"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-auth-clients no'
++ cat /etc/redis/redis.conf
+# tls-auth-clients no
+tls-auth-clients no
++ configure_tls_port
++ redis-cli -e CONFIG GET tls-port
+1) "tls-port"
+2) "0"
++ redis-cli -e CONFIG SET tls-port 56380
+OK
++ redis-cli -e CONFIG GET tls-port
+1) "tls-port"
+2) "56380"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-port 56380'
++ cat /etc/redis/redis.conf
+tls-port 56380
++ disable_non_tls_port
++ redis-cli -e --tls -p 56380 CONFIG GET port
+1) "port"
+2) "6379"
++ redis-cli -e --tls -p 56380 CONFIG SET port 0
+OK
++ redis-cli -e --tls -p 56380 CONFIG GET port
+1) "port"
+2) "0"
++ redis-cli -e --tls -p 56380 CONFIG REWRITE
+OK
++ grep 'port 0'
++ cat /etc/redis/redis.conf
+# If port 0 is specified Redis will not listen on a TCP socket.
+port 0
+# port 0
+# cluster-announce-port 0
++ configure_bind
++ redis-cli -e --tls -p 56380 CONFIG GET bind
+1) "bind"
+2) "127.0.0.1 -::1"
++ redis-cli -e --tls -p 56380 CONFIG SET bind '159.65.146.158 127.0.0.1 -::1'
+OK
++ redis-cli -e --tls -p 56380 CONFIG GET bind
+1) "bind"
+2) "159.65.146.158 127.0.0.1 -::1"
++ redis-cli -e --tls -p 56380 CONFIG REWRITE
+OK
++ grep 'bind 159.65.146.158 127.0.0.1 -::1'
++ cat /etc/redis/redis.conf
+bind 159.65.146.158 127.0.0.1 -::1
++ echo 'Redis has been installed and configured and is running with TLS support and password protection!!'
+Redis has been installed and configured and is running with TLS support and password protection!!
++ echo -e '\nConnection details - '
+
+Connection details - 
++ echo 'Username - No user name'
+Username - No user name
++ echo 'Password - 20314d71ea7868294cf096928b8b685fda40409ea9bd6e379453503a0502aef4'
+Password - 20314d71ea7868294cf096928b8b685fda40409ea9bd6e379453503a0502aef4
++ echo 'Host - redis-server-1.hosteddatabase.in'
+Host - redis-server-1.hosteddatabase.in
++ echo 'Port - 56380'
+Port - 56380
++ echo -e '\nRedis CLI (redis-cli) command - '
+
+Redis CLI (redis-cli) command - 
++ echo 'redis-cli --tls -h redis-server-1.hosteddatabase.in -a 20314d71ea7868294cf096928b8b685fda40409ea9bd6e379453503a0502aef4 -p 56380'
+redis-cli --tls -h redis-server-1.hosteddatabase.in -a 20314d71ea7868294cf096928b8b685fda40409ea9bd6e379453503a0502aef4 -p 56380
+root@redis-server:~# logout
+Connection to 159.65.146.158 closed.
+~ $ redis-cli --tls -h redis-server-1.hosteddatabase.in -a 20314d71ea7868294cf096928b8b685fda40409ea9bd6e379453503a0502aef4 -p 56380
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+redis-server-1.hosteddatabase.in:56380> ping
+PONG
+redis-server-1.hosteddatabase.in:56380> info server
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:2410
+process_supervised:systemd
+run_id:a75f3813405ec448c7759c7c567f1ad866f93675
+tcp_port:56380
+server_time_usec:1636885350109547
+uptime_in_seconds:89
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9495398
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
+redis-server-1.hosteddatabase.in:56380> keys *
+(empty array)
+redis-server-1.hosteddatabase.in:56380> 
+~ $ 
+```
