@@ -289,3 +289,15 @@ Drupal - https://www.dp-clusters.com/
 Moodle - https://www.moclusters.com/
 
 Odoo - https://www.odclusters.com/
+
+# Rill
+
+https://www.rilldata.com/
+
+Explore - Data exploration tool - https://www.rilldata.com/explore
+
+Managed Apache Druid - https://www.rilldata.com/apache-druid , https://www.rilldata.com/product
+
+Managed Streaming Analytics - Managed Apache Kafka + Apache Druid - https://www.rilldata.com/streaming-analytics
+
+Programmatic Advertising - https://www.rilldata.com/programmatic-advertising
