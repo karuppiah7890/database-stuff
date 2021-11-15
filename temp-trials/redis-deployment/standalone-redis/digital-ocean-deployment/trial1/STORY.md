@@ -9036,3 +9036,733 @@ redis-server-1.hosteddatabase.in:56380> keys *
 redis-server-1.hosteddatabase.in:56380> 
 ~ $ 
 ```
+
+---
+
+```bash
+Last login: Mon Nov 15 21:54:18 on ttys000
+database-stuff $ curl ifconfig.me
+database-stuff $ doctl compute droplet list
+ID           Name            Public IPv4       Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+273799523    redis-server    134.209.144.10    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+database-stuff $ 
+```
+
+```bash
+root@redis-server:~# ./run-redis.sh karuppiah7890@gmail.com redis-server-1.hosteddatabase.in 134.209.144.10 56380
++ email=karuppiah7890@gmail.com
++ domain_name=redis-server-1.hosteddatabase.in
++ ip=134.209.144.10
++ tls_port=56380
++ install_redis
++ add-apt-repository ppa:redislabs/redis --yes
+Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
+Get:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease [114 kB]                                                
+Hit:3 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                                
+Get:4 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease [101 kB]
+Get:5 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]      
+Get:6 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 Packages [1344 kB]                  
+Get:7 http://mirrors.digitalocean.com/ubuntu focal-updates/main Translation-en [276 kB]                   
+Get:8 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease [18.0 kB]                                       
+Get:9 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 c-n-f Metadata [14.5 kB]                               
+Get:10 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 Packages [569 kB]                               
+Get:11 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted Translation-en [81.6 kB]
+Get:12 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 Packages [1016 B]          
+Get:13 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 c-n-f Metadata [528 B]
+Get:14 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 Packages [875 kB]                                 
+Get:15 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [987 kB]                      
+Get:16 http://mirrors.digitalocean.com/ubuntu focal-updates/universe Translation-en [189 kB]                       
+Get:17 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main Translation-en [584 B]                               
+Get:18 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 c-n-f Metadata [19.5 kB]                    
+Get:19 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse amd64 Packages [24.5 kB]
+Get:20 http://security.ubuntu.com/ubuntu focal-security/main Translation-en [183 kB]
+Get:21 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse Translation-en [6856 B]
+Get:22 http://security.ubuntu.com/ubuntu focal-security/main amd64 c-n-f Metadata [8880 B]
+Get:23 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [526 kB]
+Get:24 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse amd64 c-n-f Metadata [616 B]
+Get:25 http://security.ubuntu.com/ubuntu focal-security/restricted Translation-en [75.4 kB]
+Get:26 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 c-n-f Metadata [528 B]
+Get:27 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [651 kB]     
+Get:28 http://mirrors.digitalocean.com/ubuntu focal-backports/universe amd64 Packages [6592 B]
+Get:29 http://mirrors.digitalocean.com/ubuntu focal-backports/universe Translation-en [3292 B]
+Get:30 http://security.ubuntu.com/ubuntu focal-security/universe Translation-en [107 kB]
+Get:31 http://security.ubuntu.com/ubuntu focal-security/universe amd64 c-n-f Metadata [12.9 kB]
+Get:32 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [21.9 kB]
+Get:33 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 c-n-f Metadata [540 B]
+Get:34 http://mirrors.digitalocean.com/ubuntu focal-backports/universe amd64 c-n-f Metadata [580 B]
+Fetched 4847 kB in 2s (2016 kB/s)                
+Reading package lists... Done
++ apt install redis-server --yes
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  redis-tools
+Suggested packages:
+  ruby-redis
+The following NEW packages will be installed:
+  redis-server redis-tools
+0 upgraded, 2 newly installed, 0 to remove and 34 not upgraded.
+Need to get 1150 kB of archives.
+After this operation, 6794 kB of additional disk space will be used.
+Get:1 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-tools amd64 6:6.2.6-1rl1~focal1 [1067 kB]
+Get:2 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-server amd64 6:6.2.6-1rl1~focal1 [82.4 kB]
+Fetched 1150 kB in 2s (585 kB/s)   
+Selecting previously unselected package redis-tools.
+(Reading database ... 63555 files and directories currently installed.)
+Preparing to unpack .../redis-tools_6%3a6.2.6-1rl1~focal1_amd64.deb ...
+Unpacking redis-tools (6:6.2.6-1rl1~focal1) ...
+Selecting previously unselected package redis-server.
+Preparing to unpack .../redis-server_6%3a6.2.6-1rl1~focal1_amd64.deb ...
+Unpacking redis-server (6:6.2.6-1rl1~focal1) ...
+Setting up redis-tools (6:6.2.6-1rl1~focal1) ...
+Setting up redis-server (6:6.2.6-1rl1~focal1) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for systemd (245.4-4ubuntu3.13) ...
++ systemctl status redis-server
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Mon 2021-11-15 17:14:39 UTC; 42s ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 2777 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.2M
+     CGroup: /system.slice/redis-server.service
+             └─2777 /usr/bin/redis-server 127.0.0.1:6379
+
+Nov 15 17:14:39 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 15 17:14:39 redis-server systemd[1]: Started Advanced key-value store.
++ redis-cli -e PING
+PONG
++ redis-cli -e INFO server
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:e15ab29abece34d
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:2777
+process_supervised:systemd
+run_id:b02c018b407f274b5f3364d71f6cf3933e2b5c56
+tcp_port:6379
+server_time_usec:1636996521934879
+uptime_in_seconds:42
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9606569
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
++ check_malloc_is_jemalloc
++ grep jemalloc
++ redis-cli -e MEMORY MALLOC-STATS
+___ Begin jemalloc statistics ___
+--- End jemalloc statistics ---
++ configure_password
+++ redis-cli -e ACL GENPASS
++ password=09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) ""
++ redis-cli -e CONFIG SET requirepass 09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347
+OK
++ export REDISCLI_AUTH=09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347
++ REDISCLI_AUTH=09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'requirepass "09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347"'
++ cat /etc/redis/redis.conf
+requirepass "09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347"
++ install_certbot
++ sudo snap install --classic certbot
+certbot 1.21.0 from Certbot Project (certbot-eff✓) installed
++ sudo ln --force --symbolic /snap/bin/certbot /usr/bin/certbot
++ obtain_ssl_certificate
++ sudo certbot certonly --standalone --non-interactive --agree-tos --email karuppiah7890@gmail.com --domains redis-server-1.hosteddatabase.in
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Account registered.
+Requesting a certificate for redis-server-1.hosteddatabase.in
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
+This certificate expires on 2022-02-13.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
++ give_redis_user_access_to_ssl_certificate
++ chown -R redis:redis /etc/letsencrypt/
++ configure_tls
++ configure_private_key
++ private_key_path=/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) ""
++ redis-cli -e CONFIG SET tls-key-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
+OK
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"'
++ cat /etc/redis/redis.conf
+tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ configure_ssl_certificate
++ ssl_certificate_path=/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
++ redis-cli -e CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) ""
++ redis-cli -e CONFIG SET tls-cert-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+OK
++ redis-cli -e CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"'
++ cat /etc/redis/redis.conf
+tls-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
++ disable_tls_auth
++ redis-cli -e CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "yes"
++ redis-cli -e CONFIG SET tls-auth-clients no
+OK
++ redis-cli -e CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "no"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-auth-clients no'
++ cat /etc/redis/redis.conf
+# tls-auth-clients no
+tls-auth-clients no
++ configure_tls_port
++ redis-cli -e CONFIG GET tls-port
+1) "tls-port"
+2) "0"
++ redis-cli -e CONFIG SET tls-port 56380
+OK
++ redis-cli -e CONFIG GET tls-port
+1) "tls-port"
+2) "56380"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-port 56380'
++ cat /etc/redis/redis.conf
+tls-port 56380
++ disable_non_tls_port
++ redis-cli -e --tls -p 56380 CONFIG GET port
+1) "port"
+2) "6379"
++ redis-cli -e --tls -p 56380 CONFIG SET port 0
+OK
++ redis-cli -e --tls -p 56380 CONFIG GET port
+1) "port"
+2) "0"
++ redis-cli -e --tls -p 56380 CONFIG REWRITE
+OK
++ grep 'port 0'
++ cat /etc/redis/redis.conf
+# If port 0 is specified Redis will not listen on a TCP socket.
+port 0
+# port 0
+# cluster-announce-port 0
++ configure_bind
++ redis-cli -e --tls -p 56380 CONFIG GET bind
+1) "bind"
+2) "127.0.0.1 -::1"
++ redis-cli -e --tls -p 56380 CONFIG SET bind '134.209.144.10 127.0.0.1 -::1'
+OK
++ redis-cli -e --tls -p 56380 CONFIG GET bind
+1) "bind"
+2) "134.209.144.10 127.0.0.1 -::1"
++ redis-cli -e --tls -p 56380 CONFIG REWRITE
+OK
++ grep 'bind 134.209.144.10 127.0.0.1 -::1'
++ cat /etc/redis/redis.conf
+bind 134.209.144.10 127.0.0.1 -::1
++ echo 'Redis has been installed and configured and is running with TLS support and password protection!!'
+Redis has been installed and configured and is running with TLS support and password protection!!
++ echo -e '\nConnection details - '
+
+Connection details - 
++ echo 'Username - No user name'
+Username - No user name
++ echo 'Password - 09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347'
+Password - 09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347
++ echo 'Host - redis-server-1.hosteddatabase.in'
+Host - redis-server-1.hosteddatabase.in
++ echo 'Port - 56380'
+Port - 56380
++ echo -e '\nRedis CLI (redis-cli) command - '
+
+Redis CLI (redis-cli) command - 
++ echo 'redis-cli --tls -h redis-server-1.hosteddatabase.in -a 09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347 -p 56380'
+redis-cli --tls -h redis-server-1.hosteddatabase.in -a 09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347 -p 56380
+root@redis-server:~# client_loop: send disconnect: Broken pipe
+database-stuff $ redis-cli --tls -h redis-server-1.hosteddatabase.in -a 09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347 -p 56380
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+redis-server-1.hosteddatabase.in:56380> 
+database-stuff $ ssh -i ~/.ssh/digital_ocean root@134.209.144.10
+Enter passphrase for key '/Users/karuppiahn/.ssh/digital_ocean': 
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-88-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Mon Nov 15 18:17:59 UTC 2021
+
+  System load:  0.0               Users logged in:       1
+  Usage of /:   6.2% of 24.06GB   IPv4 address for eth0: 134.209.144.10
+  Memory usage: 22%               IPv4 address for eth0: 10.47.0.5
+  Swap usage:   0%                IPv4 address for eth1: 10.122.0.2
+  Processes:    110
+
+36 updates can be applied immediately.
+23 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+
+Last login: Mon Nov 15 17:13:27 2021 from 27.5.194.196
+root@redis-server:~# redis-cli --tls -h redis-server-1.hosteddatabase.in -a 09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347 -p 56380
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+redis-server-1.hosteddatabase.in:56380> ping
+PONG
+redis-server-1.hosteddatabase.in:56380> 
+root@redis-server:~# ifconfig
+
+Command 'ifconfig' not found, but can be installed with:
+
+apt install net-tools
+
+root@redis-server:~# apt install net-tools
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  net-tools
+0 upgraded, 1 newly installed, 0 to remove and 34 not upgraded.
+Need to get 196 kB of archives.
+After this operation, 864 kB of additional disk space will be used.
+Get:1 http://mirrors.digitalocean.com/ubuntu focal/main amd64 net-tools amd64 1.60+git20180626.aebd88e-1ubuntu1 [196 kB]
+Fetched 196 kB in 0s (1091 kB/s)
+Selecting previously unselected package net-tools.
+(Reading database ... 63592 files and directories currently installed.)
+Preparing to unpack .../net-tools_1.60+git20180626.aebd88e-1ubuntu1_amd64.deb ...
+Unpacking net-tools (1.60+git20180626.aebd88e-1ubuntu1) ...
+Setting up net-tools (1.60+git20180626.aebd88e-1ubuntu1) ...
+Processing triggers for man-db (2.9.1-1) ...
+
+root@redis-server:~# 
+root@redis-server:~# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 134.209.144.10  netmask 255.255.240.0  broadcast 134.209.159.255
+        inet6 fe80::d49c:acff:fe3c:1b1f  prefixlen 64  scopeid 0x20<link>
+        ether d6:9c:ac:3c:1b:1f  txqueuelen 1000  (Ethernet)
+        RX packets 13137  bytes 55420607 (55.4 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 7652  bytes 726470 (726.4 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.122.0.2  netmask 255.255.240.0  broadcast 10.122.15.255
+        inet6 fe80::c0a4:a4ff:fe8e:8b70  prefixlen 64  scopeid 0x20<link>
+        ether c2:a4:a4:8e:8b:70  txqueuelen 1000  (Ethernet)
+        RX packets 15  bytes 1126 (1.1 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 16  bytes 1216 (1.2 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 862  bytes 158688 (158.6 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 862  bytes 158688 (158.6 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@redis-server:~# curl ifconfig.me
+134.209.144.10root@redis-server:~# 
+root@redis-server:~# 
+root@redis-server:~# logout
+Connection to 134.209.144.10 closed.
+database-stuff $ doctl compute firewall list
+ID    Name    Status    Created At    Inbound Rules    Outbound Rules    Droplet IDs    Tags    Pending Changes
+database-stuff $ doctl compute firewall 
+The sub-commands of `doctl compute firewall` manage DigitalOcean cloud firewalls.
+
+Cloud firewalls provide the ability to restrict network access to and from a Droplet, allowing you to define which ports accept inbound or outbound connections. With these commands, you can list, create, or delete Cloud firewalls, as well as modify access rules.
+
+A firewall's `inbound_rules` and `outbound_rules` attributes contain arrays of objects as their values. These objects contain the standard attributes of their associated types, which can be found below.
+
+Inbound access rules specify the protocol (TCP, UDP, or ICMP), ports, and sources for inbound traffic that will be allowed through the Firewall to the target Droplets. The `ports` attribute may contain a single port, a range of ports (e.g. `8000-9000`), or `all` to allow traffic on all ports for the specified protocol. The `sources` attribute will contain an object specifying a whitelist of sources from which traffic will be accepted.
+
+Usage:
+  doctl compute firewall [command]
+
+Available Commands:
+  add-droplets    Add Droplets to a cloud firewall
+  add-rules       Add inbound or outbound rules to a cloud firewall
+  add-tags        Add tags to a cloud firewall
+  create          Create a new cloud firewall
+  delete          Permanently delete a cloud firewall
+  get             Retrieve information about a cloud firewall
+  list            List the cloud firewalls on your account
+  list-by-droplet List firewalls by Droplet
+  remove-droplets Remove Droplets from a cloud firewall
+  remove-rules    Remove inbound or outbound rules from a cloud firewall
+  remove-tags     Remove tags from a cloud firewall
+  update          Update a cloud firewall's configuration
+
+Flags:
+  -h, --help   help for firewall
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+Use "doctl compute firewall [command] --help" for more information about a command.
+database-stuff $ doctl compute firewall add-rules
+Error: (firewall.add-rules) command is missing required arguments
+database-stuff $ doctl compute firewall add-rules -h
+Use this command to add inbound or outbound rules to a cloud firewall.
+
+Usage:
+  doctl compute firewall add-rules <id> [flags]
+
+Flags:
+  -h, --help                                                     help for add-rules
+      --inbound-rules protocol:tcp,ports:22,droplet_id:123       A comma-separated key-value list that defines an inbound rule, e.g.: protocol:tcp,ports:22,droplet_id:123. Use a quoted string of space-separated values for multiple rules.
+      --outbound-rules protocol:tcp,ports:22,address:0.0.0.0/0   A comma-separate key-value list the defines an outbound rule, e.g.: protocol:tcp,ports:22,address:0.0.0.0/0. Use a quoted string of space-separated values for multiple rules.
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+database-stuff $ doctl compute firewall 
+The sub-commands of `doctl compute firewall` manage DigitalOcean cloud firewalls.
+
+Cloud firewalls provide the ability to restrict network access to and from a Droplet, allowing you to define which ports accept inbound or outbound connections. With these commands, you can list, create, or delete Cloud firewalls, as well as modify access rules.
+
+A firewall's `inbound_rules` and `outbound_rules` attributes contain arrays of objects as their values. These objects contain the standard attributes of their associated types, which can be found below.
+
+Inbound access rules specify the protocol (TCP, UDP, or ICMP), ports, and sources for inbound traffic that will be allowed through the Firewall to the target Droplets. The `ports` attribute may contain a single port, a range of ports (e.g. `8000-9000`), or `all` to allow traffic on all ports for the specified protocol. The `sources` attribute will contain an object specifying a whitelist of sources from which traffic will be accepted.
+
+Usage:
+  doctl compute firewall [command]
+
+Available Commands:
+  add-droplets    Add Droplets to a cloud firewall
+  add-rules       Add inbound or outbound rules to a cloud firewall
+  add-tags        Add tags to a cloud firewall
+  create          Create a new cloud firewall
+  delete          Permanently delete a cloud firewall
+  get             Retrieve information about a cloud firewall
+  list            List the cloud firewalls on your account
+  list-by-droplet List firewalls by Droplet
+  remove-droplets Remove Droplets from a cloud firewall
+  remove-rules    Remove inbound or outbound rules from a cloud firewall
+  remove-tags     Remove tags from a cloud firewall
+  update          Update a cloud firewall's configuration
+
+Flags:
+  -h, --help   help for firewall
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+Use "doctl compute firewall [command] --help" for more information about a command.
+database-stuff $ doctl compute firewall create
+Error: (firewall.create.name) command is missing required arguments
+database-stuff $ doctl compute firewall create -h
+Use this command to create a cloud firewall. This command must contain at least one inbound or outbound access rule.
+
+Usage:
+  doctl compute firewall create [flags]
+
+Aliases:
+  create, c
+
+Flags:
+      --droplet-ids 123,456                                      A comma-separated list of Droplet IDs to place behind the cloud firewall, e.g.: 123,456
+      --format ID                                                Columns for output in a comma-separated list. Possible values: ID, `Name`, `Status`, `Created`, `InboundRules`, `OutboundRules`, `DropletIDs`, `Tags`, `PendingChanges`
+  -h, --help                                                     help for create
+      --inbound-rules protocol:tcp,ports:22,droplet_id:123       A comma-separated key-value list that defines an inbound rule, e.g.: protocol:tcp,ports:22,droplet_id:123. Use a quoted string of space-separated values for multiple rules.
+      --name string                                              Firewall name (required)
+      --no-header                                                Return raw data with no headers
+      --outbound-rules protocol:tcp,ports:22,address:0.0.0.0/0   A comma-separate key-value list the defines an outbound rule, e.g.: protocol:tcp,ports:22,address:0.0.0.0/0. Use a quoted string of space-separated values for multiple rules.
+      --tag-names frontend,backend                               A comma-separated list of tag names to apply to the cloud firewall, e.g.: frontend,backend
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+database-stuff $ doctl compute firewall create --name redis-server --inbound-rules tcp,ports:56380,address:27.5.207.248/32 --droplet-ids 273799523
+Error: Unexpected input value [[tcp]], must be a key:value pair
+database-stuff $ doctl compute firewall create --name redis-server --inbound-rules protocol:tcp,ports:56380,address:27.5.207.248/32 --droplet-ids 273799523
+ID                                      Name            Status     Created At              Inbound Rules                                       Outbound Rules    Droplet IDs    Tags    Pending Changes
+3d947ab0-bbe0-44f7-8c86-f8723ae247a6    redis-server    waiting    2021-11-15T18:22:59Z    protocol:tcp,ports:56380,address:27.5.207.248/32                      273799523              droplet_id:273799523,removing:false,status:waiting
+database-stuff $ ssh -i ~/.ssh/digital_ocean root@134.209.144.10
+
+^C
+database-stuff $ redis-cli --tls -h redis-server-1.hosteddatabase.in -a 09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347 -p 56380
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+redis-server-1.hosteddatabase.in:56380> 
+database-stuff $ doctl compute firewall create --name redis-server --inbound-rules protocol:tcp,ports:56380,address:27.5.207.248/32 --droplet-ids 273799523
+database-stuff $ doctl compute firewall 
+The sub-commands of `doctl compute firewall` manage DigitalOcean cloud firewalls.
+
+Cloud firewalls provide the ability to restrict network access to and from a Droplet, allowing you to define which ports accept inbound or outbound connections. With these commands, you can list, create, or delete Cloud firewalls, as well as modify access rules.
+
+A firewall's `inbound_rules` and `outbound_rules` attributes contain arrays of objects as their values. These objects contain the standard attributes of their associated types, which can be found below.
+
+Inbound access rules specify the protocol (TCP, UDP, or ICMP), ports, and sources for inbound traffic that will be allowed through the Firewall to the target Droplets. The `ports` attribute may contain a single port, a range of ports (e.g. `8000-9000`), or `all` to allow traffic on all ports for the specified protocol. The `sources` attribute will contain an object specifying a whitelist of sources from which traffic will be accepted.
+
+Usage:
+  doctl compute firewall [command]
+
+Available Commands:
+  add-droplets    Add Droplets to a cloud firewall
+  add-rules       Add inbound or outbound rules to a cloud firewall
+  add-tags        Add tags to a cloud firewall
+  create          Create a new cloud firewall
+  delete          Permanently delete a cloud firewall
+  get             Retrieve information about a cloud firewall
+  list            List the cloud firewalls on your account
+  list-by-droplet List firewalls by Droplet
+  remove-droplets Remove Droplets from a cloud firewall
+  remove-rules    Remove inbound or outbound rules from a cloud firewall
+  remove-tags     Remove tags from a cloud firewall
+  update          Update a cloud firewall's configuration
+
+Flags:
+  -h, --help   help for firewall
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+Use "doctl compute firewall [command] --help" for more information about a command.
+database-stuff $ doctl compute firewall add-rules -h
+Use this command to add inbound or outbound rules to a cloud firewall.
+
+Usage:
+  doctl compute firewall add-rules <id> [flags]
+
+Flags:
+  -h, --help                                                     help for add-rules
+      --inbound-rules protocol:tcp,ports:22,droplet_id:123       A comma-separated key-value list that defines an inbound rule, e.g.: protocol:tcp,ports:22,droplet_id:123. Use a quoted string of space-separated values for multiple rules.
+      --outbound-rules protocol:tcp,ports:22,address:0.0.0.0/0   A comma-separate key-value list the defines an outbound rule, e.g.: protocol:tcp,ports:22,address:0.0.0.0/0. Use a quoted string of space-separated values for multiple rules.
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+database-stuff $ doctl compute firewall list
+ID                                      Name            Status       Created At              Inbound Rules                                       Outbound Rules    Droplet IDs    Tags    Pending Changes
+3d947ab0-bbe0-44f7-8c86-f8723ae247a6    redis-server    succeeded    2021-11-15T18:22:59Z    protocol:tcp,ports:56380,address:27.5.207.248/32                      273799523              
+database-stuff $ doctl compute firewall add-rules 3d947ab0-bbe0-44f7-8c86-f8723ae247a6 --inbound-rules protocol:tcp,ports:22,address:27.5.207.248
+database-stuff $ ssh -i ~/.ssh/digital_ocean root@134.209.144.10
+Enter passphrase for key '/Users/karuppiahn/.ssh/digital_ocean': 
+Enter passphrase for key '/Users/karuppiahn/.ssh/digital_ocean': 
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-88-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Mon Nov 15 18:24:38 UTC 2021
+
+  System load:  0.01              Users logged in:       1
+  Usage of /:   6.2% of 24.06GB   IPv4 address for eth0: 134.209.144.10
+  Memory usage: 22%               IPv4 address for eth0: 10.47.0.5
+  Swap usage:   0%                IPv4 address for eth1: 10.122.0.2
+  Processes:    105
+
+36 updates can be applied immediately.
+23 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+
+Last login: Mon Nov 15 18:17:59 2021 from 27.5.207.248
+root@redis-server:~# redis-cli --tls -h redis-server-1.hosteddatabase.in -a 09563cba2fe8ecc48f6f3c043bbce55e226d6f3a86be601b792fbc478f44d347 -p 56380
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+redis-server-1.hosteddatabase.in:56380> 
+root@redis-server:~# 
+```
+
+```bash
+database-stuff $ doctl compute firewall list
+ID                                      Name            Status       Created At              Inbound Rules                                                                                  Outbound Rules    Droplet IDs    Tags    Pending Changes
+3d947ab0-bbe0-44f7-8c86-f8723ae247a6    redis-server    succeeded    2021-11-15T18:22:59Z    protocol:tcp,ports:22,address:27.5.207.248 protocol:tcp,ports:56380,address:27.5.207.248/32                      273799523              
+database-stuff $ 
+```
+
+```bash
+database-stuff $ doctl compute firewall list
+ID                                      Name            Status       Created At              Inbound Rules                                                                                  Outbound Rules    Droplet IDs    Tags    Pending Changes
+3d947ab0-bbe0-44f7-8c86-f8723ae247a6    redis-server    succeeded    2021-11-15T18:22:59Z    protocol:tcp,ports:22,address:27.5.207.248 protocol:tcp,ports:56380,address:27.5.207.248/32                      273799523              
+database-stuff $ doctl compute firewall 
+The sub-commands of `doctl compute firewall` manage DigitalOcean cloud firewalls.
+
+Cloud firewalls provide the ability to restrict network access to and from a Droplet, allowing you to define which ports accept inbound or outbound connections. With these commands, you can list, create, or delete Cloud firewalls, as well as modify access rules.
+
+A firewall's `inbound_rules` and `outbound_rules` attributes contain arrays of objects as their values. These objects contain the standard attributes of their associated types, which can be found below.
+
+Inbound access rules specify the protocol (TCP, UDP, or ICMP), ports, and sources for inbound traffic that will be allowed through the Firewall to the target Droplets. The `ports` attribute may contain a single port, a range of ports (e.g. `8000-9000`), or `all` to allow traffic on all ports for the specified protocol. The `sources` attribute will contain an object specifying a whitelist of sources from which traffic will be accepted.
+
+Usage:
+  doctl compute firewall [command]
+
+Available Commands:
+  add-droplets    Add Droplets to a cloud firewall
+  add-rules       Add inbound or outbound rules to a cloud firewall
+  add-tags        Add tags to a cloud firewall
+  create          Create a new cloud firewall
+  delete          Permanently delete a cloud firewall
+  get             Retrieve information about a cloud firewall
+  list            List the cloud firewalls on your account
+  list-by-droplet List firewalls by Droplet
+  remove-droplets Remove Droplets from a cloud firewall
+  remove-rules    Remove inbound or outbound rules from a cloud firewall
+  remove-tags     Remove tags from a cloud firewall
+  update          Update a cloud firewall's configuration
+
+Flags:
+  -h, --help   help for firewall
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+
+Use "doctl compute firewall [command] --help" for more information about a command.
+database-stuff $ doctl compute firewall delete
+Error: (firewall.delete) command is missing required arguments
+database-stuff $ doctl compute firewall delete -h
+Use this command to permanently delete a cloud firewall. This is irreversable, but does not delete any Droplets assigned to the cloud firewall.
+
+Usage:
+  doctl compute firewall delete <id>... [flags]
+
+Aliases:
+  delete, d, rm
+
+Flags:
+  -f, --force   Delete firewall without confirmation prompt
+  -h, --help    help for delete
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+database-stuff $ doctl compute firewall delete redis-server
+Warning: Are you sure you want to delete this firewall? (y/N) ? y
+Error: DELETE https://api.digitalocean.com/v2/firewalls/redis-server: 404 (request "304a0f4a-de1e-4d90-b1cd-1bd71a27e066") Firewall not found
+database-stuff $ doctl compute firewall delete 3d947ab0-bbe0-44f7-8c86-f8723ae247a6
+Warning: Are you sure you want to delete this firewall? (y/N) ? y
+database-stuff $ 
+```
+
+```bash
+database-stuff $ doctl compute droplet list
+ID           Name            Public IPv4       Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+273799523    redis-server    134.209.144.10    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+database-stuff $ doctl compute droplet list
+database-stuff $ doctl compute droplet delete redis-server 
+Warning: Are you sure you want to delete this Droplet? (y/N) ? n
+Error: Operation aborted.
+database-stuff $ doctl compute droplet delete redis-server -h
+Use this command to permanently delete a Droplet. This is irreversible.
+
+Usage:
+  doctl compute droplet delete <droplet-id|droplet-name>... [flags]
+
+Aliases:
+  delete, d, del, rm
+
+Flags:
+  -f, --force             Delete the Droplet without a confirmation prompt
+  -h, --help              help for delete
+      --tag-name string   Tag name
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+database-stuff $ doctl compute droplet delete redis-server --force
+database-stuff $ doctl compute droplet list
+ID           Name            Public IPv4       Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+273799523    redis-server    134.209.144.10    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+database-stuff $ doctl compute droplet list
+ID           Name            Public IPv4       Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+273799523    redis-server    134.209.144.10    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+database-stuff $ doctl compute droplet list
+ID           Name            Public IPv4       Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+273799523    redis-server    134.209.144.10    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+database-stuff $ doctl compute droplet list
+ID    Name    Public IPv4    Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image    VPC UUID    Status    Tags    Features    Volumes
+database-stuff $ doctl compute firewall list
+ID    Name    Status    Created At    Inbound Rules    Outbound Rules    Droplet IDs    Tags    Pending Changes
+database-stuff $ 
+```
