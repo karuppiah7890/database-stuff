@@ -9766,3 +9766,90 @@ database-stuff $ doctl compute firewall list
 ID    Name    Status    Created At    Inbound Rules    Outbound Rules    Droplet IDs    Tags    Pending Changes
 database-stuff $ 
 ```
+
+---
+
+[TODO]
+- Check what DNS services provide an API to manage DNS records
+  - Google Cloud Domains
+  - Cloudflare DNS
+
+
+---
+
+Services providing API to manage DNS records -
+
+Google Cloud Platform (GCP) - Google Cloud DNS - https://cloud.google.com/dns/
+
+https://cloud.google.com/products/calculator
+
+https://cloud.google.com/blog/products/networking/introducing-cloud-domains
+
+https://cloud.google.com/domains/docs
+
+https://cloud.google.com/domains/docs/domain-transfer-in
+
+https://cloud.google.com/domains/docs/apis
+
+https://cloud.google.com/domains/docs/getting-started
+
+https://cloud.google.com/domains/pricing
+
+https://duckduckgo.com/?q=dnssec&ia=web
+
+https://www.cloudflare.com/en-gb/dns/dnssec/how-dnssec-works/
+
+https://developers.cloudflare.com/registrar/
+
+https://developers.cloudflare.com/
+
+https://developers.cloudflare.com/registrar/get-started/register-domain
+
+https://www.cloudflare.com/en-gb/tld-policies/
+
+https://developers.cloudflare.com/registrar/get-started/transfer-domain-to-cloudflare
+
+https://developers.cloudflare.com/registrar/account-options/enable-dnssec
+
+https://www.cloudflare.com/en-gb/dns/dnssec/how-dnssec-works/
+
+https://insights.sei.cmu.edu/blog/probable-cache-poisoning-of-mail-handling-domains/
+
+https://developers.cloudflare.com/registrar/faq#billing
+
+https://developers.cloudflare.com/api/
+
+https://developers.cloudflare.com/api/v4docs
+
+https://api.cloudflare.com/
+
+https://api.cloudflare.com/#dns-records-for-a-zone-properties
+
+https://api.cloudflare.com/#dnssec-properties
+
+https://api.cloudflare.com/#dns-firewall-properties
+
+https://api.cloudflare.com/#dns-firewall-analytics-properties
+
+https://api.cloudflare.com/#secondary-dns-properties
+
+https://api.cloudflare.com/#secondary-dns-tsig--properties
+
+https://api.cloudflare.com/#secondary-dns-primary--properties
+
+https://duckduckgo.com/?q=cloudflare+dns+pricing&ia=web
+
+https://www.cloudflare.com/en-gb/plans/#overview
+
+https://constellix.com/news/cloudflare-dns-features
+
+https://www.wikihow.com/Transfer-a-Domain
+
+https://developers.google.com/apis-explorer/#p/domains/v1/
+
+https://cloud.google.com/dns/docs/reference/v1
+
+---
+
+[TODO]
+- Read about DNSSEC !
