@@ -8580,21 +8580,6 @@ ID           Name            Public IPv4       Private IPv4    Public IPv6    Me
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ~ $ ssh -i ~/.ssh/digital_ocean root@159.65.146.158
 The authenticity of host '159.65.146.158 (159.65.146.158)' can't be established.
 ECDSA key fingerprint is SHA256:E76ymyZB7cwS9ATciTknf9wLnvcWo5w7VTmJ6FWSaCk.
@@ -8647,54 +8632,9 @@ root@redis-server:~#
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 root@redis-server:~# ls
 run-redis.sh  snap
 root@redis-server:~# 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 root@redis-server:~# chmod +x run-redis.sh
@@ -8702,37 +8642,7 @@ root@redis-server:~# ls -l
 total 12
 -rwxr-xr-x 1 root root 4376 Nov 14 10:20 run-redis.sh
 drwxr-xr-x 3 root root 4096 Nov 14 10:18 snap
-root@redis-server:~# 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-root@redis-server:~# ./run-redis.sh karuppiah7890@gmail.com redis-server-1.hosteddatabase.in 159.65.146.158 56380
+root@redis-server:~# root@redis-server:~# ./run-redis.sh karuppiah7890@gmail.com redis-server-1.hosteddatabase.in 159.65.146.158 56380
 + email=karuppiah7890@gmail.com
 + domain_name=redis-server-1.hosteddatabase.in
 + ip=159.65.146.158
@@ -9853,3 +9763,869 @@ https://cloud.google.com/dns/docs/reference/v1
 
 [TODO]
 - Read about DNSSEC !
+
+---
+
+```bash
+~ $ doctl compute droplet create --image ubuntu-20-04-x64 --size s-1vcpu-1gb --region blr1 redis-server --ssh-keys 32221856 --wait
+ID           Name            Public IPv4        Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+274264174    redis-server    165.232.179.170    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+~ $ ssh -i ~/.ssh/digital_ocean root@165.232.179.170
+The authenticity of host '165.232.179.170 (165.232.179.170)' can't be established.
+ECDSA key fingerprint is SHA256:CMOpuH2WGRSi0fvBCtrkPmDNSa1HxhNA1GaD5o0UwwI.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '165.232.179.170' (ECDSA) to the list of known hosts.
+Enter passphrase for key '/Users/karuppiahn/.ssh/digital_ocean': 
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-88-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu Nov 18 17:12:01 UTC 2021
+
+  System load:  0.0               Users logged in:       0
+  Usage of /:   6.0% of 24.06GB   IPv4 address for eth0: 165.232.179.170
+  Memory usage: 19%               IPv4 address for eth0: 10.47.0.5
+  Swap usage:   0%                IPv4 address for eth1: 10.122.0.2
+  Processes:    100
+
+1 update can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+root@redis-server:~# 
+root@redis-server:~# wget https://gist.githubusercontent.com/karuppiah7890/fc8fca5e3bdeafbf8072ee656141de7c/raw/e8d4533d8f9eff8b5136332644dcb81e64727ff7/run-redis.sh
+--2021-11-18 17:12:09--  https://gist.githubusercontent.com/karuppiah7890/fc8fca5e3bdeafbf8072ee656141de7c/raw/e8d4533d8f9eff8b5136332644dcb81e64727ff7/run-redis.sh
+Resolving gist.githubusercontent.com (gist.githubusercontent.com)... 185.199.110.133, 185.199.109.133, 185.199.108.133, ...
+Connecting to gist.githubusercontent.com (gist.githubusercontent.com)|185.199.110.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 4376 (4.3K) [text/plain]
+Saving to: ‘run-redis.sh’
+
+run-redis.sh                    100%[=====================================================>]   4.27K  --.-KB/s    in 0s      
+
+2021-11-18 17:12:09 (36.2 MB/s) - ‘run-redis.sh’ saved [4376/4376]
+
+root@redis-server:~# 
+root@redis-server:~# chmod +x run-redis.sh
+root@redis-server:~# 
+root@redis-server:~# ./run-redis.sh
+./run-redis.sh: line 8: 1: Email has not been passed to the script. Usage example: ./run-redis.sh abc@example.com redis-server.example.com 156.165.10.5 6379
+root@redis-server:~# 
+
+root@redis-server:~# ./run-redis.sh karuppiah7890@gmail.com redis-server-1.hosteddatabase.in 165.232.179.170 56380
++ email=karuppiah7890@gmail.com
++ domain_name=redis-server-1.hosteddatabase.in
++ ip=165.232.179.170
++ tls_port=56380
++ install_redis
++ add-apt-repository ppa:redislabs/redis --yes
+Hit:1 http://mirrors.digitalocean.com/ubuntu focal InRelease
+Get:2 http://mirrors.digitalocean.com/ubuntu focal-updates InRelease [114 kB]                                                
+Hit:3 https://repos-droplet.digitalocean.com/apt/droplet-agent main InRelease                                                
+Get:4 http://mirrors.digitalocean.com/ubuntu focal-backports InRelease [101 kB]                                              
+Get:5 http://ppa.launchpad.net/redislabs/redis/ubuntu focal InRelease [18.0 kB]
+Get:6 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 Packages [1344 kB]   
+Get:7 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]                 
+Get:8 http://mirrors.digitalocean.com/ubuntu focal-updates/main Translation-en [276 kB]                                      
+Get:9 http://mirrors.digitalocean.com/ubuntu focal-updates/main amd64 c-n-f Metadata [14.5 kB]                               
+Get:10 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 Packages [1028 B]                                    
+Get:11 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 Packages [569 kB]                               
+Get:12 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main Translation-en [584 B]                            
+Get:13 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted Translation-en [81.6 kB]
+Get:14 http://mirrors.digitalocean.com/ubuntu focal-updates/restricted amd64 c-n-f Metadata [528 B]
+Get:15 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 Packages [877 kB]
+Get:16 http://mirrors.digitalocean.com/ubuntu focal-updates/universe Translation-en [190 kB]
+Get:17 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [987 kB]    
+Get:18 http://mirrors.digitalocean.com/ubuntu focal-updates/universe amd64 c-n-f Metadata [19.5 kB]
+Get:19 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse amd64 Packages [24.5 kB]
+Get:20 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse Translation-en [6856 B]
+Get:21 http://mirrors.digitalocean.com/ubuntu focal-updates/multiverse amd64 c-n-f Metadata [616 B]
+Get:22 http://mirrors.digitalocean.com/ubuntu focal-backports/universe amd64 Packages [6588 B]
+Get:23 http://mirrors.digitalocean.com/ubuntu focal-backports/universe Translation-en [3292 B]
+Get:24 http://mirrors.digitalocean.com/ubuntu focal-backports/universe amd64 c-n-f Metadata [580 B]
+Get:25 http://security.ubuntu.com/ubuntu focal-security/main Translation-en [184 kB]
+Get:26 http://security.ubuntu.com/ubuntu focal-security/main amd64 c-n-f Metadata [8880 B]
+Get:27 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [526 kB]
+Get:28 http://security.ubuntu.com/ubuntu focal-security/restricted Translation-en [75.4 kB]
+Get:29 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 c-n-f Metadata [528 B]
+Get:30 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [653 kB]
+Get:31 http://security.ubuntu.com/ubuntu focal-security/universe Translation-en [107 kB]
+Get:32 http://security.ubuntu.com/ubuntu focal-security/universe amd64 c-n-f Metadata [12.9 kB]
+Get:33 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [21.9 kB]
+Get:34 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 c-n-f Metadata [540 B]
+Fetched 6339 kB in 3s (2086 kB/s)                           
+Reading package lists... Done
++ apt install redis-server --yes
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  redis-tools
+Suggested packages:
+  ruby-redis
+The following NEW packages will be installed:
+  redis-server redis-tools
+0 upgraded, 2 newly installed, 0 to remove and 39 not upgraded.
+Need to get 1149 kB of archives.
+After this operation, 6794 kB of additional disk space will be used.
+Get:1 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-tools amd64 6:6.2.6-2rl1~focal1 [1067 kB]
+Get:2 http://ppa.launchpad.net/redislabs/redis/ubuntu focal/main amd64 redis-server amd64 6:6.2.6-2rl1~focal1 [82.5 kB]
+Fetched 1149 kB in 2s (578 kB/s)   
+Selecting previously unselected package redis-tools.
+(Reading database ... 63555 files and directories currently installed.)
+Preparing to unpack .../redis-tools_6%3a6.2.6-2rl1~focal1_amd64.deb ...
+Unpacking redis-tools (6:6.2.6-2rl1~focal1) ...
+Selecting previously unselected package redis-server.
+Preparing to unpack .../redis-server_6%3a6.2.6-2rl1~focal1_amd64.deb ...
+Unpacking redis-server (6:6.2.6-2rl1~focal1) ...
+Setting up redis-tools (6:6.2.6-2rl1~focal1) ...
+Setting up redis-server (6:6.2.6-2rl1~focal1) ...
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for systemd (245.4-4ubuntu3.13) ...
++ systemctl status redis-server
+● redis-server.service - Advanced key-value store
+     Loaded: loaded (/lib/systemd/system/redis-server.service; disabled; vendor preset: enabled)
+     Active: active (running) since Thu 2021-11-18 17:12:50 UTC; 39s ago
+       Docs: http://redis.io/documentation,
+             man:redis-server(1)
+   Main PID: 2448 (redis-server)
+     Status: "Ready to accept connections"
+      Tasks: 5 (limit: 1136)
+     Memory: 2.2M
+     CGroup: /system.slice/redis-server.service
+             └─2448 /usr/bin/redis-server 127.0.0.1:6379
+
+Nov 18 17:12:50 redis-server systemd[1]: Starting Advanced key-value store...
+Nov 18 17:12:50 redis-server systemd[1]: Started Advanced key-value store.
++ redis-cli -e PING
+PONG
++ redis-cli -e INFO server
+# Server
+redis_version:6.2.6
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:9c9e426e2f96cc51
+redis_mode:standalone
+os:Linux 5.4.0-88-generic x86_64
+arch_bits:64
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:9.3.0
+process_id:2448
+process_supervised:systemd
+run_id:1a09c9dc7de65e338b227d9e49278259352e1882
+tcp_port:6379
+server_time_usec:1637255610119177
+uptime_in_seconds:40
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:9865658
+executable:/usr/bin/redis-server
+config_file:/etc/redis/redis.conf
+io_threads_active:0
++ check_malloc_is_jemalloc
++ grep jemalloc
++ redis-cli -e MEMORY MALLOC-STATS
+___ Begin jemalloc statistics ___
+--- End jemalloc statistics ---
++ configure_password
+++ redis-cli -e ACL GENPASS
++ password=d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) ""
++ redis-cli -e CONFIG SET requirepass d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828
+OK
++ export REDISCLI_AUTH=d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828
++ REDISCLI_AUTH=d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828
++ redis-cli -e CONFIG GET requirepass
+1) "requirepass"
+2) "d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'requirepass "d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828"'
++ cat /etc/redis/redis.conf
+requirepass "d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828"
++ install_certbot
++ sudo snap install --classic certbot
+certbot 1.21.0 from Certbot Project (certbot-eff✓) installed
++ sudo ln --force --symbolic /snap/bin/certbot /usr/bin/certbot
++ obtain_ssl_certificate
++ sudo certbot certonly --standalone --non-interactive --agree-tos --email karuppiah7890@gmail.com --domains redis-server-1.hosteddatabase.in
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Account registered.
+Requesting a certificate for redis-server-1.hosteddatabase.in
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
+This certificate expires on 2022-02-16.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
++ give_redis_user_access_to_ssl_certificate
++ chown -R redis:redis /etc/letsencrypt/
++ configure_tls
++ configure_private_key
++ private_key_path=/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) ""
++ redis-cli -e CONFIG SET tls-key-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem
+OK
++ redis-cli -e CONFIG GET tls-key-file
+1) "tls-key-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"'
++ cat /etc/redis/redis.conf
+tls-key-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/privkey.pem"
++ configure_ssl_certificate
++ ssl_certificate_path=/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
++ redis-cli -e CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) ""
++ redis-cli -e CONFIG SET tls-cert-file /etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem
+OK
++ redis-cli -e CONFIG GET tls-cert-file
+1) "tls-cert-file"
+2) "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"'
++ cat /etc/redis/redis.conf
+tls-cert-file "/etc/letsencrypt/live/redis-server-1.hosteddatabase.in/fullchain.pem"
++ disable_tls_auth
++ redis-cli -e CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "yes"
++ redis-cli -e CONFIG SET tls-auth-clients no
+OK
++ redis-cli -e CONFIG GET tls-auth-clients
+1) "tls-auth-clients"
+2) "no"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-auth-clients no'
++ cat /etc/redis/redis.conf
+# tls-auth-clients no
+tls-auth-clients no
++ configure_tls_port
++ redis-cli -e CONFIG GET tls-port
+1) "tls-port"
+2) "0"
++ redis-cli -e CONFIG SET tls-port 56380
+OK
++ redis-cli -e CONFIG GET tls-port
+1) "tls-port"
+2) "56380"
++ redis-cli -e CONFIG REWRITE
+OK
++ grep 'tls-port 56380'
++ cat /etc/redis/redis.conf
+tls-port 56380
++ disable_non_tls_port
++ redis-cli -e --tls -p 56380 CONFIG GET port
+1) "port"
+2) "6379"
++ redis-cli -e --tls -p 56380 CONFIG SET port 0
+OK
++ redis-cli -e --tls -p 56380 CONFIG GET port
+1) "port"
+2) "0"
++ redis-cli -e --tls -p 56380 CONFIG REWRITE
+OK
++ grep 'port 0'
++ cat /etc/redis/redis.conf
+# If port 0 is specified Redis will not listen on a TCP socket.
+port 0
+# port 0
+# cluster-announce-port 0
++ configure_bind
++ redis-cli -e --tls -p 56380 CONFIG GET bind
+1) "bind"
+2) "127.0.0.1 -::1"
++ redis-cli -e --tls -p 56380 CONFIG SET bind '165.232.179.170 127.0.0.1 -::1'
+OK
++ redis-cli -e --tls -p 56380 CONFIG GET bind
+1) "bind"
+2) "165.232.179.170 127.0.0.1 -::1"
++ redis-cli -e --tls -p 56380 CONFIG REWRITE
+OK
++ grep 'bind 165.232.179.170 127.0.0.1 -::1'
++ cat /etc/redis/redis.conf
+bind 165.232.179.170 127.0.0.1 -::1
++ echo 'Redis has been installed and configured and is running with TLS support and password protection!!'
+Redis has been installed and configured and is running with TLS support and password protection!!
++ echo -e '\nConnection details - '
+
+Connection details - 
++ echo 'Username - No user name'
+Username - No user name
++ echo 'Password - d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828'
+Password - d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828
++ echo 'Host - redis-server-1.hosteddatabase.in'
+Host - redis-server-1.hosteddatabase.in
++ echo 'Port - 56380'
+Port - 56380
++ echo -e '\nRedis CLI (redis-cli) command - '
+
+Redis CLI (redis-cli) command - 
++ echo 'redis-cli --tls -h redis-server-1.hosteddatabase.in -a d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828 -p 56380'
+redis-cli --tls -h redis-server-1.hosteddatabase.in -a d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828 -p 56380
+root@redis-server:~# logout
+Connection to 165.232.179.170 closed.
+~ $ redis-cli --tls -h redis-server-1.hosteddatabase.in -a d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828 -p 56380
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+redis-server-1.hosteddatabase.in:56380> 
+~ $ 
+~ $ doctl compute firewall create --name redis-server --inbound-rules tcp,ports:56380,address:27.5.207.248/32 --droplet-ids redis-server
+~ $ curl ifconfig.me
+60.243.82.0~ $ doctl compute firewall create --name redis-server --inbound-rules tcp,ports:56380,address:60.243.82.0/32 --dropis-servered 
+~ $ 
+~ $ 
+~ $ 
+~ $ doctl compute firewall create --name redis-server --inbound-rules tcp,ports:56380,address:60.243.82.0/32 --droplet-ids redis-server 
+Error: Unexpected input value [[tcp]], must be a key:value pair
+~ $ doctl compute firewall create --name redis-server --inbound-rules protocol:tcp,ports:56380,address:60.243.82.0/32 --droplet-ids redis-server 
+Error: Provided value [redis-server] for droplet id is not of type int
+~ $ 
+~ $ doctl compute droplet list
+ID           Name            Public IPv4        Private IPv4    Public IPv6    Memory    VCPUs    Disk    Region    Image                     VPC UUID                                Status    Tags    Features                            Volumes
+274264174    redis-server    165.232.179.170    10.122.0.2                     1024      1        25      blr1      Ubuntu 20.04 (LTS) x64    98ca4926-d9da-4647-a411-2a489c7d2515    active            droplet_agent,private_networking    
+~ $ doctl compute firewall create --name redis-server --inbound-rules protocol:tcp,ports:56380,address:60.243.82.0/32 --droplet-ids 274264174
+ID                                      Name            Status     Created At              Inbound Rules                                      Outbound Rules    Droplet IDs    Tags    Pending Changes
+f776fef2-0d90-4e59-ba11-74acab796bc4    redis-server    waiting    2021-11-18T17:16:07Z    protocol:tcp,ports:56380,address:60.243.82.0/32                      274264174              droplet_id:274264174,removing:false,status:waiting
+~ $ doc
+docker                         docker-compose-v1              docker-credential-ecr-login    doctl
+docker-compose                 docker-credential-desktop      docker-credential-osxkeychain  
+~ $ doctl compute firewall list
+ID                                      Name            Status       Created At              Inbound Rules                                      Outbound Rules    Droplet IDs    Tags    Pending Changes
+f776fef2-0d90-4e59-ba11-74acab796bc4    redis-server    succeeded    2021-11-18T17:16:07Z    protocol:tcp,ports:56380,address:60.243.82.0/32                      274264174              
+~ $ ~ $ redis-cli --tls -h redis-server-1.hosteddatabase.in -a d95e66647a6816e7216efff60da3ce9c7733f565d62fd989a5b72ceca0d72828 -p 56380
+Warning: Using a password with '-a' or '-u' option on the command line interface may not be safe.
+redis-server-1.hosteddatabase.in:56380> 
+~ $ ssh -i ~/.ssh/digital_ocean root@165.232.179.170
+^C
+~ $ ssh -vvv -i ~/.ssh/digital_ocean root@165.232.179.170
+OpenSSH_8.1p1, LibreSSL 2.7.3
+debug1: Reading configuration data /Users/karuppiahn/.ssh/config
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 47: Applying options for *
+debug2: resolve_canonicalize: hostname 165.232.179.170 is address
+debug2: ssh_connect_direct
+debug1: Connecting to 165.232.179.170 [165.232.179.170] port 22.
+^C
+~ $ telnet 165.232.179.170 22
+Trying 165.232.179.170...
+
+^C
+~ $ doctl compute firewall list
+ID                                      Name            Status       Created At              Inbound Rules                                      Outbound Rules    Droplet IDs    Tags    Pending Changes
+f776fef2-0d90-4e59-ba11-74acab796bc4    redis-server    succeeded    2021-11-18T17:16:07Z    protocol:tcp,ports:56380,address:60.243.82.0/32                      274264174              
+~ $ 
+
+
+
+
+
+
+
+
+
+
+~ $ doctl compute firewall add-rules f776fef2-0d90-4e59-ba11-74acab796bc4 --inbound-rules protocol:tcp,ports:22,address:60.243.82.0/32
+
+~ $ 
+~ $ ssh -vvv -i ~/.ssh/digital_ocean root@165.232.179.170
+OpenSSH_8.1p1, LibreSSL 2.7.3
+debug1: Reading configuration data /Users/karuppiahn/.ssh/config
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 47: Applying options for *
+debug2: resolve_canonicalize: hostname 165.232.179.170 is address
+debug2: ssh_connect_direct
+debug1: Connecting to 165.232.179.170 [165.232.179.170] port 22.
+debug1: Connection established.
+debug1: identity file /Users/karuppiahn/.ssh/digital_ocean type 3
+debug1: identity file /Users/karuppiahn/.ssh/digital_ocean-cert type -1
+debug1: Local version string SSH-2.0-OpenSSH_8.1
+debug1: Remote protocol version 2.0, remote software version OpenSSH_8.2p1 Ubuntu-4ubuntu0.3
+debug1: match: OpenSSH_8.2p1 Ubuntu-4ubuntu0.3 pat OpenSSH* compat 0x04000000
+debug2: fd 3 setting O_NONBLOCK
+debug1: Authenticating to 165.232.179.170:22 as 'root'
+debug3: hostkeys_foreach: reading file "/Users/karuppiahn/.ssh/known_hosts"
+debug3: record_hostkey: found key type ECDSA in file /Users/karuppiahn/.ssh/known_hosts:77
+debug3: load_hostkeys: loaded 1 keys from 165.232.179.170
+debug3: order_hostkeyalgs: prefer hostkeyalgs: ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521
+debug3: send packet: type 20
+debug1: SSH2_MSG_KEXINIT sent
+debug3: receive packet: type 20
+debug1: SSH2_MSG_KEXINIT received
+debug2: local client KEXINIT proposal
+debug2: KEX algorithms: curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256,diffie-hellman-group14-sha1,ext-info-c
+debug2: host key algorithms: ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256,ssh-rsa
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com,zlib
+debug2: compression stoc: none,zlib@openssh.com,zlib
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug2: peer server KEXINIT proposal
+debug2: KEX algorithms: curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group14-sha256
+debug2: host key algorithms: rsa-sha2-512,rsa-sha2-256,ssh-rsa,ecdsa-sha2-nistp256,ssh-ed25519
+debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
+debug2: compression ctos: none,zlib@openssh.com
+debug2: compression stoc: none,zlib@openssh.com
+debug2: languages ctos: 
+debug2: languages stoc: 
+debug2: first_kex_follows 0 
+debug2: reserved 0 
+debug1: kex: algorithm: curve25519-sha256
+debug1: kex: host key algorithm: ecdsa-sha2-nistp256
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug3: send packet: type 30
+debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
+debug3: receive packet: type 31
+debug1: Server host key: ecdsa-sha2-nistp256 SHA256:CMOpuH2WGRSi0fvBCtrkPmDNSa1HxhNA1GaD5o0UwwI
+debug3: hostkeys_foreach: reading file "/Users/karuppiahn/.ssh/known_hosts"
+debug3: record_hostkey: found key type ECDSA in file /Users/karuppiahn/.ssh/known_hosts:77
+debug3: load_hostkeys: loaded 1 keys from 165.232.179.170
+debug1: Host '165.232.179.170' is known and matches the ECDSA host key.
+debug1: Found key in /Users/karuppiahn/.ssh/known_hosts:77
+debug3: send packet: type 21
+debug2: set_newkeys: mode 1
+debug1: rekey out after 134217728 blocks
+debug1: SSH2_MSG_NEWKEYS sent
+debug1: expecting SSH2_MSG_NEWKEYS
+debug3: receive packet: type 21
+debug1: SSH2_MSG_NEWKEYS received
+debug2: set_newkeys: mode 0
+debug1: rekey in after 134217728 blocks
+debug1: Will attempt key: /Users/karuppiahn/.ssh/digital_ocean ED25519 SHA256:NMIQtJbsFE3DjlpS2UQm2ODIwKne3YNyYL+fU0BiFkA explicit
+debug2: pubkey_prepare: done
+debug3: send packet: type 5
+debug3: receive packet: type 7
+debug1: SSH2_MSG_EXT_INFO received
+debug1: kex_input_ext_info: server-sig-algs=<ssh-ed25519,sk-ssh-ed25519@openssh.com,ssh-rsa,rsa-sha2-256,rsa-sha2-512,ssh-dss,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,sk-ecdsa-sha2-nistp256@openssh.com>
+debug3: receive packet: type 6
+debug2: service_accept: ssh-userauth
+debug1: SSH2_MSG_SERVICE_ACCEPT received
+debug3: send packet: type 50
+debug3: receive packet: type 51
+debug1: Authentications that can continue: publickey
+debug3: start over, passed a different list publickey
+debug3: preferred publickey,keyboard-interactive,password
+debug3: authmethod_lookup publickey
+debug3: remaining preferred: keyboard-interactive,password
+debug3: authmethod_is_enabled publickey
+debug1: Next authentication method: publickey
+debug1: Offering public key: /Users/karuppiahn/.ssh/digital_ocean ED25519 SHA256:NMIQtJbsFE3DjlpS2UQm2ODIwKne3YNyYL+fU0BiFkA explicit
+debug3: send packet: type 50
+debug2: we sent a publickey packet, wait for reply
+debug3: receive packet: type 60
+debug1: Server accepts key: /Users/karuppiahn/.ssh/digital_ocean ED25519 SHA256:NMIQtJbsFE3DjlpS2UQm2ODIwKne3YNyYL+fU0BiFkA explicit
+debug3: sign_and_send_pubkey: ED25519 SHA256:NMIQtJbsFE3DjlpS2UQm2ODIwKne3YNyYL+fU0BiFkA
+debug3: sign_and_send_pubkey: signing using ssh-ed25519
+Enter passphrase for key '/Users/karuppiahn/.ssh/digital_ocean': 
+debug3: send packet: type 50
+debug3: receive packet: type 52
+debug1: Authentication succeeded (publickey).
+Authenticated to 165.232.179.170 ([165.232.179.170]:22).
+debug1: channel 0: new [client-session]
+debug3: ssh_session2_open: channel_new: 0
+debug2: channel 0: send open
+debug3: send packet: type 90
+debug1: Requesting no-more-sessions@openssh.com
+debug3: send packet: type 80
+debug1: Entering interactive session.
+debug1: pledge: network
+debug3: receive packet: type 80
+debug1: client_input_global_request: rtype hostkeys-00@openssh.com want_reply 0
+debug3: receive packet: type 4
+debug1: Remote: /root/.ssh/authorized_keys:1: key options: agent-forwarding port-forwarding pty user-rc x11-forwarding
+debug3: receive packet: type 4
+debug1: Remote: /root/.ssh/authorized_keys:1: key options: agent-forwarding port-forwarding pty user-rc x11-forwarding
+debug3: receive packet: type 91
+debug2: channel_input_open_confirmation: channel 0: callback start
+debug2: fd 3 setting TCP_NODELAY
+debug3: ssh_packet_set_tos: set IP_TOS 0x48
+debug2: client_session2_setup: id 0
+debug2: channel 0: request pty-req confirm 1
+debug3: send packet: type 98
+debug1: Sending environment.
+debug3: Ignored env NVM_INC
+debug3: Ignored env TERM_PROGRAM
+debug3: Ignored env NVM_CD_FLAGS
+debug3: Ignored env SHELL
+debug3: Ignored env TERM
+debug3: Ignored env HISTSIZE
+debug3: Ignored env TMPDIR
+debug3: Ignored env TERM_PROGRAM_VERSION
+debug3: Ignored env TERM_SESSION_ID
+debug3: Ignored env GOPRIVATE
+debug3: Ignored env NVM_DIR
+debug3: Ignored env USER
+debug3: Ignored env DIGITALOCEAN_API_TOKEN
+debug3: Ignored env SSH_AUTH_SOCK
+debug3: Ignored env DO_API_TOKEN
+debug3: Ignored env BASH_SILENCE_DEPRECATION_WARNING
+debug3: Ignored env PATH
+debug3: Ignored env LaunchInstanceID
+debug3: Ignored env __CFBundleIdentifier
+debug3: Ignored env PWD
+debug3: Ignored env XPC_FLAGS
+debug3: Ignored env PS1
+debug3: Ignored env XPC_SERVICE_NAME
+debug3: Ignored env GPG_TTY
+debug3: Ignored env SHLVL
+debug3: Ignored env HOME
+debug3: Ignored env GOROOT
+debug3: Ignored env LOGNAME
+debug1: Sending env LC_CTYPE = UTF-8
+debug2: channel 0: request env confirm 0
+debug3: send packet: type 98
+debug3: Ignored env JABBA_HOME
+debug3: Ignored env GOPATH
+debug3: Ignored env NVM_BIN
+debug3: Ignored env SECURITYSESSIONID
+debug3: Ignored env _
+debug3: Ignored env __CF_USER_TEXT_ENCODING
+debug2: channel 0: request shell confirm 1
+debug3: send packet: type 98
+debug2: channel_input_open_confirmation: channel 0: callback done
+debug2: channel 0: open confirm rwindow 0 rmax 32768
+debug3: receive packet: type 99
+debug2: channel_input_status_confirm: type 99 id 0
+debug2: PTY allocation request accepted on channel 0
+debug2: channel 0: rcvd adjust 2097152
+debug3: receive packet: type 99
+debug2: channel_input_status_confirm: type 99 id 0
+debug2: shell request accepted on channel 0
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-88-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu Nov 18 17:18:57 UTC 2021
+
+  System load:  0.03              Users logged in:       0
+  Usage of /:   6.2% of 24.06GB   IPv4 address for eth0: 165.232.179.170
+  Memory usage: 21%               IPv4 address for eth0: 10.47.0.5
+  Swap usage:   0%                IPv4 address for eth1: 10.122.0.2
+  Processes:    103
+
+37 updates can be applied immediately.
+25 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+
+Last login: Thu Nov 18 17:12:02 2021 from 60.243.82.0
+root@redis-server:~# logout
+debug3: receive packet: type 98
+debug1: client_input_channel_req: channel 0 rtype exit-status reply 0
+debug3: receive packet: type 98
+debug1: client_input_channel_req: channel 0 rtype eow@openssh.com reply 0
+debug2: channel 0: rcvd eow
+debug2: channel 0: chan_shutdown_read (i0 o0 sock -1 wfd 4 efd 6 [write])
+debug2: channel 0: input open -> closed
+debug3: receive packet: type 96
+debug2: channel 0: rcvd eof
+debug2: channel 0: output open -> drain
+debug2: channel 0: obuf empty
+debug2: channel 0: chan_shutdown_write (i3 o1 sock -1 wfd 5 efd 6 [write])
+debug2: channel 0: output drain -> closed
+debug3: receive packet: type 97
+debug2: channel 0: rcvd close
+debug3: channel 0: will not send data after close
+debug2: channel 0: almost dead
+debug2: channel 0: gc: notify user
+debug2: channel 0: gc: user detached
+debug2: channel 0: send close
+debug3: send packet: type 97
+debug2: channel 0: is dead
+debug2: channel 0: garbage collecting
+debug1: channel 0: free: client-session, nchannels 1
+debug3: channel 0: status: The following connections are open:
+  #0 client-session (t4 r0 i3/0 o3/0 e[write]/0 fd -1/-1/6 sock -1 cc -1)
+
+debug3: send packet: type 1
+debug3: fd 1 is not O_NONBLOCK
+Connection to 165.232.179.170 closed.
+Transferred: sent 2424, received 4300 bytes, in 1.6 seconds
+Bytes per second: sent 1539.0, received 2730.0
+debug1: Exit status 0
+~ $ telnet 165.232.179.170 22
+Trying 165.232.179.170...
+Connected to 165.232.179.170.
+Escape character is '^]'.
+SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.3
+
+Invalid SSH identification string.
+Connection closed by foreign host.
+~ $ telnet 165.232.179.170 22
+Trying 165.232.179.170...
+Connected to 165.232.179.170.
+Escape character is '^]'.
+SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.3
+^]
+telnet> Connection closed.
+~ $ 
+```
+
+https://docs.digitalocean.com/products/networking/firewalls/how-to/configure-rules/
+
+https://docs.digitalocean.com/reference/api/api-reference/#operation/add_firewall_rules
+
+```bash
+database-stuff $ doctl compute firewall add-rules --help
+Use this command to add inbound or outbound rules to a cloud firewall.
+
+Usage:
+  doctl compute firewall add-rules <id> [flags]
+
+Flags:
+  -h, --help                                                     help for add-rules
+      --inbound-rules protocol:tcp,ports:22,droplet_id:123       A comma-separated key-value list that defines an inbound rule, e.g.: protocol:tcp,ports:22,droplet_id:123. Use a quoted string of space-separated values for multiple rules.
+      --outbound-rules protocol:tcp,ports:22,address:0.0.0.0/0   A comma-separate key-value list the defines an outbound rule, e.g.: protocol:tcp,ports:22,address:0.0.0.0/0. Use a quoted string of space-separated values for multiple rules.
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+database-stuff $ doctl compute firewall add-rules f776fef2-0d90-4e59-ba11-74acab796bc4 --outbound-rules protocol:tcp,ports:0,address:0.0.0.0/0
+database-stuff $ doctl compute firewall list
+ID                                      Name            Status       Created At              Inbound Rules                                                                                   Outbound Rules                            Droplet IDs    Tags    Pending Changes
+f776fef2-0d90-4e59-ba11-74acab796bc4    redis-server    succeeded    2021-11-18T17:16:07Z    protocol:tcp,ports:22,address:60.243.82.0/32 protocol:tcp,ports:56380,address:60.243.82.0/32    protocol:tcp,ports:0,address:0.0.0.0/0    274264174              
+database-stuff $ doctl compute firewall add-rules f776fef2-0d90-4e59-ba11-74acab796bc4 --outbound-rules protocol:tcp,address:0.0.0.0/0
+Error: POST https://api.digitalocean.com/v2/firewalls/f776fef2-0d90-4e59-ba11-74acab796bc4/rules: 422 (request "684ac201-dde6-478c-a924-7ad64830a33c") must have at least one rule
+database-stuff $ doctl compute firewall add-rules f776fef2-0d90-4e59-ba11-74acab796bc4 --outbound-rules protocol:tcp,ports:,address:0.0.0.0/0
+Error: POST https://api.digitalocean.com/v2/firewalls/f776fef2-0d90-4e59-ba11-74acab796bc4/rules: 422 (request "707b5886-8a38-4789-9925-df7bcaccea0c") must have at least one rule
+database-stuff $ doctl compute firewall add-rules f776fef2-0d90-4e59-ba11-74acab796bc4 --outbound-rules protocol:tcp,ports:0,address:0.0.0.0/0
+database-stuff $ ssh -i ~/.ssh/digital_ocean root@165.232.179.170
+Enter passphrase for key '/Users/karuppiahn/.ssh/digital_ocean': 
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-88-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu Nov 18 17:33:18 UTC 2021
+
+  System load:  0.0               Users logged in:       0
+  Usage of /:   6.2% of 24.06GB   IPv4 address for eth0: 165.232.179.170
+  Memory usage: 21%               IPv4 address for eth0: 10.47.0.5
+  Swap usage:   0%                IPv4 address for eth1: 10.122.0.2
+  Processes:    102
+
+37 updates can be applied immediately.
+25 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+
+Last login: Thu Nov 18 17:26:15 2021 from 60.243.82.0
+root@redis-server:~# curl google.com
+^C
+root@redis-server:~# logout
+Connection to 165.232.179.170 closed.
+database-stuff $ doctl compute firewall list
+ID                                      Name            Status       Created At              Inbound Rules                                                                                   Outbound Rules                            Droplet IDs    Tags    Pending Changes
+f776fef2-0d90-4e59-ba11-74acab796bc4    redis-server    succeeded    2021-11-18T17:16:07Z    protocol:tcp,ports:22,address:60.243.82.0/32 protocol:tcp,ports:56380,address:60.243.82.0/32    protocol:tcp,ports:0,address:0.0.0.0/0    274264174              
+database-stuff $ doctl compute firewall list -h
+Use this command to retrieve a list of cloud firewalls.
+
+Usage:
+  doctl compute firewall list [flags]
+
+Aliases:
+  list, ls
+
+Flags:
+      --format ID   Columns for output in a comma-separated list. Possible values: ID, `Name`, `Status`, `Created`, `InboundRules`, `OutboundRules`, `DropletIDs`, `Tags`, `PendingChanges`
+  -h, --help        help for list
+      --no-header   Return raw data with no headers
+
+Global Flags:
+  -t, --access-token string   API V2 access token
+  -u, --api-url string        Override default API endpoint
+  -c, --config string         Specify a custom config file (default "/Users/karuppiahn/Library/Application Support/doctl/config.yaml")
+      --context string        Specify a custom authentication context name
+  -o, --output string         Desired output format [text|json] (default "text")
+      --trace                 Show a log of network activity while performing a command
+  -v, --verbose               Enable verbose output
+database-stuff $ doctl compute firewall list -o json
+[
+  {
+    "id": "f776fef2-0d90-4e59-ba11-74acab796bc4",
+    "name": "redis-server",
+    "status": "succeeded",
+    "inbound_rules": [
+      {
+        "protocol": "tcp",
+        "ports": "22",
+        "sources": {
+          "addresses": [
+            "60.243.82.0/32"
+          ]
+        }
+      },
+      {
+        "protocol": "tcp",
+        "ports": "56380",
+        "sources": {
+          "addresses": [
+            "60.243.82.0/32"
+          ]
+        }
+      }
+    ],
+    "outbound_rules": [
+      {
+        "protocol": "tcp",
+        "ports": "0",
+        "destinations": {
+          "addresses": [
+            "0.0.0.0/0"
+          ]
+        }
+      }
+    ],
+    "droplet_ids": [
+      274264174
+    ],
+    "tags": [],
+    "created_at": "2021-11-18T17:16:07Z",
+    "pending_changes": []
+  }
+]database-stuff $ curl google.com
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="http://www.google.com/">here</A>.
+</BODY></HTML>
+database-stuff $ ssh -i ~/.ssh/digital_ocean root@165.232.179.170
+Enter passphrase for key '/Users/karuppiahn/.ssh/digital_ocean': 
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-88-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu Nov 18 17:34:15 UTC 2021
+
+  System load:  0.0               Users logged in:       0
+  Usage of /:   6.2% of 24.06GB   IPv4 address for eth0: 165.232.179.170
+  Memory usage: 21%               IPv4 address for eth0: 10.47.0.5
+  Swap usage:   0%                IPv4 address for eth1: 10.122.0.2
+  Processes:    102
+
+37 updates can be applied immediately.
+25 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+
+Last login: Thu Nov 18 17:33:18 2021 from 60.243.82.0
+root@redis-server:~# dig
+
+; <<>> DiG 9.16.1-Ubuntu <<>>
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 7777
+;; flags: qr rd ra; QUERY: 1, ANSWER: 13, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;.				IN	NS
+
+;; ANSWER SECTION:
+.			83454	IN	NS	l.root-servers.net.
+.			83454	IN	NS	g.root-servers.net.
+.			83454	IN	NS	e.root-servers.net.
+.			83454	IN	NS	k.root-servers.net.
+.			83454	IN	NS	f.root-servers.net.
+.			83454	IN	NS	m.root-servers.net.
+.			83454	IN	NS	b.root-servers.net.
+.			83454	IN	NS	a.root-servers.net.
+.			83454	IN	NS	i.root-servers.net.
+.			83454	IN	NS	j.root-servers.net.
+.			83454	IN	NS	h.root-servers.net.
+.			83454	IN	NS	c.root-servers.net.
+.			83454	IN	NS	d.root-servers.net.
+
+;; Query time: 4 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Thu Nov 18 17:34:18 UTC 2021
+;; MSG SIZE  rcvd: 239
+
+root@redis-server:~# dig google.com
+
+; <<>> DiG 9.16.1-Ubuntu <<>> google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 11910
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;google.com.			IN	A
+
+;; ANSWER SECTION:
+google.com.		92	IN	A	142.250.193.110
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Thu Nov 18 17:34:21 UTC 2021
+;; MSG SIZE  rcvd: 55
+
+root@redis-server:~# curl google.com
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="http://www.google.com/">here</A>.
+</BODY></HTML>
+root@redis-server:~# curl google.com
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="http://www.google.com/">here</A>.
+</BODY></HTML>
+root@redis-server:~# logout
+Connection to 165.232.179.170 closed.
+database-stuff $ 
+```
+
+
