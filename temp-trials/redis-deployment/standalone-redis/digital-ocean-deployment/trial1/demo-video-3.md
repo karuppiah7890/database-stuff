@@ -20,3 +20,5 @@ Now, you can see you can SSH into the virtual machine
 But if you try to access the Internet, it will not work out. Now, this maybe a boon or a bane. If you think the virtual machine should not have access to the Internet and other networks, it's a boon, but otherwise it's a bane / a problem. For solving this, you need to add an outbound rule to the firewall to allow all outbound connections. Note that this is assuming that all the software in the virtual machine can be trusted, if you can't trust it - then it can corrupt / damage your data on the virtual machine and it can also send / transfer / leak all the data to some remote machine for which it will ideally require Internet access, which can be controller outbound Firewall rules
 
 These cloud firewall rules are similar to Operating System firewall rules. For Digital Ocean cloud firewall, the features it provides are these - https://docs.digitalocean.com/products/networking/firewalls/ . Each cloud's firewall has it's own features!
+
+Finally we can delete the firewall like this or we can also delete just some of the firewall rules too

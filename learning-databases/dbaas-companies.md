@@ -230,7 +230,15 @@ https://www.exoscale.com/dbaas/ - PostgreSQL, Apache Kafka, MySQL, Redis
 
 # ObjectRocket
 
-https://www.objectrocket.com/dbaas-for-redis-jetpack/
+Redis - https://www.objectrocket.com/managed-redis/
+
+MongoDB - https://www.objectrocket.com/managed-mongodb/
+
+PostgreSQL - https://www.objectrocket.com/managed-postgresql/
+
+ElasticSearch - https://www.objectrocket.com/managed-elasticsearch/
+
+https://www.objectrocket.com/private-dbaas
 
 # ScaleChamp
 
@@ -301,3 +309,11 @@ Managed Apache Druid - https://www.rilldata.com/apache-druid , https://www.rilld
 Managed Streaming Analytics - Managed Apache Kafka + Apache Druid - https://www.rilldata.com/streaming-analytics
 
 Programmatic Advertising - https://www.rilldata.com/programmatic-advertising
+
+# UpCloud
+
+https://upcloud.com/
+
+https://upcloud.com/products/managed-databases/
+
+Currently MySQL and PostgreSQL are available

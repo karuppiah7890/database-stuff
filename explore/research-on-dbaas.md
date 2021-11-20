@@ -46,3 +46,13 @@ https://www.dbta.com/Editorial/News-Flashes/Percona-Showcases-Open-Source-Databa
 https://www.percona.com/software/percona-kubernetes-operators
 
 https://github.com/percona
+
+---
+
+https://www.objectrocket.com/everything-you-need-to-know-about-dbaas/
+
+https://www.objectrocket.com/dbaas-for-redis-jetpack/
+
+https://www.objectrocket.com/ebooks/
+
+
