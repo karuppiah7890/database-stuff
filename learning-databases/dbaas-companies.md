@@ -317,3 +317,29 @@ https://upcloud.com/
 https://upcloud.com/products/managed-databases/
 
 Currently MySQL and PostgreSQL are available
+
+# Timescale
+
+Time Series DB
+
+https://www.timescale.com
+
+https://www.timescale.com/products
+
+PromScale - https://www.timescale.com/promscale
+
+# Influx Data
+
+Time Series DB
+
+https://www.influxdata.com/
+
+https://www.influxdata.com/products/influxdb/
+
+https://www.influxdata.com/products/influxdb-cloud/
+
+https://www.influxdata.com/products/influxdb-enterprise/
+
+https://www.influxdata.com/products/influxdb-templates/
+
+https://www.influxdata.com/products/services/
