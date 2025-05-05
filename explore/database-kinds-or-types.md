@@ -26,3 +26,7 @@ A different way to categorize DBs would be according to their use case
 - Analytics - Online Analytics Processing (OLAP)
 - Transactions - Online Transaction Processing (OLAP)
 - Hybrid of Analytics and Transaction - Hybrid Transaction Analytical Processing (HTAP)
+
+---
+
+There's databases / data stores for AI applications. For example, Vector Databases. Example - https://github.com/milvus-io/milvus , https://milvus.io and managed milvus - https://zilliz.com . Another example - pinecone - https://www.pinecone.io , https://github.com/pinecone-io
