@@ -26,4 +26,8 @@ https://deepai.org/profile/sanjay-ghemawat
 
 https://scholar.google.com/citations?user=0KF6ZC8AAAAJ
 
+RocksDB is apparently a fork of LevelDB - check this!
 
+It's apparently optimized for modern flash and SSD storage it seems. - check this!
+
+What's modern flash storage? And what is modern SSD storage? What's the difference between the two?

@@ -47,3 +47,17 @@ https://github.com/wiredtiger/wiredtiger
 Following https://github.com/tidb-incubator/tinykv/blob/course/doc/reading_list.md
 
 Flavors of IO - https://medium.com/databasss/on-disk-io-part-1-flavours-of-io-8e1ace1de017
+
+---
+
+Storage Engine -
+
+https://medium.com/@BuildMySite1/performance-efficiency-gains-new-storage-architecture-589d84375e60
+
+https://dev.mysql.com/doc/refman/8.4/en/pluggable-storage-overview.html
+
+https://dev.mysql.com/doc/refman/8.4/en/pluggable-storage.html
+
+https://www.mongodb.com/resources/products/capabilities/storage-engine-white-paper
+
+

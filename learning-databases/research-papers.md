@@ -9,3 +9,6 @@ https://dl.acm.org/doi/10.1145/362384.362685
 
 ---
 
+DynamoDB
+
+https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf
